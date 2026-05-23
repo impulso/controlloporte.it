@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile | Controllo Porte</title>
+        <meta name="description" content="IP pubblico, NAT e CGNAT spiegati in modo semplice: perché una porta non è raggiungibile da Internet e quando il port forwarding non può funzionare." />
+        <meta name="keywords" content="IP pubblico CGNAT, porta non raggiungibile da internet, CGNAT port forwarding, servizio non raggiungibile da internet" />
+        <link rel="canonical" href="https://controlloporte.it/ip-pubblico-nat-cgnat/" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:site_name" content="Controllo Porte" />
+        <meta property="og:title" content="IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile" />
+        <meta property="og:description" content="IP pubblico, NAT e CGNAT spiegati in modo semplice: perché una porta non è raggiungibile da Internet e quando il port forwarding non può funzionare." />
+        <meta property="og:url" content="https://controlloporte.it/ip-pubblico-nat-cgnat/" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile" />
+        <meta name="twitter:description" content="IP pubblico, NAT e CGNAT spiegati in modo semplice: perché una porta non è raggiungibile da Internet e quando il port forwarding non può funzionare." />
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile",
+        "description": "IP pubblico, NAT e CGNAT spiegati in modo semplice: perché una porta non è raggiungibile da Internet e quando il port forwarding non può funzionare.",
+        "inLanguage": "it-IT",
+        "mainEntityOfPage": "https://controlloporte.it/ip-pubblico-nat-cgnat/",
+        "publisher": {
+                "@type": "Organization",
+                "name": "Controllo Porte"
+        }
+}</script>
+        <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
+        <link href="/css/index.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="app-container article-container">
+            <header class="header">
+                <a href="/" class="logo"><span class="logo-text">Controllo Porte</span></a>
+                <nav class="nav"><a href="/" class="nav-link">Home</a><a href="/docs" class="nav-link">API</a></nav>
+            </header>
+            <main class="main article-main">
+                <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
+                <article class="article-content">
+                    <h1>IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile</h1>
+<p>Quando un servizio non è raggiungibile da Internet, spesso il problema non è il programma, né la porta, né il firewall.</p>
+<p>Il problema può essere più a monte: il tuo router potrebbe non avere un vero IP pubblico.</p>
+<p>Per capire perché una porta non è raggiungibile da Internet bisogna conoscere tre concetti: IP pubblico, NAT e CGNAT.</p>
+<p>Vuoi fare subito una verifica? Usa il <a href="/">controllo porte aperte online</a> per testare IP, dominio e porta TCP dall&#x27;esterno.</p>
+<h2>Cos&#x27;è un IP pubblico</h2>
+<p>Un IP pubblico è un indirizzo raggiungibile da Internet.</p>
+<p>Quando qualcuno prova a collegarsi al tuo servizio, per esempio:</p>
+<pre><code>203.0.113.10:443</code></pre>
+<p>sta cercando di raggiungere l&#x27;IP pubblico <code>203.0.113.10</code> sulla porta <code>443</code>.</p>
+<p>Se quell&#x27;IP è assegnato direttamente al tuo router, allora il router può ricevere connessioni in ingresso e inoltrarle ai dispositivi interni tramite port forwarding.</p>
+<h2>Cos&#x27;è un IP privato</h2>
+<p>Dentro casa o in ufficio i dispositivi usano quasi sempre IP privati.</p>
+<p>Esempi:</p>
+<pre><code>192.168.1.10
+10.0.0.25
+172.16.5.20</code></pre>
+<p>Questi indirizzi funzionano nella rete locale, ma non sono raggiungibili direttamente da Internet.</p>
+<p>Se provi a pubblicare un servizio su:</p>
+<pre><code>192.168.1.50:8080</code></pre>
+<p>funzionerà solo dentro la rete locale, non da fuori.</p>
+<h2>Cos&#x27;è il NAT</h2>
+<p>NAT significa Network Address Translation.</p>
+<p>È il meccanismo con cui il router permette a tanti dispositivi interni di navigare su Internet usando un solo IP pubblico.</p>
+<p>Schema semplificato:</p>
+<pre><code>PC, NAS, smartphone -&gt; router -&gt; Internet</code></pre>
+<p>Quando navighi verso l&#x27;esterno, il NAT funziona automaticamente.</p>
+<p>Il problema nasce per le connessioni in ingresso: Internet non sa quale dispositivo interno deve ricevere quella richiesta.</p>
+<p>Per questo serve il port forwarding.</p>
+<p>Se devi configurarlo o verificarlo, leggi anche <a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a>.</p>
+<h2>NAT e port forwarding</h2>
+<p>Il port forwarding crea una regola sul router.</p>
+<p>Esempio:</p>
+<pre><code>Connessioni in arrivo sulla porta 8443
+inoltrate a 192.168.1.50 sulla porta 443</code></pre>
+<p>Così un servizio interno può essere raggiunto dall&#x27;esterno.</p>
+<p>Ma questo funziona solo se il router riceve davvero la connessione da Internet.</p>
+<p>Se prima del router c&#x27;è un altro NAT, o se il provider usa CGNAT, la richiesta potrebbe non arrivare mai al tuo router.</p>
+<h2>Cos&#x27;è il CGNAT</h2>
+<p>CGNAT significa Carrier-Grade NAT.</p>
+<p>È un NAT gestito dal provider. In pratica, più clienti condividono uno o più IP pubblici a monte della rete dell&#x27;operatore.</p>
+<p>Schema semplificato:</p>
+<pre><code>Tuo dispositivo -&gt; tuo router -&gt; NAT del provider -&gt; Internet</code></pre>
+<p>In questa situazione il tuo router non ha un vero IP pubblico direttamente raggiungibile.</p>
+<p>Puoi navigare normalmente, fare streaming, usare app e servizi online. Ma ricevere connessioni in ingresso diventa un problema.</p>
+<h2>CGNAT port forwarding: perché non funziona</h2>
+<p>Con CGNAT, il port forwarding configurato sul tuo router di solito non basta.</p>
+<p>Il motivo è semplice: la connessione dall&#x27;esterno si ferma al NAT del provider, prima ancora di arrivare al tuo router.</p>
+<p>Tu puoi dire al tuo router:</p>
+<pre><code>inoltra la porta 8080 al NAS</code></pre>
+<p>ma se il provider non inoltra quella connessione verso di te, il router non la vedrà mai.</p>
+<p>Per questo molti utenti configurano tutto correttamente e vedono comunque la porta chiusa.</p>
+<h2>Come capire se sei dietro CGNAT</h2>
+<p>Il controllo più utile è confrontare due indirizzi:</p>
+<ol>
+<li>l&#x27;IP WAN mostrato dal router</li>
+<li>l&#x27;IP pubblico visto da un servizio online</li>
+</ol>
+<p>Se coincidono, probabilmente il router ha un IP pubblico.</p>
+<p>Se sono diversi, potresti essere dietro doppio NAT o CGNAT.</p>
+<p>Inoltre, se l&#x27;IP WAN del router rientra in questi intervalli, non è un normale IP pubblico raggiungibile direttamente:</p>
+<pre><code>10.0.0.0 - 10.255.255.255
+172.16.0.0 - 172.31.255.255
+192.168.0.0 - 192.168.255.255
+100.64.0.0 - 100.127.255.255</code></pre>
+<p>L&#x27;intervallo <code>100.64.0.0/10</code> è spesso associato proprio al CGNAT.</p>
+<h2>Doppio NAT: simile, ma non identico</h2>
+<p>Il doppio NAT si verifica quando hai due router uno dietro l&#x27;altro.</p>
+<p>Esempio:</p>
+<pre><code>Internet -&gt; modem/router operatore -&gt; router personale -&gt; NAS</code></pre>
+<p>In questo caso il primo dispositivo può avere l&#x27;IP pubblico, mentre il secondo gestisce la tua rete interna.</p>
+<p>Il port forwarding va configurato correttamente su entrambi i livelli, oppure bisogna mettere uno dei dispositivi in bridge o DMZ.</p>
+<p>Il doppio NAT si può spesso risolvere in autonomia. Il CGNAT, invece, dipende dal provider.</p>
+<h2>Porta non raggiungibile da Internet: cause tipiche</h2>
+<p>Se una porta non è raggiungibile da Internet, le cause più comuni sono:</p>
+<ul>
+<li>servizio non attivo</li>
+<li>firewall locale</li>
+<li>firewall del router</li>
+<li>port forwarding mancante o errato</li>
+<li>IP interno del dispositivo cambiato</li>
+<li>doppio NAT</li>
+<li>CGNAT</li>
+<li>porta bloccata dal provider</li>
+<li>test fatto dall&#x27;interno della stessa rete</li>
+</ul>
+<p>NAT e CGNAT sono tra le cause più frustranti perché la configurazione locale può sembrare perfetta, ma la connessione non arriva comunque.</p>
+<h2>Cosa fare se sei sotto CGNAT</h2>
+<p>Le opzioni principali sono:</p>
+<ul>
+<li>chiedere al provider un IP pubblico</li>
+<li>chiedere un IP pubblico statico, se disponibile</li>
+<li>usare un servizio dedicato per raggiungere dispositivi dietro CGNAT, come <a href="https://ipstatico.pro">ipstatico.pro</a></li>
+<li>usare una VPN con port forwarding</li>
+<li>usare un tunnel verso un server esterno</li>
+<li>pubblicare il servizio su una VPS</li>
+<li>usare soluzioni reverse tunnel</li>
+</ul>
+<p>La scelta dipende dal servizio che vuoi esporre e dal livello di affidabilità richiesto.</p>
+<p>Se il provider non offre un IP pubblico, o se vuoi evitare configurazioni complesse su VPS, una soluzione pratica è usare <a href="https://ipstatico.pro">ipstatico.pro</a>: permette di accedere da remoto a dispositivi e servizi anche quando la connessione è dietro CGNAT.</p>
+<p>È utile, per esempio, per raggiungere telecamere, NAS, sistemi domotici, server locali, apparati industriali o piccoli servizi self-hosted senza dover dipendere dal port forwarding tradizionale del router.</p>
+<p>Per un accesso occasionale può bastare un tunnel generico. Per un accesso stabile a dispositivi dietro CGNAT, invece, un servizio pensato per questo scenario evita molte complicazioni tecniche.</p>
+<h2>IP pubblico statico o dinamico</h2>
+<p>Un IP pubblico può essere statico o dinamico.</p>
+<p>Statico significa che resta sempre uguale.</p>
+<p>Dinamico significa che può cambiare nel tempo, per esempio dopo un riavvio del router o una riconnessione.</p>
+<p>Per pubblicare servizi da casa o ufficio, un IP dinamico può comunque funzionare usando un servizio DDNS, cioè DNS dinamico.</p>
+<p>Il punto fondamentale è un altro: statico o dinamico, l&#x27;IP deve essere realmente pubblico e raggiungibile.</p>
+<h2>Checklist rapida</h2>
+<p>Per capire perché un servizio non è raggiungibile da Internet:</p>
+<ol>
+<li>verifica che il servizio funzioni in rete locale</li>
+<li>controlla firewall e porta del servizio</li>
+<li>configura il port forwarding sul router</li>
+<li>verifica l&#x27;IP WAN del router</li>
+<li>confrontalo con l&#x27;IP pubblico visto online</li>
+<li>controlla se l&#x27;IP WAN rientra in range privati o CGNAT</li>
+<li>esegui il test porta dall&#x27;esterno della rete</li>
+</ol>
+<p>Se l&#x27;IP WAN non è pubblico, il problema non si risolve aprendo altre porte sul router.</p>
+<p>Se invece l&#x27;IP è pubblico ma la porta resta chiusa, può esserti utile la guida su <a href="/perche-una-porta-risulta-chiusa/">perché una porta risulta chiusa</a>.</p>
+<h2>FAQ</h2>
+<div class="faq-list">
+    <details class="faq-item">
+        <summary>Cos&#x27;è IP pubblico CGNAT?</summary>
+<p>È una situazione in cui il provider usa un NAT a monte della tua connessione. Tu navighi su Internet, ma il router non ha un IP pubblico direttamente raggiungibile dall&#x27;esterno.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Il port forwarding funziona con CGNAT?</summary>
+<p>Di solito no. Il port forwarding sul router funziona solo se le connessioni in ingresso arrivano al router. Con CGNAT si fermano prima, nella rete del provider.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Come verifico se ho un IP pubblico?</summary>
+<p>Confronta l&#x27;IP WAN indicato dal router con l&#x27;IP pubblico mostrato da un servizio online. Se sono uguali, probabilmente hai un IP pubblico. Se sono diversi, potresti avere doppio NAT o CGNAT.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Perché il servizio è raggiungibile in LAN ma non da Internet?</summary>
+<p>Perché in LAN usi l&#x27;IP privato del dispositivo, mentre da Internet serve passare da IP pubblico, NAT, router, firewall e port forwarding. Se uno di questi passaggi manca, il servizio non è raggiungibile.</p>
+    </details>
+</div>
+<h2>Controlla ora una porta TCP</h2>
+<p>Inserisci IP o dominio, indica la porta da verificare e controlla se il servizio è raggiungibile da Internet con il <a href="/">test online di Controllo Porte</a>.</p>
+                </article>
+            </main>
+<footer class="footer">
+                <div class="footer-content">
+                    <p class="copyright">
+                        © 2026 Controllo Porte ·
+                        <a href="/privacy-policy/">Privacy Policy</a> ·
+                        <a href="/llms.txt">AI</a>
+                    </p>
+                    <p class="footer-credit">
+                        Servizio offerto da
+                        <a class="external-link" href="https://impulso.it" target="_blank" rel="noopener noreferrer">
+                            Impulso.it
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7"></path>
+                                <path d="M8 7h9v9"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

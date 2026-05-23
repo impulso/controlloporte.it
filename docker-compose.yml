@@ -1,0 +1,52 @@
+---
+services:
+  web:
+    restart: unless-stopped
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      args:
+        API_URL: http://api:8000
+        DEFAULT_HOST: ""
+        DEFAULT_PORT: "443"
+    image: local/portcheckerio-web:latest
+    container_name: web
+    environment:
+      - DEFAULT_HOST=  # Optional, Populates a default host address value to be populataed in the in the UI input. Defaults to external/WAN IP.
+      - DEFAULT_PORT=443  # Optional, Populates a default port value to be populataed in the in the UI input
+      - API_URL=http://api:8000  # Public API URL for browser clients
+    ports:
+      - 127.0.0.1:8080:80
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-S", "http://127.0.0.1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    depends_on:
+      - api  # Ensure api service is ready before web starts
+    networks:
+      - portchecker
+  api:
+    restart: unless-stopped
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    image: local/portcheckerio-api:latest
+    container_name: api
+    environment:
+      - ALLOW_PRIVATE=false  # Prevent usage of private IP addresses
+    ports:
+      - 127.0.0.1:8000:8000
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-S", "http://127.0.0.1:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - portchecker
+
+networks:
+  portchecker:
+    driver: bridge

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Come verificare se una porta è aperta | Controllo Porte</title>
+        <meta name="description" content="Scopri come verificare se una porta TCP è aperta su un IP o dominio, come leggere il risultato e cosa controllare se la porta risulta chiusa." />
+        <meta name="keywords" content="verificare porta aperta, controllo porte aperte, controllare porta aperta, test porta TCP" />
+        <link rel="canonical" href="https://controlloporte.it/come-verificare-se-una-porta-e-aperta/" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:site_name" content="Controllo Porte" />
+        <meta property="og:title" content="Come verificare se una porta è aperta" />
+        <meta property="og:description" content="Scopri come verificare se una porta TCP è aperta su un IP o dominio, come leggere il risultato e cosa controllare se la porta risulta chiusa." />
+        <meta property="og:url" content="https://controlloporte.it/come-verificare-se-una-porta-e-aperta/" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Come verificare se una porta è aperta" />
+        <meta name="twitter:description" content="Scopri come verificare se una porta TCP è aperta su un IP o dominio, come leggere il risultato e cosa controllare se la porta risulta chiusa." />
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Come verificare se una porta è aperta",
+        "description": "Scopri come verificare se una porta TCP è aperta su un IP o dominio, come leggere il risultato e cosa controllare se la porta risulta chiusa.",
+        "inLanguage": "it-IT",
+        "mainEntityOfPage": "https://controlloporte.it/come-verificare-se-una-porta-e-aperta/",
+        "publisher": {
+                "@type": "Organization",
+                "name": "Controllo Porte"
+        }
+}</script>
+        <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
+        <link href="/css/index.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="app-container article-container">
+            <header class="header">
+                <a href="/" class="logo"><span class="logo-text">Controllo Porte</span></a>
+                <nav class="nav">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/docs" class="nav-link">API</a>
+                </nav>
+            </header>
+            <main class="main article-main">
+                <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
+                <article class="article-content">
+                    <h1>Come verificare se una porta è aperta</h1>
+<p>Verificare se una porta è aperta significa controllare se un servizio su un computer, server, router, NAS o dispositivo di rete è raggiungibile dall&#x27;esterno tramite una specifica porta TCP.</p>
+<p>È una delle verifiche più comuni quando si configura un server web, un accesso SSH, una VPN, un gestionale, un database o il port forwarding sul router.</p>
+<p>In pratica, quando fai un controllo porte aperte stai chiedendo: &quot;Da Internet riesco davvero a raggiungere questo servizio?&quot;.</p>
+<p>Vuoi fare subito il test? Usa il <a href="/">controllo porte aperte online</a>: inserisci IP o dominio, scegli la porta e verifica se è raggiungibile dall&#x27;esterno.</p>
+<h2>Cos&#x27;è una porta di rete</h2>
+<p>Un indirizzo IP identifica il dispositivo. La porta identifica il servizio in ascolto su quel dispositivo.</p>
+<p>Per esempio:</p>
+<ul>
+<li><code>80</code> è usata spesso per HTTP</li>
+<li><code>443</code> è usata per HTTPS</li>
+<li><code>22</code> è usata per SSH</li>
+<li><code>25</code> è usata per SMTP</li>
+<li><code>3306</code> è usata spesso da MySQL</li>
+</ul>
+<p>Se l&#x27;IP è l&#x27;indirizzo di un edificio, la porta è il numero dell&#x27;ufficio da raggiungere.</p>
+<h2>Cosa significa porta aperta</h2>
+<p>Una porta risulta aperta quando un servizio risponde su quella porta e la connessione TCP può essere stabilita.</p>
+<p>Per esempio, se controlli la porta <code>443</code> di un sito web e il server HTTPS risponde, il test indicherà che la porta è aperta.</p>
+<p>Una porta può risultare:</p>
+<ul>
+<li>aperta, quando un servizio è raggiungibile</li>
+<li>chiusa, quando il dispositivo risponde ma nessun servizio ascolta su quella porta</li>
+<li>filtrata o non raggiungibile, quando firewall, NAT, router o provider bloccano la connessione</li>
+</ul>
+<h2>Verificare porta aperta: il test online</h2>
+<p>Il modo più semplice è usare uno strumento di test porta TCP online.</p>
+<p>Ti servono due dati:</p>
+<ol>
+<li>l&#x27;indirizzo IP pubblico o il dominio da controllare</li>
+<li>il numero della porta da testare</li>
+</ol>
+<p>Esempio:</p>
+<pre><code>Host: esempio.it
+Porta: 443</code></pre>
+<p>Oppure:</p>
+<pre><code>Host: 203.0.113.10
+Porta: 22</code></pre>
+<p>Il tester prova ad aprire una connessione TCP verso quell&#x27;host e quella porta. Se la connessione riesce, la porta è aperta dal punto di vista di Internet.</p>
+<h2>Come controllare una porta aperta da terminale</h2>
+<p>Chi ha un minimo di confidenza con il terminale può usare strumenti come <code>nc</code>, <code>telnet</code> o <code>curl</code>.</p>
+<p>Con <code>nc</code>:</p>
+<pre><code>nc -vz esempio.it 443</code></pre>
+<p>Se la connessione riesce, vedrai un messaggio di successo. Se fallisce, la porta potrebbe essere chiusa, filtrata o non raggiungibile.</p>
+<p>Con <code>curl</code>, utile soprattutto per servizi web:</p>
+<pre><code>curl -I https://esempio.it</code></pre>
+<p>Questo non è un test generico per tutte le porte, ma è molto pratico per verificare HTTP e HTTPS.</p>
+<h2>Attenzione: locale e pubblico non sono la stessa cosa</h2>
+<p>Un errore comune è provare un servizio dalla stessa rete interna e pensare che, se funziona in LAN, allora sia raggiungibile anche da Internet.</p>
+<p>Non è detto.</p>
+<p>Un servizio può funzionare perfettamente su:</p>
+<pre><code>192.168.1.50:8080</code></pre>
+<p>ma risultare chiuso dall&#x27;esterno se:</p>
+<ul>
+<li>il port forwarding non è configurato</li>
+<li>il firewall blocca la porta</li>
+<li>il servizio ascolta solo sull&#x27;indirizzo locale</li>
+<li>il router non ha un IP pubblico</li>
+<li>il provider usa CGNAT</li>
+</ul>
+<p>Per questo è importante fare il test da fuori dalla tua rete, usando un controllo porte aperte online.</p>
+<p>Approfondimenti utili:</p>
+<ul>
+<li><a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a></li>
+<li><a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile</a></li>
+</ul>
+<h2>Prima di fare il test: cosa verificare</h2>
+<p>Prima di concludere che la porta non funziona, controlla questi punti:</p>
+<ul>
+<li>il servizio è acceso</li>
+<li>il servizio ascolta sulla porta corretta</li>
+<li>il firewall del dispositivo consente la porta</li>
+<li>il router inoltra la porta verso l&#x27;IP interno corretto</li>
+<li>l&#x27;IP interno del dispositivo non è cambiato</li>
+<li>stai testando l&#x27;IP pubblico giusto</li>
+<li>il provider non blocca quella porta</li>
+</ul>
+<p>Se anche uno solo di questi elementi è sbagliato, il test porta TCP può fallire.</p>
+<h2>Esempio pratico: verificare la porta 80</h2>
+<p>Immagina di avere un piccolo server web in casa.</p>
+<p>Il server ha IP locale:</p>
+<pre><code>192.168.1.20</code></pre>
+<p>Il servizio web ascolta sulla porta:</p>
+<pre><code>80</code></pre>
+<p>Per renderlo raggiungibile da Internet devi:</p>
+<ol>
+<li>configurare il router per inoltrare la porta <code>80</code> verso <code>192.168.1.20</code></li>
+<li>consentire la porta <code>80</code> nel firewall del server</li>
+<li>verificare che il server web sia attivo</li>
+<li>testare dall&#x27;esterno l&#x27;IP pubblico sulla porta <code>80</code></li>
+</ol>
+<p>Solo se tutti questi passaggi sono corretti, la porta risulterà aperta.</p>
+<p>Puoi consultare anche la guida sulle <a href="/porte-tcp-comuni/">porte TCP comuni</a> per capire quali porte sono usate più spesso dai servizi principali.</p>
+<h2>Perché una porta aperta localmente può risultare chiusa online</h2>
+<p>Una porta può sembrare aperta sul dispositivo, ma chiusa da Internet.</p>
+<p>Succede spesso quando il servizio è in ascolto solo su <code>localhost</code> o <code>127.0.0.1</code>. In quel caso risponde solo dal dispositivo stesso, non dalla rete.</p>
+<p>Un altro caso frequente è il firewall: il servizio è attivo, ma le connessioni esterne vengono bloccate.</p>
+<p>Infine, se sei dietro CGNAT, il router potrebbe non avere un vero IP pubblico. In quel caso il port forwarding classico non basta.</p>
+<p>Per una diagnosi più completa, leggi anche: <a href="/perche-una-porta-risulta-chiusa/">Perché una porta risulta chiusa</a>.</p>
+<h2>Verificare porta aperta: metodo rapido</h2>
+<p>Per fare una verifica sensata:</p>
+<ol>
+<li>identifica il servizio da testare</li>
+<li>controlla su quale porta ascolta</li>
+<li>verifica l&#x27;IP pubblico</li>
+<li>esegui il test porta TCP dall&#x27;esterno</li>
+<li>se la porta risulta chiusa, controlla firewall, router e NAT</li>
+</ol>
+<p>Questo approccio evita di andare a tentativi.</p>
+<h2>FAQ</h2>
+<div class="faq-list">
+    <details class="faq-item">
+        <summary>Cosa vuol dire verificare porta aperta?</summary>
+<p>Vuol dire controllare se un servizio è raggiungibile su una determinata porta TCP da un altro computer, spesso da Internet.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Una porta aperta è sempre un rischio?</summary>
+<p>Non sempre. Una porta aperta è normale se serve a pubblicare un servizio. Diventa un rischio se il servizio è vulnerabile, non aggiornato o esposto senza necessità.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Posso verificare una porta UDP allo stesso modo?</summary>
+<p>No. Il test TCP e il test UDP funzionano in modo diverso. Una porta UDP può non rispondere anche quando il servizio è attivo, quindi richiede strumenti e interpretazioni differenti.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Perché il test dice porta chiusa anche se il programma è aperto?</summary>
+<p>Perché potrebbero intervenire firewall, router, NAT, configurazione del servizio o CGNAT. Il programma attivo sul computer non garantisce da solo la raggiungibilità da Internet.</p>
+    </details>
+</div>
+<h2>Controlla ora una porta TCP</h2>
+<p>Se vuoi verificare subito se una porta è aperta, usa il <a href="/">test online di Controllo Porte</a>: inserisci il dominio o l&#x27;indirizzo IP pubblico, indica la porta e controlla il risultato dall&#x27;esterno della tua rete.</p>
+                </article>
+            </main>
+<footer class="footer">
+                <div class="footer-content">
+                    <p class="copyright">
+                        © 2026 Controllo Porte ·
+                        <a href="/privacy-policy/">Privacy Policy</a> ·
+                        <a href="/llms.txt">AI</a>
+                    </p>
+                    <p class="footer-credit">
+                        Servizio offerto da
+                        <a class="external-link" href="https://impulso.it" target="_blank" rel="noopener noreferrer">
+                            Impulso.it
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7"></path>
+                                <path d="M8 7h9v9"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>
