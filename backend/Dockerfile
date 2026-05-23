@@ -1,4 +1,4 @@
-FROM python:3.13-alpine3.23 AS builder
+FROM python:3.14-alpine3.23 AS builder
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -12,7 +12,7 @@ COPY pyproject.toml poetry.lock ./
 
 RUN poetry install --only=main --no-root --no-cache
 
-FROM python:3.13-alpine3.23 AS api
+FROM python:3.14-alpine3.23 AS api
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
