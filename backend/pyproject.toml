@@ -1,0 +1,46 @@
+[tool.poetry]
+package-mode = false
+name = "controlloporte.it"
+version = "4.0.1"
+description = """controlloporte.it offers an API for checking port \
+    availability on specified hostnames or IP addresses. \
+    Ideal for developers and network admins, it helps troubleshoot network \
+    setups, validate firewall rules, and assess potential access points."""
+authors = ["Impulso.it"]
+repository = "https://github.com/impulso/controlloporte.it"
+license = "GNU General Public License v3.0"
+readme = "../README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+litestar = {extras = ["prometheus"], version = "^2.21.1"}
+httpcore = "^1.0.9"
+gunicorn = "25.1.0"
+pydantic = "^2.12.5"
+uvicorn = "^0.42.0"
+tomli = "^2.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^4.0.5"
+isort = "^8.0.1"
+pytest = "^9.0.2"
+pytest-mock = "^3.15.1"
+pytest-cov = "^7.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 88
+known_first_party = ["app"]
+
+[tool.pylint]
+init-hook='import sys; sys.path.append("api")'
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "api"
+]

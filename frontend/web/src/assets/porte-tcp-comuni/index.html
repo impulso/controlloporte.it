@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Porte TCP comuni: 80, 443, 22, 25, 3306 | Controllo Porte</title>
+        <meta name="description" content="Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare." />
+        <meta name="keywords" content="porte TCP comuni, porta 443, porta 22 ssh, porta 80, porta 25 smtp, porta 3306 mysql" />
+        <link rel="canonical" href="https://controlloporte.it/porte-tcp-comuni/" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:site_name" content="Controllo Porte" />
+        <meta property="og:title" content="Porte TCP comuni: 80, 443, 22, 25, 3306" />
+        <meta property="og:description" content="Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare." />
+        <meta property="og:url" content="https://controlloporte.it/porte-tcp-comuni/" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Porte TCP comuni: 80, 443, 22, 25, 3306" />
+        <meta name="twitter:description" content="Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare." />
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Porte TCP comuni: 80, 443, 22, 25, 3306",
+        "description": "Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare.",
+        "inLanguage": "it-IT",
+        "mainEntityOfPage": "https://controlloporte.it/porte-tcp-comuni/",
+        "publisher": {
+                "@type": "Organization",
+                "name": "Controllo Porte"
+        }
+}</script>
+        <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
+        <link href="/css/index.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="app-container article-container">
+            <header class="header">
+                <a href="/" class="logo"><span class="logo-text">Controllo Porte</span></a>
+                <nav class="nav"><a href="/" class="nav-link">Home</a><a href="/docs" class="nav-link">API</a></nav>
+            </header>
+            <main class="main article-main">
+                <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
+                <article class="article-content">
+                    <h1>Porte TCP comuni: 80, 443, 22, 25, 3306</h1>
+<p>Le porte TCP comuni sono numeri standard usati da servizi molto diffusi: siti web, accessi SSH, posta elettronica, database e applicazioni server.</p>
+<p>Conoscerle aiuta a capire cosa stai esponendo su Internet, quale porta testare e quali rischi valutare prima di aprire una regola sul router o sul firewall.</p>
+<p>In questa guida vediamo le porte TCP più cercate: <code>80</code>, <code>443</code>, <code>22</code>, <code>25</code> e <code>3306</code>.</p>
+<p>Vuoi fare subito una verifica? Usa il <a href="/">controllo porte aperte online</a> per testare IP, dominio e porta TCP dall&#x27;esterno.</p>
+<h2>Cosa sono le porte TCP</h2>
+<p>TCP è un protocollo di trasporto usato per stabilire connessioni affidabili tra due dispositivi.</p>
+<p>Una porta TCP identifica il servizio da raggiungere su un host.</p>
+<p>Esempio:</p>
+<pre><code>esempio.it:443</code></pre>
+<p>In questo caso:</p>
+<ul>
+<li><code>esempio.it</code> è l&#x27;host</li>
+<li><code>443</code> è la porta</li>
+<li>il servizio atteso è HTTPS</li>
+</ul>
+<p>Senza la porta, il sistema non saprebbe a quale applicazione consegnare la connessione.</p>
+<h2>Porta 80: HTTP</h2>
+<p>La porta <code>80</code> è la porta standard di HTTP.</p>
+<p>Viene usata per siti web non cifrati o per reindirizzare automaticamente gli utenti verso HTTPS.</p>
+<p>Esempio:</p>
+<pre><code>http://esempio.it</code></pre>
+<p>Quando apri un sito con <code>http://</code>, il browser usa normalmente la porta <code>80</code>.</p>
+<h3>Quando aprire la porta 80</h3>
+<p>Ha senso aprirla se:</p>
+<ul>
+<li>ospiti un sito web</li>
+<li>devi gestire il rinnovo di certificati con challenge HTTP</li>
+<li>vuoi reindirizzare HTTP verso HTTPS</li>
+<li>stai pubblicando un servizio web interno</li>
+</ul>
+<h3>Attenzione alla sicurezza</h3>
+<p>HTTP non cifra il traffico. Per login, pannelli di controllo, API e dati personali è meglio usare HTTPS sulla porta <code>443</code>.</p>
+<h2>Porta 443: HTTPS</h2>
+<p>La porta <code>443</code> è la porta standard di HTTPS.</p>
+<p>È usata dai siti web cifrati tramite TLS, cioè la maggior parte del web moderno.</p>
+<p>Esempio:</p>
+<pre><code>https://esempio.it</code></pre>
+<p>Se un sito è raggiungibile sulla porta <code>443</code>, il browser può stabilire una connessione sicura e verificare il certificato.</p>
+<h3>Quando aprire la porta 443</h3>
+<p>È la porta giusta per:</p>
+<ul>
+<li>siti web pubblici</li>
+<li>pannelli amministrativi protetti</li>
+<li>reverse proxy</li>
+<li>API HTTPS</li>
+<li>applicazioni self-hosted</li>
+</ul>
+<h3>Porta 443 e reverse proxy</h3>
+<p>Molti servizi domestici o aziendali vengono pubblicati dietro un reverse proxy come Nginx, Caddy, Traefik o Apache.</p>
+<p>In quel caso dall&#x27;esterno si apre solo la porta <code>443</code>, mentre il reverse proxy smista le richieste verso servizi interni diversi.</p>
+<h2>Porta 22 SSH</h2>
+<p>La porta <code>22</code> è la porta standard di SSH.</p>
+<p>SSH serve ad accedere da remoto a server Linux, dispositivi di rete, VPS, NAS e sistemi embedded.</p>
+<p>Esempio:</p>
+<pre><code>ssh utente@esempio.it</code></pre>
+<p>Se non specifichi una porta diversa, SSH prova normalmente la porta <code>22</code>.</p>
+<h3>Quando aprire la porta 22</h3>
+<p>Aprila solo se hai davvero bisogno di amministrare un sistema da remoto.</p>
+<p>Buone pratiche:</p>
+<ul>
+<li>disabilitare il login root</li>
+<li>usare chiavi SSH invece della sola password</li>
+<li>limitare gli IP autorizzati quando possibile</li>
+<li>tenere il sistema aggiornato</li>
+<li>valutare una VPN per l&#x27;accesso amministrativo</li>
+</ul>
+<h3>Cambiare porta SSH serve?</h3>
+<p>Spostare SSH da <code>22</code> a un&#x27;altra porta riduce il rumore dei tentativi automatici, ma non sostituisce una configurazione sicura.</p>
+<p>La sicurezza vera arriva da autenticazione forte, aggiornamenti e regole firewall sensate.</p>
+<h2>Porta 25 SMTP</h2>
+<p>La porta <code>25</code> è storicamente usata da SMTP, il protocollo per l&#x27;invio di email tra server.</p>
+<p>È una porta particolare perché molti provider la bloccano o la limitano sulle connessioni residenziali, per ridurre spam e abusi.</p>
+<h3>Quando serve la porta 25</h3>
+<p>Serve soprattutto ai mail server che devono consegnare email ad altri server.</p>
+<p>Non è di solito la porta usata da un normale client email per inviare posta autenticata.</p>
+<p>Per i client si usano spesso:</p>
+<pre><code>587 submission
+465 SMTPS</code></pre>
+<h3>Perché la porta 25 risulta chiusa</h3>
+<p>Può risultare chiusa perché:</p>
+<ul>
+<li>il servizio SMTP non è attivo</li>
+<li>il firewall la blocca</li>
+<li>il provider la filtra</li>
+<li>il server non accetta connessioni pubbliche</li>
+<li>il cloud provider richiede una richiesta di sblocco</li>
+</ul>
+<p>Se devi gestire posta in uscita, verifica sempre le policy del provider.</p>
+<h2>Porta 3306 MySQL</h2>
+<p>La porta <code>3306</code> è la porta predefinita di MySQL e MariaDB.</p>
+<p>È usata dai client per collegarsi al database.</p>
+<p>Esempio:</p>
+<pre><code>mysql.example.it:3306</code></pre>
+<h3>È una buona idea aprire MySQL su Internet?</h3>
+<p>In generale no, salvo casi ben controllati.</p>
+<p>Un database esposto pubblicamente aumenta molto la superficie di attacco. Se devi accedere a MySQL da remoto, valuta soluzioni più sicure:</p>
+<ul>
+<li>VPN</li>
+<li>tunnel SSH</li>
+<li>firewall con IP sorgente limitati</li>
+<li>rete privata del provider cloud</li>
+<li>autenticazione forte e TLS</li>
+</ul>
+<h3>Porta 3306 aperta: cosa controllare</h3>
+<p>Se devi esporla, controlla almeno:</p>
+<ul>
+<li>utenti con password robuste</li>
+<li>privilegi minimi</li>
+<li>accesso limitato per IP</li>
+<li>aggiornamenti del database</li>
+<li>log di accesso</li>
+<li>backup funzionanti</li>
+</ul>
+<h2>Tabella riepilogativa</h2>
+<table>
+<thead>
+<tr>
+<th>Porta</th>
+<th>Servizio comune</th>
+<th>Uso tipico</th>
+<th>Da esporre su Internet?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80</td>
+<td>HTTP</td>
+<td>Siti web non cifrati o redirect</td>
+<td>Sì, se serve</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+<td>Siti web e API cifrate</td>
+<td>Sì, spesso</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SSH</td>
+<td>Amministrazione remota</td>
+<td>Solo con protezioni</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP</td>
+<td>Invio email tra server</td>
+<td>Solo per mail server</td>
+</tr>
+<tr>
+<td>3306</td>
+<td>MySQL/MariaDB</td>
+<td>Database</td>
+<td>Meglio evitare, salvo restrizioni</td>
+</tr>
+</tbody>
+</table>
+<h2>Porte aperte e sicurezza</h2>
+<p>Ogni porta aperta espone un servizio.</p>
+<p>Questo non significa che ogni porta aperta sia pericolosa, ma significa che quel servizio deve essere:</p>
+<ul>
+<li>necessario</li>
+<li>aggiornato</li>
+<li>configurato correttamente</li>
+<li>monitorato</li>
+<li>protetto da autenticazione adeguata</li>
+</ul>
+<p>La regola pratica è semplice: apri solo ciò che serve davvero.</p>
+<h2>Come testare una porta TCP comune</h2>
+<p>Per verificare se una porta è aperta, usa l&#x27;host e il numero di porta.</p>
+<p>Esempi:</p>
+<pre><code>esempio.it:80
+esempio.it:443
+esempio.it:22
+esempio.it:25
+esempio.it:3306</code></pre>
+<p>Se il test ha successo, significa che da Internet è possibile stabilire una connessione TCP verso quella porta.</p>
+<p>Se fallisce, il servizio può essere spento, filtrato da firewall, non inoltrato dal router o non raggiungibile per problemi di NAT.</p>
+<p>Per una guida passo passo, leggi anche <a href="/come-verificare-se-una-porta-e-aperta/">come verificare se una porta è aperta</a>.</p>
+<h2>FAQ</h2>
+<div class="faq-list">
+    <details class="faq-item">
+        <summary>Quali sono le porte TCP più comuni?</summary>
+<p>Tra le più comuni ci sono <code>80</code> per HTTP, <code>443</code> per HTTPS, <code>22</code> per SSH, <code>25</code> per SMTP e <code>3306</code> per MySQL.</p>
+    </details>
+    <details class="faq-item">
+        <summary>La porta 443 deve essere aperta?</summary>
+<p>Deve essere aperta se vuoi rendere raggiungibile un sito o servizio HTTPS da Internet. Se non pubblichi servizi web, non è necessario aprirla.</p>
+    </details>
+    <details class="faq-item">
+        <summary>La porta 22 SSH è pericolosa?</summary>
+<p>Non è pericolosa di per sé, ma se esposta a Internet riceverà tentativi automatici di accesso. Va protetta con chiavi SSH, firewall e configurazione corretta.</p>
+    </details>
+    <details class="faq-item">
+        <summary>È sicuro aprire la porta 3306 MySQL?</summary>
+<p>Di solito è meglio evitare. Per accedere a un database da remoto sono preferibili VPN, tunnel SSH o regole firewall che limitano gli IP autorizzati.</p>
+    </details>
+</div>
+<h2>Controlla ora una porta TCP</h2>
+<p>Inserisci IP o dominio, indica la porta da verificare e controlla se il servizio è raggiungibile da Internet con il <a href="/">test online di Controllo Porte</a>.</p>
+                </article>
+            </main>
+<footer class="footer">
+                <div class="footer-content">
+                    <p class="copyright">
+                        © 2026 Controllo Porte ·
+                        <a href="/privacy-policy/">Privacy Policy</a> ·
+                        <a href="/llms.txt">AI</a>
+                    </p>
+                    <p class="footer-credit">
+                        Servizio offerto da
+                        <a class="external-link" href="https://impulso.it" target="_blank" rel="noopener noreferrer">
+                            Impulso.it
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7"></path>
+                                <path d="M8 7h9v9"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

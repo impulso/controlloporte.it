@@ -1,0 +1,67 @@
+"""Tests for exception handlers"""
+from litestar import MediaType
+from litestar.exceptions import ValidationException
+from litestar.status_codes import HTTP_400_BAD_REQUEST
+
+from api.app.helpers.exceptions import JsonAPIException
+from api.app.helpers.handlers import (
+    json_api_exception_handler,
+    text_value_error_exception_handler,
+    validation_exception_handler,
+)
+
+
+def test_validation_exception_handler(mock_request_path):
+    """Test for validation_exception_handler"""
+    # Create a ValidationException with sample details
+    exc = ValidationException(detail="Invalid data provided", extra={"field": "value"})
+
+    # Call the handler
+    response = validation_exception_handler(mock_request_path, exc)
+
+    # Assert response status and structure
+    assert response.status_code == HTTP_400_BAD_REQUEST
+    assert response.media_type == MediaType.JSON
+    assert response.content == {
+        "error": True,
+        "detail": "errore di validazione: richiesta non valida per GET /test-path",
+        "extra": {"field": "value"},
+    }
+
+
+def test_json_api_exception_handler(mock_request_path):
+    """Test for json_api_exception_handler"""
+    # Create a JsonAPIException with sample details
+    exc = JsonAPIException(key="username", message="This field is required")
+
+    # Call the handler
+    response = json_api_exception_handler(mock_request_path, exc)
+
+    # Assert response status and structure
+    assert response.status_code == HTTP_400_BAD_REQUEST
+    assert response.media_type == MediaType.JSON
+    assert response.content.error is True
+    assert (
+        response.content.detail
+        == "errore di validazione: richiesta non valida per GET /test-path"
+    )
+    assert response.content.extra == [
+        {"key": "username", "message": "This field is required"}
+    ]
+
+
+def test_text_value_error_exception_handler(mock_request_path):
+    """Test for text_value_error_exception_handler"""
+    # Create a ValueError with a sample message
+    exc = ValueError("An unexpected value error occurred")
+
+    # Call the handler
+    response = text_value_error_exception_handler(mock_request_path, exc)
+
+    # Assert response status and content type
+    assert response.status_code == HTTP_400_BAD_REQUEST
+    assert response.media_type == MediaType.TEXT
+    assert (
+        response.content
+        == "Si è verificato un errore per GET /test-path: An unexpected value error occurred"
+    )

@@ -1,0 +1,28 @@
+FROM python:3.13-alpine3.23 AS builder
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=1 \
+    POETRY_VER=2.2.1
+
+RUN pip install --no-cache-dir poetry==$POETRY_VER
+
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry install --only=main --no-root --no-cache
+
+FROM python:3.13-alpine3.23 AS api
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PATH="/.venv/bin:$PATH"
+
+COPY --from=builder /.venv /.venv
+
+COPY pyproject.toml entrypoint.sh ./
+COPY api /src
+WORKDIR /src
+
+EXPOSE 8000
+CMD ["sh", "/entrypoint.sh"]

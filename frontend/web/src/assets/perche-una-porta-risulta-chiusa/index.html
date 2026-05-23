@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Perché una porta risulta chiusa | Controllo Porte</title>
+        <meta name="description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT." />
+        <meta name="keywords" content="porta risulta chiusa, porta chiusa firewall, porta TCP chiusa, porta aperta ma risulta chiusa" />
+        <link rel="canonical" href="https://controlloporte.it/perche-una-porta-risulta-chiusa/" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:site_name" content="Controllo Porte" />
+        <meta property="og:title" content="Perché una porta risulta chiusa" />
+        <meta property="og:description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT." />
+        <meta property="og:url" content="https://controlloporte.it/perche-una-porta-risulta-chiusa/" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Perché una porta risulta chiusa" />
+        <meta name="twitter:description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT." />
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Perché una porta risulta chiusa",
+        "description": "Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT.",
+        "inLanguage": "it-IT",
+        "mainEntityOfPage": "https://controlloporte.it/perche-una-porta-risulta-chiusa/",
+        "publisher": {
+                "@type": "Organization",
+                "name": "Controllo Porte"
+        }
+}</script>
+        <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
+        <link href="/css/index.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="app-container article-container">
+            <header class="header">
+                <a href="/" class="logo"><span class="logo-text">Controllo Porte</span></a>
+                <nav class="nav"><a href="/" class="nav-link">Home</a><a href="/docs" class="nav-link">API</a></nav>
+            </header>
+            <main class="main article-main">
+                <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
+                <article class="article-content">
+                    <h1>Perché una porta risulta chiusa</h1>
+<p>Una porta risulta chiusa quando, da Internet o da un altro dispositivo, non è possibile stabilire una connessione verso quella porta.</p>
+<p>È un problema molto comune: configuri un servizio, apri una regola sul router, fai il test e il risultato è ancora &quot;porta chiusa&quot;.</p>
+<p>La causa non è sempre una sola. Può dipendere dal servizio, dal firewall, dal router, dal NAT, dal provider o dal modo in cui stai facendo il test.</p>
+<p>Vuoi fare subito una verifica? Usa il <a href="/">controllo porte aperte online</a> per testare IP, dominio e porta TCP dall&#x27;esterno.</p>
+<h2>Cosa significa porta TCP chiusa</h2>
+<p>Una porta TCP è chiusa quando non c&#x27;è nessun servizio raggiungibile su quella porta.</p>
+<p>Tecnicamente possono verificarsi situazioni diverse:</p>
+<ul>
+<li>il dispositivo risponde che la porta è chiusa</li>
+<li>il firewall scarta la connessione</li>
+<li>il router non sa dove inoltrare il traffico</li>
+<li>il provider blocca la porta</li>
+<li>l&#x27;IP pubblico non è realmente assegnato al tuo router</li>
+</ul>
+<p>Per l&#x27;utente il risultato sembra lo stesso: il servizio non è raggiungibile.</p>
+<h2>Il servizio non è in ascolto</h2>
+<p>La causa più semplice è anche la più frequente: il servizio non sta ascoltando su quella porta.</p>
+<p>Per esempio:</p>
+<ul>
+<li>il server web non è avviato</li>
+<li>SSH è disabilitato</li>
+<li>MySQL ascolta solo in locale</li>
+<li>il container Docker non espone la porta</li>
+<li>il programma usa una porta diversa da quella prevista</li>
+</ul>
+<p>Su Linux puoi controllare le porte in ascolto con:</p>
+<pre><code>ss -tlnp</code></pre>
+<p>oppure:</p>
+<pre><code>netstat -tlnp</code></pre>
+<p>Se la porta non compare, il problema non è il router: il servizio non è pronto a ricevere connessioni.</p>
+<h2>Il servizio ascolta solo su localhost</h2>
+<p>Un caso classico: il servizio è attivo, ma ascolta solo su <code>127.0.0.1</code>.</p>
+<p>Esempio:</p>
+<pre><code>127.0.0.1:8080</code></pre>
+<p>In questa configurazione il servizio risponde solo dallo stesso computer. Non risponde dalla rete locale e non può rispondere da Internet.</p>
+<p>Per essere raggiungibile da altri dispositivi, deve ascoltare sull&#x27;IP di rete o su tutte le interfacce:</p>
+<pre><code>0.0.0.0:8080</code></pre>
+<p>Questa differenza spiega molti casi in cui una porta sembra aperta localmente ma risulta chiusa online.</p>
+<h2>Porta chiusa firewall</h2>
+<p>Il firewall può bloccare la connessione anche quando il servizio è attivo.</p>
+<p>Ci sono diversi firewall da considerare:</p>
+<ul>
+<li>firewall del sistema operativo</li>
+<li>firewall del router</li>
+<li>firewall del pannello hosting o cloud</li>
+<li>security group del provider cloud</li>
+<li>regole di rete aziendali</li>
+</ul>
+<p>Su un server cloud, per esempio, non basta aprire la porta su Linux. Devi spesso aprirla anche nel pannello del provider.</p>
+<p>Su un PC Windows, invece, un programma può essere in ascolto ma bloccato dal firewall di Windows per le reti pubbliche.</p>
+<h2>Il port forwarding è sbagliato</h2>
+<p>Se il servizio si trova dentro una rete privata, il router deve sapere dove mandare il traffico.</p>
+<p>Una regola di port forwarding errata è una causa molto comune di porta chiusa.</p>
+<p>Se stai configurando una regola sul router, leggi anche <a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a>.</p>
+<p>Controlla:</p>
+<ul>
+<li>IP interno del dispositivo</li>
+<li>porta esterna</li>
+<li>porta interna</li>
+<li>protocollo TCP o UDP</li>
+<li>regola abilitata</li>
+<li>assenza di conflitti con altre regole</li>
+</ul>
+<p>Esempio corretto:</p>
+<pre><code>Porta esterna: 8080
+IP interno: 192.168.1.50
+Porta interna: 80
+Protocollo: TCP</code></pre>
+<p>In questo caso il test va fatto sulla porta esterna <code>8080</code>, non sulla porta interna <code>80</code>, a meno che le due coincidano.</p>
+<h2>L&#x27;IP interno è cambiato</h2>
+<p>Se il router inoltra la porta verso <code>192.168.1.50</code>, ma il dispositivo ora ha <code>192.168.1.71</code>, la connessione non arriverà al servizio.</p>
+<p>Questo succede quando il dispositivo riceve l&#x27;indirizzo via DHCP e non ha una prenotazione stabile.</p>
+<p>La soluzione è configurare:</p>
+<ul>
+<li>prenotazione DHCP sul router</li>
+<li>IP statico coerente con la rete</li>
+<li>regola di port forwarding aggiornata</li>
+</ul>
+<h2>Stai testando l&#x27;IP sbagliato</h2>
+<p>Per verificare una porta da Internet devi testare l&#x27;IP pubblico della connessione.</p>
+<p>Non devi testare l&#x27;IP locale, come:</p>
+<pre><code>192.168.1.50</code></pre>
+<p>Gli indirizzi privati funzionano solo dentro la rete locale. Da Internet non sono raggiungibili direttamente.</p>
+<p>Devi invece usare l&#x27;IP pubblico visto dall&#x27;esterno.</p>
+<h2>Porta aperta ma risulta chiusa</h2>
+<p>Questa situazione capita spesso quando il servizio funziona da dentro la rete ma non da fuori.</p>
+<p>Le cause più probabili sono:</p>
+<ul>
+<li>firewall che blocca solo le connessioni esterne</li>
+<li>servizio in ascolto solo su localhost</li>
+<li>port forwarding non configurato</li>
+<li>doppio NAT</li>
+<li>CGNAT</li>
+<li>test fatto sulla porta sbagliata</li>
+<li>router senza NAT loopback</li>
+</ul>
+<p>In altre parole, &quot;aperta&quot; rispetto al computer locale non significa &quot;raggiungibile da Internet&quot;.</p>
+<h2>Il provider blocca alcune porte</h2>
+<p>Alcuni provider bloccano porte specifiche per motivi di sicurezza o policy anti-abuso.</p>
+<p>La porta <code>25</code>, usata per SMTP, è una delle più spesso limitate sulle connessioni residenziali.</p>
+<p>In certi casi possono esserci restrizioni anche su porte usate per servizi comuni o su connessioni in ingresso.</p>
+<p>Se tutto è configurato correttamente ma una porta specifica non funziona, prova temporaneamente una porta esterna diversa, per esempio:</p>
+<pre><code>8080
+8443
+2222</code></pre>
+<p>Poi inoltrala internamente verso la porta reale del servizio.</p>
+<h2>CGNAT e IP non pubblico</h2>
+<p>Se il router non ha un vero IP pubblico, le connessioni in ingresso non possono arrivare direttamente alla tua rete.</p>
+<p>Questo accade spesso con CGNAT, soprattutto su alcune connessioni mobili, FWA e offerte residenziali.</p>
+<p>Controlla l&#x27;IP WAN nel pannello del router. Se è diverso dall&#x27;IP pubblico che vedi online, potresti essere dietro CGNAT o doppio NAT.</p>
+<p>In quel caso il port forwarding sul tuo router non basta.</p>
+<p>Per capire meglio questa situazione, puoi approfondire con la guida su <a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT</a>.</p>
+<h2>Checklist per capire perché la porta è chiusa</h2>
+<p>Procedi in ordine:</p>
+<ol>
+<li>il servizio è acceso?</li>
+<li>ascolta sulla porta corretta?</li>
+<li>ascolta sull&#x27;interfaccia giusta?</li>
+<li>il firewall locale consente la connessione?</li>
+<li>il router inoltra la porta verso l&#x27;IP interno corretto?</li>
+<li>l&#x27;IP interno è stabile?</li>
+<li>stai testando l&#x27;IP pubblico corretto?</li>
+<li>il router ha davvero un IP pubblico?</li>
+<li>il provider blocca quella porta?</li>
+</ol>
+<p>Questa sequenza aiuta a isolare il problema senza cambiare impostazioni a caso.</p>
+<p>Se non sai quale porta testare, consulta anche la guida sulle <a href="/porte-tcp-comuni/">porte TCP comuni</a>.</p>
+<h2>FAQ</h2>
+<div class="faq-list">
+    <details class="faq-item">
+        <summary>Perché una porta risulta chiusa se il programma è aperto?</summary>
+<p>Perché il programma potrebbe non ascoltare sull&#x27;interfaccia giusta, il firewall potrebbe bloccare il traffico o il router potrebbe non inoltrare la porta correttamente.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Porta chiusa significa che il firewall blocca?</summary>
+<p>Non sempre. Il firewall è una causa possibile, ma non l&#x27;unica. Anche servizio spento, NAT errato, IP sbagliato o CGNAT possono produrre lo stesso risultato.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Come capisco se il problema è il router?</summary>
+<p>Prima testa il servizio dalla rete locale. Se in LAN funziona ma da Internet no, allora il problema è probabilmente nel router, nel NAT, nel firewall o nel provider.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Una porta può risultare chiusa solo da fuori?</summary>
+<p>Sì. È molto comune. In locale il servizio può funzionare, ma da Internet può essere bloccato da firewall, NAT, port forwarding mancante o CGNAT.</p>
+    </details>
+</div>
+<h2>Controlla ora una porta TCP</h2>
+<p>Inserisci IP o dominio, indica la porta da verificare e controlla se il servizio è raggiungibile da Internet con il <a href="/">test online di Controllo Porte</a>.</p>
+                </article>
+            </main>
+<footer class="footer">
+                <div class="footer-content">
+                    <p class="copyright">
+                        © 2026 Controllo Porte ·
+                        <a href="/privacy-policy/">Privacy Policy</a> ·
+                        <a href="/llms.txt">AI</a>
+                    </p>
+                    <p class="footer-credit">
+                        Servizio offerto da
+                        <a class="external-link" href="https://impulso.it" target="_blank" rel="noopener noreferrer">
+                            Impulso.it
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7"></path>
+                                <path d="M8 7h9v9"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

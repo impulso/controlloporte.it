@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Controllo Porte Aperte Online | Test TCP Gratuito</title>
+        <meta
+            name="description"
+            content="Controlla se una porta TCP è aperta o chiusa su un indirizzo IP o dominio. Test online gratuito per port forwarding, firewall, router, server, VPS e servizi self-hosted."
+        />
+        <link rel="canonical" href="https://controlloporte.it/" />
+        <meta name="robots" content="index,follow" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:site_name" content="Controllo Porte" />
+        <meta property="og:title" content="Controllo Porte Aperte Online" />
+        <meta
+            property="og:description"
+            content="Verifica se una porta TCP è raggiungibile dall'esterno su IP o dominio."
+        />
+        <meta property="og:url" content="https://controlloporte.it/" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Controllo Porte Aperte Online" />
+        <meta
+            name="twitter:description"
+            content="Test online gratuito per verificare porte TCP aperte o chiuse."
+        />
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Controllo Porte",
+            "url": "https://controlloporte.it/",
+            "applicationCategory": "NetworkingApplication",
+            "operatingSystem": "Any",
+            "description": "Strumento gratuito per controllare se una porta TCP è aperta o chiusa su un indirizzo IP o dominio.",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "EUR"
+            }
+        }
+        </script>
+        <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
+    </head>
+
+    <body>
+        <div class="app-container">
+            <header class="header">
+                <a href="/" class="logo">
+                    <span class="logo-text">Controllo Porte</span>
+                </a>
+                <nav class="nav">
+                    <a href="/docs" class="nav-link">API</a>
+                </nav>
+            </header>
+
+            <main class="main">
+                <section class="hero">
+                    <h1 class="hero-title">Controllo Porte Aperte Online</h1>
+                    <p class="hero-subtitle">
+                        Verifica se una porta TCP è aperta o chiusa su un indirizzo IP o dominio.
+                    </p>
+                    <p class="public-ip">
+                        Il tuo IP pubblico attuale è:
+                        <span id="public-ip-value">rilevamento...</span>
+                    </p>
+                </section>
+
+                <section class="checker-card">
+                    <form id="form" class="checker-form" novalidate>
+                        <div class="form-group">
+                            <label for="host" class="form-label">Host o indirizzo IP</label>
+                            <div class="host-input-wrapper">
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    id="host"
+                                    placeholder="Inserisci un dominio o indirizzo IPv4"
+                                    value="<%= htmlWebpackPlugin.options.DEFAULT_HOST %>"
+                                    autocomplete="off"
+                                    required
+                                />
+                                <button id="use-public-ip" class="secondary-form-btn" type="button" disabled>
+                                    Usa il mio IP pubblico
+                                </button>
+                            </div>
+                            <span class="form-hint">Inserisci un dominio o indirizzo IPv4</span>
+                            <span class="form-error">Inserisci un dominio o indirizzo IP valido</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ports" class="form-label">Porte</label>
+                            <div class="ports-input-wrapper">
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    id="ports"
+                                    placeholder="80, 443, 22"
+                                    value="<%= htmlWebpackPlugin.options.DEFAULT_PORT %>"
+                                    autocomplete="off"
+                                    required
+                                />
+                                <div class="port-presets">
+                                    <div class="port-preset-group">
+                                        <span class="port-preset-label">Gruppi</span>
+                                        <div class="quick-ports">
+                                            <button type="button" class="quick-port-btn" data-ports="80,443">Web</button>
+                                            <button type="button" class="quick-port-btn" data-ports="25,465,587,993,995">Email</button>
+                                            <button type="button" class="quick-port-btn" data-ports="22,3389,5900">Accesso remoto</button>
+                                            <button type="button" class="quick-port-btn" data-ports="3306,5432,6379,27017">Database</button>
+                                            <button type="button" class="quick-port-btn" data-ports="8123,32400,5000,8096">Casa/NAS</button>
+                                        </div>
+                                    </div>
+                                    <div class="port-preset-group">
+                                        <span class="port-preset-label">Porte rapide</span>
+                                        <div class="quick-ports">
+                                            <button type="button" class="quick-port-btn" data-port="80">HTTP</button>
+                                            <button type="button" class="quick-port-btn" data-port="443">HTTPS</button>
+                                            <button type="button" class="quick-port-btn" data-port="22">SSH</button>
+                                            <button type="button" class="quick-port-btn" data-port="21">FTP</button>
+                                            <button type="button" class="quick-port-btn" data-port="3306">MySQL</button>
+                                            <button type="button" class="quick-port-btn" data-port="5432">PostgreSQL</button>
+                                            <button type="button" class="quick-port-btn" data-port="3389">Remote Desktop</button>
+                                            <button type="button" class="quick-port-btn" data-port="8123">Home Assistant</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="form-hint">Separa più porte con una virgola, da 1 a 65535</span>
+                            <span class="form-error">Inserisci porte valide</span>
+                        </div>
+
+                        <button id="submit" type="submit" class="submit-btn">
+                            <span class="submit-text">Controlla porte</span>
+                            <span class="submit-loading">
+                                <svg class="spinner" viewBox="0 0 24 24">
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                        fill="none"
+                                        stroke-dasharray="31.4 31.4"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                                Controllo...
+                            </span>
+                        </button>
+                    </form>
+
+                    <div id="results" class="results hidden">
+                        <div class="results-header">
+                            <h3 class="results-title">Risultati</h3>
+                            <span id="results-host" class="results-host"></span>
+                        </div>
+                        <div id="results-list" class="results-list"></div>
+                        <div class="share-result">
+                            <label for="share-url" class="share-label">Link condivisibile</label>
+                            <div class="share-control">
+                                <input id="share-url" class="share-input" type="text" readonly />
+                                <button id="copy-share-link" class="share-copy-btn" type="button">Copia link</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="error" class="error-message hidden">
+                        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span id="error-text"></span>
+                    </div>
+                </section>
+
+                <section class="desc-content">
+                    <div id="intro-content" class="intro-content">
+                        <h2>Verifica porte TCP aperte o chiuse</h2>
+                        <p>
+                            Controllo Porte ti permette di verificare se una porta TCP è raggiungibile dall'esterno.
+                            È utile per testare port forwarding, configurazioni firewall, router, VPS, server domestici,
+                            NAS, servizi web, SSH, database e applicazioni self-hosted.
+                        </p>
+                    </div>
+
+                    <h2>Risolvi problemi di porte chiuse, port forwarding e CGNAT</h2>
+                    <p>
+                        Se la porta è chiusa, queste guide ti aiutano a capire se il problema è nel servizio,
+                        nel firewall, nel router, nel NAT o nel provider.
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="/come-verificare-se-una-porta-e-aperta/">Come verificare se una porta è aperta</a>
+                        </li>
+                        <li>
+                            <a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a>
+                        </li>
+                        <li>
+                            <a href="/porte-tcp-comuni/">Porte TCP comuni: 80, 443, 22, 25, 3306</a>
+                        </li>
+                        <li>
+                            <a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile</a>
+                        </li>
+                        <li>
+                            <a href="/perche-una-porta-risulta-chiusa/">Perché una porta risulta chiusa</a>
+                        </li>
+                    </ul>
+
+                    <h2>Domande frequenti</h2>
+                    <div class="faq-list">
+                        <details class="faq-item">
+                            <summary>Perché una porta risulta chiusa?</summary>
+                    <p>
+                        Una porta può risultare chiusa se il servizio non è in ascolto, il firewall blocca la connessione,
+                        il port forwarding non è configurato correttamente o l'indirizzo IP pubblico non è quello atteso.
+                    </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Il test funziona anche per il port forwarding?</summary>
+                    <p>
+                        Sì. Il controllo viene eseguito dall'esterno, quindi è utile per verificare se una regola di
+                        port forwarding sul router rende effettivamente raggiungibile il servizio.
+                    </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Posso controllare più porte insieme?</summary>
+                    <p>
+                        Sì. Inserisci più porte separate da virgola, ad esempio 80, 443, 22.
+                    </p>
+                        </details>
+                    </div>
+
+                    <h2>Porte comuni da controllare</h2>
+                    <div class="faq-list">
+                        <details class="faq-item common-ports">
+                            <summary>Mostra porte TCP comuni</summary>
+                            <ul>
+                                <li><strong>80</strong>: HTTP</li>
+                                <li><strong>443</strong>: HTTPS</li>
+                                <li><strong>22</strong>: SSH</li>
+                                <li><strong>21</strong>: FTP</li>
+                                <li><strong>25</strong>: SMTP</li>
+                                <li><strong>3306</strong>: MySQL</li>
+                                <li><strong>5432</strong>: PostgreSQL</li>
+                                <li><strong>3389</strong>: Desktop remoto</li>
+                            </ul>
+                        </details>
+                    </div>
+                </section>
+            </main>
+<footer class="footer">
+                <div class="footer-content">
+                    <p class="copyright">
+                        © 2026 Controllo Porte ·
+                        <a href="/privacy-policy/">Privacy Policy</a> ·
+                        <a href="/llms.txt">AI</a>
+                    </p>
+                    <p class="footer-credit">
+                        Servizio offerto da
+                        <a class="external-link" href="https://impulso.it" target="_blank" rel="noopener noreferrer">
+                            Impulso.it
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7"></path>
+                                <path d="M8 7h9v9"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

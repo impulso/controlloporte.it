@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# AI agent discovery
+# LLM context files
+Sitemap: https://controlloporte.it/sitemap.xml
+LLMs-Txt: https://controlloporte.it/llms.txt
+LLMs-Full-Txt: https://controlloporte.it/llms-full.txt

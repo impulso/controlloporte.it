@@ -1,0 +1,34 @@
+---
+services:
+  web:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    container_name: web
+    environment:
+      - DEFAULT_HOST=  # Optional, Populates a default host address value to be populataed in the in the UI input. Defaults to external/WAN IP.
+      - DEFAULT_PORT=443  # Optional, Populates a default port value to be populataed in the in the UI input
+      - API_URL=  # Optional, the URL of the API service. The scheme and port is required. Defaults to http://api:8000 if not set.
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend/web:/web
+    networks:
+      - portchecker
+  api:
+    build:
+      context: backend
+      dockerfile: Dockerfile.dev
+    container_name: api
+    environment:
+      - ALLOW_PRIVATE=false  # Prevent usage of private IP addresses
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend/api:/src
+    networks:
+      - portchecker
+
+networks:
+  portchecker:
+    driver: bridge
