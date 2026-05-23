@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REMOTE_HOST="${REMOTE_HOST:-188.68.55.102}"
-REMOTE_USER="${REMOTE_USER:-root}"
+REMOTE_HOST="${REMOTE_HOST:?Set REMOTE_HOST to the deployment host.}"
+REMOTE_USER="${REMOTE_USER:?Set REMOTE_USER to the deployment user.}"
 REMOTE_PATH="${REMOTE_PATH:-/opt/portchecker.io}"
 WEB_CONTAINER="${WEB_CONTAINER:-web}"
 
