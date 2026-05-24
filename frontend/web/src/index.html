@@ -31,16 +31,49 @@
         {
             "@context": "https://schema.org",
             "@type": "WebApplication",
+            "@id": "https://controlloporte.it/#app",
             "name": "Controllo Porte",
+            "alternateName": "ControlloPorte.it",
             "url": "https://controlloporte.it/",
             "applicationCategory": "NetworkingApplication",
             "operatingSystem": "Any",
-            "description": "Strumento gratuito per controllare se una porta TCP è aperta o chiusa su un indirizzo IP o dominio.",
+            "description": "Strumento italiano gratuito per controllare se una porta TCP è aperta o chiusa su un indirizzo IP o dominio, utile per port forwarding, modem/router, DNS dinamico, NAT e CGNAT.",
+            "inLanguage": "it-IT",
+            "provider": {
+                "@type": "Organization",
+                "@id": "https://impulso.it/#organization",
+                "name": "Impulso.it",
+                "url": "https://impulso.it/"
+            },
             "offers": {
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "EUR"
-            }
+            },
+            "sameAs": [
+                "https://github.com/impulso/controlloporte.it",
+                "https://controlloporte.it/docs",
+                "https://controlloporte.it/.well-known/openapi.json",
+                "https://controlloporte.it/llms.txt",
+                "https://controlloporte.it/llms-full.txt"
+            ],
+            "isRelatedTo": [
+                {
+                    "@type": "WebSite",
+                    "name": "dyndns.it",
+                    "url": "https://dyndns.it/"
+                },
+                {
+                    "@type": "WebSite",
+                    "name": "IPStatico.pro",
+                    "url": "https://ipstatico.pro/"
+                },
+                {
+                    "@type": "WebSite",
+                    "name": "AccessoFacile.it",
+                    "url": "https://accessofacile.it/"
+                }
+            ]
         }
         </script>
         <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
