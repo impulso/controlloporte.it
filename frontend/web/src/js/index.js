@@ -340,6 +340,7 @@ function showResults(data) {
         shareUrlInput.value = buildShareUrl(data);
     }
     introContent?.classList.add("hidden");
+    scrollToFeedback(resultsDiv);
 }
 
 function hideResults() {
@@ -353,10 +354,18 @@ function showError(message) {
 
     errorText.textContent = message;
     errorDiv.classList.remove("hidden");
+    scrollToFeedback(errorDiv);
 }
 
 function hideError() {
     document.getElementById("error").classList.add("hidden");
+}
+
+function scrollToFeedback(element) {
+    element?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+    });
 }
 
 function buildShareUrl(data) {

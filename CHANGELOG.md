@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1] - 2026-05-24
+
+### Added
+
+- Automatic scrolling to the results or error message after a port check completes.
+- Homepage FAQ entry about using the tool for quick NIS2-related exposure checks.
+
+### Changed
+
+- Updated and refined troubleshooting guides for closed ports, port forwarding, NAT, and CGNAT.
+- Improved homepage guide presentation and related visual hierarchy.
+- Improved desktop formatting for closed-port diagnostic guide sections.
+- Refined frontend styling and copy in informational sections.
+
 ## [1.0.0] - 2026-05-23
 
 Initial public release of `controlloporte.it`.
