@@ -305,6 +305,10 @@ No. Il DNS dinamico aiuta quando l'IP pubblico cambia, perché associa un nome s
 
 Se il servizio funziona in LAN ma non da Internet, il problema è spesso nel modem/router, nel doppio NAT, nel port forwarding, nel firewall o nel provider.
 
+## Hai bisogno di aiuto?
+
+Se vuoi supporto per capire perché non riesci a connetterti al tuo dispositivo da remoto, contatta il supporto di dyndns.it all'indirizzo [supporto@supporto.email](mailto:supporto@supporto.email) per richiedere una diagnosi gratuita.
+
 ## Controlla ora una porta TCP
 
 Dopo ogni modifica, ripeti il test dall'esterno con il [test online di Controllo Porte](/).
