@@ -598,6 +598,9 @@ a {
 .copyright a,
 .footer-credit a {
     color: var(--text-secondary);
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
     transition: color var(--transition);
 }
 
@@ -741,6 +744,17 @@ a {
 .desc-content a,
 .article-content a {
     color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+}
+
+.breadcrumb a:hover,
+.desc-content a:hover,
+.article-content a:hover,
+.copyright a:hover,
+.footer-credit a:hover {
+    text-decoration-thickness: 0.12em;
 }
 
 .article-content {
