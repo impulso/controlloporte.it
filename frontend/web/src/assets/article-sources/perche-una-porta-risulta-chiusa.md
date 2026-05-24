@@ -12,11 +12,8 @@ keywords:
 
 # Capire perché una porta risulta chiusa
 
-Una porta risulta chiusa quando, da Internet, non è possibile stabilire una connessione TCP verso il dispositivo con la porta indicata.
-
-Dall'esperienza di oltre 20 anni con il servizio dyndns.it, questa è la checklist usata dai nostri tecnici per capire perché le porte di un dispositivo, come telecamera, impianto fotovoltaico, centrale antifurto, NAS o server locale, non sono raggiungibili da remoto.
-
-Se hai già fatto una verifica con il [controllo porte aperte online](/) e la porta risulta chiusa, qui trovi il metodo per capire perché.
+Questa è la checklist usata dei tecnici del servizio dyndns.it, nata da un'esperienza di oltre 20 anni, per capire perché le porte di un dispositivo, come telecamera, impianto fotovoltaico, centrale antifurto, NAS o server locale, non sono raggiungibili da remoto.</p>
+Se hai già fatto una verifica con il [controllo porte aperte online](/) e la porta risulta chiusa, qui trovi il metodo che noi usiamo per capire la causa.
 
 ## Checklist rapida dall'esterno verso l'interno
 
