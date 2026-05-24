@@ -34,6 +34,12 @@ server {
         return 301 https://$host$uri/;
     }
 
+    location ~* ^/fonts/.*\.(ttf|woff|woff2|otf)$ {
+        root /usr/share/nginx/html;
+        add_header Cache-Control "public, max-age=2592000" always;
+        try_files $uri =404;
+    }
+
     location ~* \.(css|js|png|svg|ico|webmanifest|txt|xml|json|ttf|woff|woff2)$ {
         root /usr/share/nginx/html;
         try_files $uri =404;

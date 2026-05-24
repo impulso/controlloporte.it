@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Updated and refined troubleshooting guides for closed ports, port forwarding, NAT, and CGNAT.
 - Improved homepage guide presentation and related visual hierarchy.
 - Improved desktop formatting for closed-port diagnostic guide sections.
+- Added cache headers for locally served font assets in the Nginx configuration.
 - Refined frontend styling and copy in informational sections.
 
 ## [1.0.0] - 2026-05-23
