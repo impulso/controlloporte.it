@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Perché una porta risulta chiusa | Controllo Porte</title>
-        <meta name="description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT." />
+        <meta name="description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Segui una checklist dall'esterno verso l'interno per controllare IP pubblico, CGNAT, modem/router, firewall e servizio." />
         <meta name="keywords" content="porta risulta chiusa, porta chiusa firewall, porta TCP chiusa, porta aperta ma risulta chiusa" />
         <link rel="canonical" href="https://controlloporte.it/perche-una-porta-risulta-chiusa/" />
         <meta name="robots" content="index,follow" />
@@ -12,16 +12,16 @@
         <meta property="og:locale" content="it_IT" />
         <meta property="og:site_name" content="Controllo Porte" />
         <meta property="og:title" content="Perché una porta risulta chiusa" />
-        <meta property="og:description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT." />
+        <meta property="og:description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Segui una checklist dall'esterno verso l'interno per controllare IP pubblico, CGNAT, modem/router, firewall e servizio." />
         <meta property="og:url" content="https://controlloporte.it/perche-una-porta-risulta-chiusa/" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="Perché una porta risulta chiusa" />
-        <meta name="twitter:description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT." />
+        <meta name="twitter:description" content="Una porta risulta chiusa anche se il servizio sembra attivo? Segui una checklist dall'esterno verso l'interno per controllare IP pubblico, CGNAT, modem/router, firewall e servizio." />
         <script type="application/ld+json">{
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "Perché una porta risulta chiusa",
-        "description": "Una porta risulta chiusa anche se il servizio sembra attivo? Ecco le cause più comuni: firewall, NAT, router, servizio non in ascolto e CGNAT.",
+        "description": "Una porta risulta chiusa anche se il servizio sembra attivo? Segui una checklist dall'esterno verso l'interno per controllare IP pubblico, CGNAT, modem/router, firewall e servizio.",
         "inLanguage": "it-IT",
         "mainEntityOfPage": "https://controlloporte.it/perche-una-porta-risulta-chiusa/",
         "publisher": {
@@ -44,155 +44,200 @@
             <main class="main article-main">
                 <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
                 <article class="article-content">
-                    <h1>Perché una porta risulta chiusa</h1>
-<p>Una porta risulta chiusa quando, da Internet o da un altro dispositivo, non è possibile stabilire una connessione verso quella porta.</p>
-<p>È un problema molto comune: configuri un servizio, apri una regola sul router, fai il test e il risultato è ancora &quot;porta chiusa&quot;.</p>
-<p>La causa non è sempre una sola. Può dipendere dal servizio, dal firewall, dal router, dal NAT, dal provider o dal modo in cui stai facendo il test.</p>
-<p>Vuoi fare subito una verifica? Usa il <a href="/">controllo porte aperte online</a> per testare IP, dominio e porta TCP dall&#x27;esterno.</p>
-<h2>Cosa significa porta TCP chiusa</h2>
-<p>Una porta TCP è chiusa quando non c&#x27;è nessun servizio raggiungibile su quella porta.</p>
-<p>Tecnicamente possono verificarsi situazioni diverse:</p>
+<h1>Perché una porta risulta chiusa</h1>
+<p>Una porta risulta chiusa quando, da Internet, non è possibile stabilire una connessione TCP verso il dispositivo con la porta indicata.</p>
+<p>Una porta può risultare chiusa per molti motivi: IP pubblico sbagliato, CGNAT, blocco del provider, doppio modem/router, port forwarding errato, firewall locale, servizio spento o servizio in ascolto solo su <code>127.0.0.1</code>.</p>
+<p>Dall&#x27;esperienza di oltre 20 anni con il servizio dyndns.it, questa è la checklist usata dai nostri tecnici per capire perché le porte di un dispositivo, come telecamera, impianto fotovoltaico, centrale antifurto, NAS o server locale, non sono raggiungibili da remoto.</p>
+<p>Se hai già fatto una verifica con il <a href="/">controllo porte aperte online</a> e la porta risulta chiusa, qui trovi il metodo per capire perché.</p>
+<h2>Checklist rapida dall&#x27;esterno verso l&#x27;interno</h2>
+<p>Procedi in questo ordine. Parti da ciò che vede Internet e avvicinati, passo dopo passo, al dispositivo che ospita il servizio. Così puoi capire perché la porta risulta chiusa da Internet.</p>
+<ol>
+<li>Stai testando l&#x27;IP pubblico corretto?</li>
+<li>La linea ha davvero un IP pubblico o sei dietro CGNAT?</li>
+<li>Il provider blocca quella porta?</li>
+<li>Il traffico arriva al modem/router giusto?</li>
+<li>Il port forwarding inoltra verso l&#x27;IP interno corretto?</li>
+<li>L&#x27;IP interno del dispositivo è stabile?</li>
+<li>Gateway e netmask del dispositivo sono corretti?</li>
+<li>Il firewall locale consente la connessione?</li>
+<li>Il servizio è acceso e ascolta sulla porta corretta?</li>
+<li>Il servizio ascolta sull&#x27;interfaccia giusta?</li>
+</ol>
+<p>Questa sequenza evita di cambiare impostazioni a caso. Se il problema è CGNAT, per esempio, modificare il firewall del PC non risolverà nulla; se il servizio non è in ascolto, aprire altre porte sul modem/router non servirà.</p>
+<h2>Come usare questa checklist</h2>
+<p>Controlla un punto alla volta e passa al successivo solo quando il punto precedente è OK. L&#x27;obiettivo è capire dove si ferma la connessione:</p>
 <ul>
-<li>il dispositivo risponde che la porta è chiusa</li>
-<li>il firewall scarta la connessione</li>
-<li>il router non sa dove inoltrare il traffico</li>
-<li>il provider blocca la porta</li>
-<li>l&#x27;IP pubblico non è realmente assegnato al tuo router</li>
+<li>prima della tua linea</li>
+<li>sul modem/router o su un secondo apparato in cascata</li>
+<li>sul dispositivo interno</li>
+<li>dentro la configurazione del servizio</li>
 </ul>
-<p>Per l&#x27;utente il risultato sembra lo stesso: il servizio non è raggiungibile.</p>
-<h2>Il servizio non è in ascolto</h2>
-<p>La causa più semplice è anche la più frequente: il servizio non sta ascoltando su quella porta.</p>
-<p>Per esempio:</p>
+<p>Se il tuo IP pubblico cambia spesso, un servizio di DNS dinamico come <a href="https://dyndns.it/">dyndns.it</a> può aiutarti a raggiungere la connessione con un nome stabile. Attenzione però: il DNS dinamico non risolve CGNAT, doppio NAT, firewall o port forwarding errato.</p>
+<h2>1. Stai testando l&#x27;IP pubblico corretto?</h2>
+<p>Il primo errore è testare l&#x27;indirizzo sbagliato. Da Internet devi controllare l&#x27;IP pubblico della linea, non l&#x27;IP locale del dispositivo.</p>
+<h3>Come controllare</h3>
+<p>Apri il tool di Controllo Porte e usa il tuo IP pubblico rilevato automaticamente, oppure usa l&#x27;indirizzo:</p>
+<pre><code>https://controlloporte.it/api/me</code></pre>
+<p>Se usi un dominio o un DNS dinamico, effettua PRIMA la verifica sull&#x27;IP e poi ripeti i test sul nome host.</p>
+<h3>Se fallisce</h3>
+<p>Se stai testando un IP vecchio, un IP locale o un dominio non aggiornato, il risultato sarà quasi sempre porta chiusa. Aggiorna il record DNS, il servizio DDNS o il dominio usato per il test.</p>
+<h3>Se è OK</h3>
+<p>Se stai testando l&#x27;IP pubblico corretto, passa al controllo della linea: il modem/router ha davvero un IP pubblico raggiungibile?</p>
+<h2>2. La linea ha davvero un IP pubblico o sei dietro CGNAT?</h2>
+<p>Il port forwarding funziona solo se le connessioni in ingresso arrivano al tuo modem/router. Se il provider usa CGNAT, il modem/router non riceve direttamente il traffico da Internet.</p>
+<h3>Come controllare</h3>
+<p>Hai due modi per verificare:</p>
+<ol>
+<li>controlla il documento di trasparenza tecnica che il tuo provider deve pubblicare su Internet relativo alla tua offerta Internet</li>
+<li>Confronta:</li>
+</ol>
 <ul>
-<li>il server web non è avviato</li>
-<li>SSH è disabilitato</li>
-<li>MySQL ascolta solo in locale</li>
-<li>il container Docker non espone la porta</li>
-<li>il programma usa una porta diversa da quella prevista</li>
+<li>l&#x27;IP pubblico visto online</li>
+<li>l&#x27;IP WAN mostrato nel pannello del modem/router</li>
 </ul>
-<p>Su Linux puoi controllare le porte in ascolto con:</p>
-<pre><code>ss -tlnp</code></pre>
-<p>oppure:</p>
-<pre><code>netstat -tlnp</code></pre>
-<p>Se la porta non compare, il problema non è il router: il servizio non è pronto a ricevere connessioni.</p>
-<h2>Il servizio ascolta solo su localhost</h2>
-<p>Un caso classico: il servizio è attivo, ma ascolta solo su <code>127.0.0.1</code>.</p>
-<p>Esempio:</p>
-<pre><code>127.0.0.1:8080</code></pre>
-<p>In questa configurazione il servizio risponde solo dallo stesso computer. Non risponde dalla rete locale e non può rispondere da Internet.</p>
-<p>Per essere raggiungibile da altri dispositivi, deve ascoltare sull&#x27;IP di rete o su tutte le interfacce:</p>
-<pre><code>0.0.0.0:8080</code></pre>
-<p>Questa differenza spiega molti casi in cui una porta sembra aperta localmente ma risulta chiusa online.</p>
-<h2>Porta chiusa firewall</h2>
-<p>Il firewall può bloccare la connessione anche quando il servizio è attivo.</p>
-<p>Ci sono diversi firewall da considerare:</p>
+<p>Se l&#x27;IP WAN del modem/router rientra in questi intervalli, non è un IP pubblico direttamente raggiungibile:</p>
+<pre><code>10.0.0.0 - 10.255.255.255
+172.16.0.0 - 172.31.255.255
+192.168.0.0 - 192.168.255.255
+100.64.0.0 - 100.127.255.255</code></pre>
+<p>Il range <code>100.64.0.0/10</code> è spesso usato per CGNAT.</p>
+<h3>Se fallisce</h3>
+<p>Se sei dietro CGNAT, aprire porte sul modem/router di casa di solito non basta. Puoi chiedere al provider un IP pubblico, usare una VPN con port forwarding, un tunnel verso un server esterno o un servizio dedicato come <a href="https://ipstatico.pro/">IPStatico.pro</a> quando serve rendere raggiungibili dispositivi dietro NAT o CGNAT.</p>
+<h3>Se è OK</h3>
+<p>Se il modem/router ha un vero IP pubblico, passa al punto successivo: verifica se il provider blocca proprio quella porta.</p>
+<h2>3. Il provider blocca quella porta?</h2>
+<p>Alcuni provider bloccano o limitano porte specifiche, soprattutto su connessioni residenziali, mobili o FWA.</p>
+<h3>Come controllare</h3>
+<p>La porta <code>25</code> per SMTP è una delle più spesso bloccate. Se una sola porta non funziona ma altre porte funzionano, prova temporaneamente una porta esterna diversa, per esempio:</p>
+<pre><code>8080
+8443
+2222</code></pre>
+<p>Inoltra la porta temporanea esterna verso la porta reale del servizio interno e ripeti il test sulla porta temporanea esterna.</p>
+<h3>Se fallisce</h3>
+<p>Se il provider blocca una porta, devi usare una porta esterna diversa, chiedere lo sblocco al provider o usare una soluzione alternativa coerente con il servizio.</p>
+<h3>Se è OK</h3>
+<p>Se la porta non sembra bloccata dal provider, passa al modem/router: il traffico arriva al dispositivo giusto?</p>
+<h2>4. Il traffico arriva al modem/router giusto?</h2>
+<p>Se utilizzi due modem/router in cascata, si tratta di un caso particolare. In questo caso il traffico deve attraversare entrambi.</p>
+<pre><code>Internet -&gt; modem/router esterno -&gt; modem/router interno -&gt; dispositivo</code></pre>
+<h3>Come controllare</h3>
+<p>Guarda la topologia della rete. Se il dispositivo è collegato al modem/router interno, non basta configurare il port forwarding solo lì.</p>
+<p>Devi controllare prima il modem/router esterno connesso a Internet e poi il modem/router più interno:</p>
 <ul>
-<li>firewall del sistema operativo</li>
-<li>firewall del router</li>
-<li>firewall del pannello hosting o cloud</li>
-<li>security group del provider cloud</li>
-<li>regole di rete aziendali</li>
+<li>sul modem/router esterno, inoltra la porta verso l&#x27;IP WAN del modem/router interno</li>
+<li>sul modem/router interno, inoltra la porta verso l&#x27;IP LAN del dispositivo finale</li>
 </ul>
-<p>Su un server cloud, per esempio, non basta aprire la porta su Linux. Devi spesso aprirla anche nel pannello del provider.</p>
-<p>Su un PC Windows, invece, un programma può essere in ascolto ma bloccato dal firewall di Windows per le reti pubbliche.</p>
-<h2>Il port forwarding è sbagliato</h2>
-<p>Se il servizio si trova dentro una rete privata, il router deve sapere dove mandare il traffico.</p>
-<p>Una regola di port forwarding errata è una causa molto comune di porta chiusa.</p>
-<p>Se stai configurando una regola sul router, leggi anche <a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a>.</p>
-<p>Controlla:</p>
+<p>In alternativa, puoi mettere il router esterno in bridge o configurare una DMZ verso il router interno, se il tuo scenario lo consente.</p>
+<h3>Se fallisce</h3>
+<p>Se il primo modem/router non inoltra verso il secondo, la connessione si ferma prima ancora di arrivare alla rete interna. Correggi il port forwarding sul modem/router esterno o semplifica la rete con bridge/DMZ.</p>
+<h3>Se è OK</h3>
+<p>Se il traffico arriva al modem/router che gestisce il dispositivo finale, passa alla regola di port forwarding vera e propria.</p>
+<h2>5. Il port forwarding inoltra verso l&#x27;IP interno corretto?</h2>
+<p>Una regola NAT sbagliata è una delle cause più comuni di porta chiusa.</p>
+<h3>Come controllare</h3>
+<p>Nella regola di port forwarding del modem/router controlla tutti i dati:</p>
 <ul>
-<li>IP interno del dispositivo</li>
 <li>porta esterna</li>
 <li>porta interna</li>
-<li>protocollo TCP o UDP</li>
+<li>protocollo TCP</li>
+<li>IP interno del dispositivo</li>
 <li>regola abilitata</li>
 <li>assenza di conflitti con altre regole</li>
 </ul>
-<p>Esempio corretto:</p>
+<p>Ricorda che il test va sempre fatto sulla porta esterna impostata. Se la configurazione è la seguente:</p>
 <pre><code>Porta esterna: 8080
 IP interno: 192.168.1.50
 Porta interna: 80
 Protocollo: TCP</code></pre>
-<p>In questo caso il test va fatto sulla porta esterna <code>8080</code>, non sulla porta interna <code>80</code>, a meno che le due coincidano.</p>
-<h2>L&#x27;IP interno è cambiato</h2>
-<p>Se il router inoltra la porta verso <code>192.168.1.50</code>, ma il dispositivo ora ha <code>192.168.1.71</code>, la connessione non arriverà al servizio.</p>
-<p>Questo succede quando il dispositivo riceve l&#x27;indirizzo via DHCP e non ha una prenotazione stabile.</p>
-<p>La soluzione è configurare:</p>
+<p>Allora il test da Internet va fatto sulla porta <code>8080</code>, non sulla porta <code>80</code>.</p>
+<p>Nota importante: il protocollo UDP non può essere testato da remoto con questo tipo di verifica. Solo le porte TCP possono essere controllate dagli strumenti online.</p>
+<h3>Se fallisce</h3>
+<p>Correggi porta esterna, porta interna, protocollo o IP di destinazione. Se stai testando TCP, assicurati che la regola non sia solo UDP.</p>
+<h3>Se è OK</h3>
+<p>Se la regola è corretta, verifica che l&#x27;IP interno del dispositivo non sia cambiato.</p>
+<h2>6. L&#x27;IP interno del dispositivo è stabile?</h2>
+<p>Il modem/router inoltra la porta verso un IP interno della rete locale. Se il dispositivo cambia IP, la regola continua a puntare al posto sbagliato.</p>
+<h3>Come controllare</h3>
+<p>Controlla l&#x27;IP attuale del dispositivo nel pannello del modem/router, nel sistema operativo o nell&#x27;interfaccia del NAS, server o apparato.</p>
+<p>Confrontalo con l&#x27;IP indicato nella regola di port forwarding.</p>
+<h3>Se fallisce</h3>
+<p>Configura una prenotazione DHCP sul modem/router oppure imposta sul dispositivo un IP statico appartenente alla rete. Poi aggiorna la regola di port forwarding.</p>
+<h3>Se è OK</h3>
+<p>Se l&#x27;IP interno è corretto e stabile, passa al controllo del dispositivo.</p>
+<h2>7. Gateway e netmask del dispositivo sono corretti?</h2>
+<p>Se il dispositivo ha IP statico configurato a mano, gateway o netmask sbagliati possono permettere l&#x27;accesso solo dalla rete locale e impedire le risposte verso Internet.</p>
+<h3>Come controllare</h3>
+<p>Se la configurazione della rete del dispositivo è stata impostata a mano, controlla:</p>
 <ul>
-<li>prenotazione DHCP sul router</li>
-<li>IP statico coerente con la rete</li>
-<li>regola di port forwarding aggiornata</li>
+<li>indirizzo IP: deve essere univoco sulla rete locale</li>
+<li>netmask o subnet mask: deve essere uguale a quella del modem/router</li>
+<li>gateway predefinito: deve essere esattamente l&#x27;IP del modem/router</li>
+<li>DNS, se il servizio ne ha bisogno: l&#x27;IP del modem/router oppure resolver pubblici affidabili come 1.1.1.1, 9.9.9.9 o 8.8.8.8</li>
 </ul>
-<h2>Stai testando l&#x27;IP sbagliato</h2>
-<p>Per verificare una porta da Internet devi testare l&#x27;IP pubblico della connessione.</p>
-<p>Non devi testare l&#x27;IP locale, come:</p>
-<pre><code>192.168.1.50</code></pre>
-<p>Gli indirizzi privati funzionano solo dentro la rete locale. Da Internet non sono raggiungibili direttamente.</p>
-<p>Devi invece usare l&#x27;IP pubblico visto dall&#x27;esterno.</p>
-<h2>Porta aperta ma risulta chiusa</h2>
-<p>Questa situazione capita spesso quando il servizio funziona da dentro la rete ma non da fuori.</p>
-<p>Le cause più probabili sono:</p>
-<ul>
-<li>firewall che blocca solo le connessioni esterne</li>
-<li>servizio in ascolto solo su localhost</li>
-<li>port forwarding non configurato</li>
-<li>doppio NAT</li>
-<li>CGNAT</li>
-<li>test fatto sulla porta sbagliata</li>
-<li>router senza NAT loopback</li>
-</ul>
-<p>In altre parole, &quot;aperta&quot; rispetto al computer locale non significa &quot;raggiungibile da Internet&quot;.</p>
-<h2>Il provider blocca alcune porte</h2>
-<p>Alcuni provider bloccano porte specifiche per motivi di sicurezza o policy anti-abuso.</p>
-<p>La porta <code>25</code>, usata per SMTP, è una delle più spesso limitate sulle connessioni residenziali.</p>
-<p>In certi casi possono esserci restrizioni anche su porte usate per servizi comuni o su connessioni in ingresso.</p>
-<p>Se tutto è configurato correttamente ma una porta specifica non funziona, prova temporaneamente una porta esterna diversa, per esempio:</p>
-<pre><code>8080
-8443
-2222</code></pre>
-<p>Poi inoltrala internamente verso la porta reale del servizio.</p>
-<h2>CGNAT e IP non pubblico</h2>
-<p>Se il router non ha un vero IP pubblico, le connessioni in ingresso non possono arrivare direttamente alla tua rete.</p>
-<p>Questo accade spesso con CGNAT, soprattutto su alcune connessioni mobili, FWA e offerte residenziali.</p>
-<p>Controlla l&#x27;IP WAN nel pannello del router. Se è diverso dall&#x27;IP pubblico che vedi online, potresti essere dietro CGNAT o doppio NAT.</p>
-<p>In quel caso il port forwarding sul tuo router non basta.</p>
-<p>Per capire meglio questa situazione, puoi approfondire con la guida su <a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT</a>.</p>
-<h2>Checklist per capire perché la porta è chiusa</h2>
-<p>Procedi in ordine:</p>
-<ol>
-<li>il servizio è acceso?</li>
-<li>ascolta sulla porta corretta?</li>
-<li>ascolta sull&#x27;interfaccia giusta?</li>
-<li>il firewall locale consente la connessione?</li>
-<li>il router inoltra la porta verso l&#x27;IP interno corretto?</li>
-<li>l&#x27;IP interno è stabile?</li>
-<li>stai testando l&#x27;IP pubblico corretto?</li>
-<li>il router ha davvero un IP pubblico?</li>
-<li>il provider blocca quella porta?</li>
-</ol>
-<p>Questa sequenza aiuta a isolare il problema senza cambiare impostazioni a caso.</p>
-<p>Se non sai quale porta testare, consulta anche la guida sulle <a href="/porte-tcp-comuni/">porte TCP comuni</a>.</p>
-<h2>FAQ</h2>
+<p>Il gateway, quindi, deve essere l&#x27;IP del modem/router della stessa rete del dispositivo. Per esempio, se il dispositivo è <code>192.168.1.50/24</code>, il gateway tipico è <code>192.168.1.1</code> e la netmask è <code>255.255.255.0</code>.</p>
+<h3>Se fallisce</h3>
+<p>Correggi gateway e netmask. Se il gateway punta a un modem/router sbagliato, o la netmask mette il dispositivo in una rete diversa, le connessioni possono funzionare solo da locale ma non da remoto.</p>
+<h3>Se è OK</h3>
+<p>Se gateway e netmask sono corretti, passa al firewall del dispositivo.</p>
+<h2>8. Il firewall locale consente la connessione?</h2>
+<p>Il servizio può essere attivo ma bloccato dal firewall del sistema operativo o da un firewall applicativo.</p>
+<h3>Come controllare</h3>
+<p>Controlla firewall di Windows, <code>ufw</code>, <code>firewalld</code>, regole del NAS, pannelli cloud o security group. Su un server cloud, spesso devi aprire la porta sia nel sistema operativo sia nel pannello del provider.</p>
+<h3>Se fallisce</h3>
+<p>Aggiungi una regola che consenta connessioni TCP in ingresso sulla porta corretta, limitando gli IP sorgente quando possibile. Evita di aprire servizi amministrativi a tutta Internet se non è necessario.</p>
+<h3>Se è OK</h3>
+<p>Se il firewall consente la porta, controlla che il servizio sia davvero avviato e in ascolto.</p>
+<h2>9. Il servizio è acceso e ascolta sulla porta corretta?</h2>
+<p>Il modem/router non può rendere aperta una porta se dall&#x27;altra parte non c&#x27;è un servizio attivo che ascolta.</p>
+<h3>Come controllare</h3>
+<p>Su Linux puoi usare:</p>
+<pre><code>ss -tlnp</code></pre>
+<p>oppure:</p>
+<pre><code>netstat -tlnp</code></pre>
+<p>Controlla anche container Docker, reverse proxy, pannelli NAS e configurazione del programma.</p>
+<h3>Se fallisce</h3>
+<p>Avvia il servizio, correggi la porta configurata o sistema il mapping del container. Se la porta non compare tra quelle in ascolto, il problema non è ancora il test esterno.</p>
+<h3>Se è OK</h3>
+<p>Se il servizio ascolta sulla porta giusta, resta l&#x27;ultimo controllo: su quale interfaccia sta ascoltando?</p>
+<h2>10. Il servizio ascolta sull&#x27;interfaccia giusta?</h2>
+<p>Un servizio può essere attivo ma raggiungibile solo dallo stesso computer.</p>
+<h3>Come controllare</h3>
+<p>Se vedi un ascolto su:</p>
+<pre><code>127.0.0.1:8080</code></pre>
+<p>il servizio risponde solo localmente. Per essere raggiungibile dalla rete deve ascoltare sull&#x27;IP LAN o su tutte le interfacce:</p>
+<pre><code>0.0.0.0:8080</code></pre>
+<h3>Se fallisce</h3>
+<p>Modifica la configurazione del servizio, del web server, del database o del container affinché ascolti sull&#x27;interfaccia di rete corretta. Poi ripeti il test dalla rete locale e infine da Internet.</p>
+<h3>Se è OK</h3>
+<p>Se anche questo punto è corretto ma la porta risulta ancora chiusa, ricontrolla i passaggi precedenti: spesso il problema è doppio NAT, CGNAT, porta esterna diversa da quella testata o firewall del provider/cloud.</p>
+<h2>Domande frequenti</h2>
 <div class="faq-list">
     <details class="faq-item">
-        <summary>Perché una porta risulta chiusa se il programma è aperto?</summary>
-<p>Perché il programma potrebbe non ascoltare sull&#x27;interfaccia giusta, il firewall potrebbe bloccare il traffico o il router potrebbe non inoltrare la porta correttamente.</p>
-    </details>
-    <details class="faq-item">
         <summary>Porta chiusa significa che il firewall blocca?</summary>
-<p>Non sempre. Il firewall è una causa possibile, ma non l&#x27;unica. Anche servizio spento, NAT errato, IP sbagliato o CGNAT possono produrre lo stesso risultato.</p>
+<p>Non sempre. Il firewall è solo una delle cause possibili. Una porta può risultare chiusa anche per IP sbagliato, CGNAT, doppio NAT, port forwarding errato, servizio spento o ascolto su <code>localhost</code>.</p>
     </details>
     <details class="faq-item">
-        <summary>Come capisco se il problema è il router?</summary>
-<p>Prima testa il servizio dalla rete locale. Se in LAN funziona ma da Internet no, allora il problema è probabilmente nel router, nel NAT, nel firewall o nel provider.</p>
+        <summary>Perché la porta funziona in LAN ma risulta chiusa da Internet?</summary>
+<p>Perché in LAN raggiungi direttamente l&#x27;IP privato del dispositivo. Da Internet, invece, la connessione deve attraversare IP pubblico, provider, modem/router, NAT, firewall e servizio.</p>
     </details>
     <details class="faq-item">
-        <summary>Una porta può risultare chiusa solo da fuori?</summary>
-<p>Sì. È molto comune. In locale il servizio può funzionare, ma da Internet può essere bloccato da firewall, NAT, port forwarding mancante o CGNAT.</p>
+        <summary>Il DNS dinamico risolve una porta chiusa?</summary>
+<p>No. Il DNS dinamico aiuta quando l&#x27;IP pubblico cambia, perché associa un nome stabile alla linea. Non risolve CGNAT, firewall o port forwarding sbagliato.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Come capisco se il problema è il modem/router?</summary>
+<p>Se il servizio funziona in LAN ma non da Internet, il problema è spesso nel modem/router, nel doppio NAT, nel port forwarding, nel firewall o nel provider.</p>
     </details>
 </div>
 <h2>Controlla ora una porta TCP</h2>
-<p>Inserisci IP o dominio, indica la porta da verificare e controlla se il servizio è raggiungibile da Internet con il <a href="/">test online di Controllo Porte</a>.</p>
+<p>Dopo ogni modifica, ripeti il test dall&#x27;esterno con il <a href="/">test online di Controllo Porte</a>.</p>
+<p>Guide correlate:</p>
+<ul>
+<li><a href="/come-verificare-se-una-porta-e-aperta/">Come verificare se una porta è aperta</a></li>
+<li><a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a></li>
+<li><a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT</a></li>
+<li><a href="/porte-tcp-comuni/">Porte TCP comuni</a></li>
+</ul>
                 </article>
             </main>
 <footer class="footer">
