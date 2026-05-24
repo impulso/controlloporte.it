@@ -762,6 +762,27 @@ a {
     margin-bottom: 0.75rem;
 }
 
+.article-content .checklist-step-title {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.checklist-step-number {
+    display: inline-grid;
+    flex: 0 0 auto;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    background: var(--success-bg);
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
 .article-content h3 {
     color: var(--text-primary);
     font-size: 1.125rem;
