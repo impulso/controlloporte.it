@@ -10,11 +10,9 @@ keywords:
   - porta aperta ma risulta chiusa
 ---
 
-# Perché una porta risulta chiusa
+# Capire perché una porta risulta chiusa
 
 Una porta risulta chiusa quando, da Internet, non è possibile stabilire una connessione TCP verso il dispositivo con la porta indicata.
-
-Una porta può risultare chiusa per molti motivi: IP pubblico sbagliato, CGNAT, blocco del provider, doppio modem/router, port forwarding errato, firewall locale, servizio spento o servizio in ascolto solo su `127.0.0.1`.
 
 Dall'esperienza di oltre 20 anni con il servizio dyndns.it, questa è la checklist usata dai nostri tecnici per capire perché le porte di un dispositivo, come telecamera, impianto fotovoltaico, centrale antifurto, NAS o server locale, non sono raggiungibili da remoto.
 
@@ -36,17 +34,6 @@ Procedi in questo ordine. Parti da ciò che vede Internet e avvicinati, passo do
 10. Il servizio ascolta sull'interfaccia giusta?
 
 Questa sequenza evita di cambiare impostazioni a caso. Se il problema è CGNAT, per esempio, modificare il firewall del PC non risolverà nulla; se il servizio non è in ascolto, aprire altre porte sul modem/router non servirà.
-
-## Come usare questa checklist
-
-Controlla un punto alla volta e passa al successivo solo quando il punto precedente è OK. L'obiettivo è capire dove si ferma la connessione:
-
-- prima della tua linea
-- sul modem/router o su un secondo apparato in cascata
-- sul dispositivo interno
-- dentro la configurazione del servizio
-
-Se il tuo IP pubblico cambia spesso, un servizio di DNS dinamico come [dyndns.it](https://dyndns.it/) può aiutarti a raggiungere la connessione con un nome stabile. Attenzione però: il DNS dinamico non risolve CGNAT, doppio NAT, firewall o port forwarding errato.
 
 ## 1. Stai testando l'IP pubblico corretto?
 

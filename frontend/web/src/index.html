@@ -191,19 +191,17 @@
                         </p>
                     </div>
 
+                    <h2>Identifica con sicurezza perché la porta è chiusa</h2>
+                    <p>
+                        <a href="/perche-una-porta-risulta-chiusa/">Perché una porta risulta chiusa</a>
+                    </p>
+                    <p>Esegui i controlli indicati per capire la causa della porta chiusa.</p>
+
                     <h2>Risolvi problemi di porte chiuse, port forwarding e CGNAT</h2>
                     <p>
                         Se la porta è chiusa, queste guide ti aiutano a capire se il problema è nel servizio,
                         nel firewall, nel router, nel NAT o nel provider.
                     </p>
-                    <div class="featured-guide">
-                        <span class="featured-guide-label">Checklist diagnostica</span>
-                        <a href="/perche-una-porta-risulta-chiusa/">Perché una porta risulta chiusa</a>
-                        <p>
-                            Segui i controlli in ordine per identificare con sicurezza la causa della porta chiusa:
-                            servizio, firewall, port forwarding, doppio NAT, CGNAT o blocchi del provider.
-                        </p>
-                    </div>
                     <ul>
                         <li>
                             <a href="/come-verificare-se-una-porta-e-aperta/">Come verificare se una porta è aperta</a>
@@ -239,6 +237,17 @@
                             <summary>Posso controllare più porte insieme?</summary>
                     <p>
                         Sì. Inserisci più porte separate da virgola, ad esempio 80, 443, 22.
+                    </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Posso usarlo per controlli di sicurezza legati alla NIS2?</summary>
+                    <p>
+                        Sì, come controllo rapido dell'esposizione dei tuoi sistemi pubblici. Inserisci l'indirizzo del
+                        server da verificare e usa il gruppo Accesso remoto per controllare se porte come SSH, Desktop
+                        remoto o VNC risultano aperte verso Internet. Non sostituisce un audit NIS2 completo, ma aiuta a
+                        individuare servizi amministrativi esposti al mondo. Il servizio applicativo non conserva log
+                        delle verifiche effettuate, quindi puoi eseguire controlli puntuali senza creare uno storico
+                        consultabile degli host e delle porte testate.
                     </p>
                         </details>
                     </div>

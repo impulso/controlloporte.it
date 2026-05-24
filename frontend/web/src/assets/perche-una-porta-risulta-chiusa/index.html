@@ -44,9 +44,8 @@
             <main class="main article-main">
                 <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
                 <article class="article-content">
-<h1>Perché una porta risulta chiusa</h1>
+<h1>Capire perché una porta risulta chiusa</h1>
 <p>Una porta risulta chiusa quando, da Internet, non è possibile stabilire una connessione TCP verso il dispositivo con la porta indicata.</p>
-<p>Una porta può risultare chiusa per molti motivi: IP pubblico sbagliato, CGNAT, blocco del provider, doppio modem/router, port forwarding errato, firewall locale, servizio spento o servizio in ascolto solo su <code>127.0.0.1</code>.</p>
 <p>Dall&#x27;esperienza di oltre 20 anni con il servizio dyndns.it, questa è la checklist usata dai nostri tecnici per capire perché le porte di un dispositivo, come telecamera, impianto fotovoltaico, centrale antifurto, NAS o server locale, non sono raggiungibili da remoto.</p>
 <p>Se hai già fatto una verifica con il <a href="/">controllo porte aperte online</a> e la porta risulta chiusa, qui trovi il metodo per capire perché.</p>
 <h2>Checklist rapida dall&#x27;esterno verso l&#x27;interno</h2>
@@ -64,27 +63,25 @@
 <li>Il servizio ascolta sull&#x27;interfaccia giusta?</li>
 </ol>
 <p>Questa sequenza evita di cambiare impostazioni a caso. Se il problema è CGNAT, per esempio, modificare il firewall del PC non risolverà nulla; se il servizio non è in ascolto, aprire altre porte sul modem/router non servirà.</p>
-<h2>Come usare questa checklist</h2>
-<p>Controlla un punto alla volta e passa al successivo solo quando il punto precedente è OK. L&#x27;obiettivo è capire dove si ferma la connessione:</p>
-<ul>
-<li>prima della tua linea</li>
-<li>sul modem/router o su un secondo apparato in cascata</li>
-<li>sul dispositivo interno</li>
-<li>dentro la configurazione del servizio</li>
-</ul>
-<p>Se il tuo IP pubblico cambia spesso, un servizio di DNS dinamico come <a href="https://dyndns.it/">dyndns.it</a> può aiutarti a raggiungere la connessione con un nome stabile. Attenzione però: il DNS dinamico non risolve CGNAT, doppio NAT, firewall o port forwarding errato.</p>
 <h2>1. Stai testando l&#x27;IP pubblico corretto?</h2>
 <p>Il primo errore è testare l&#x27;indirizzo sbagliato. Da Internet devi controllare l&#x27;IP pubblico della linea, non l&#x27;IP locale del dispositivo.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Apri il tool di Controllo Porte e usa il tuo IP pubblico rilevato automaticamente, oppure usa l&#x27;indirizzo:</p>
 <pre><code>https://controlloporte.it/api/me</code></pre>
 <p>Se usi un dominio o un DNS dinamico, effettua PRIMA la verifica sull&#x27;IP e poi ripeti i test sul nome host.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Se stai testando un IP vecchio, un IP locale o un dominio non aggiornato, il risultato sarà quasi sempre porta chiusa. Aggiorna il record DNS, il servizio DDNS o il dominio usato per il test.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se stai testando l&#x27;IP pubblico corretto, passa al controllo della linea: il modem/router ha davvero un IP pubblico raggiungibile?</p>
+</div>
 <h2>2. La linea ha davvero un IP pubblico o sei dietro CGNAT?</h2>
 <p>Il port forwarding funziona solo se le connessioni in ingresso arrivano al tuo modem/router. Se il provider usa CGNAT, il modem/router non riceve direttamente il traffico da Internet.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Hai due modi per verificare:</p>
 <ol>
@@ -101,25 +98,37 @@
 192.168.0.0 - 192.168.255.255
 100.64.0.0 - 100.127.255.255</code></pre>
 <p>Il range <code>100.64.0.0/10</code> è spesso usato per CGNAT.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Se sei dietro CGNAT, aprire porte sul modem/router di casa di solito non basta. Puoi chiedere al provider un IP pubblico, usare una VPN con port forwarding, un tunnel verso un server esterno o un servizio dedicato come <a href="https://ipstatico.pro/">IPStatico.pro</a> quando serve rendere raggiungibili dispositivi dietro NAT o CGNAT.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se il modem/router ha un vero IP pubblico, passa al punto successivo: verifica se il provider blocca proprio quella porta.</p>
+</div>
 <h2>3. Il provider blocca quella porta?</h2>
 <p>Alcuni provider bloccano o limitano porte specifiche, soprattutto su connessioni residenziali, mobili o FWA.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>La porta <code>25</code> per SMTP è una delle più spesso bloccate. Se una sola porta non funziona ma altre porte funzionano, prova temporaneamente una porta esterna diversa, per esempio:</p>
 <pre><code>8080
 8443
 2222</code></pre>
 <p>Inoltra la porta temporanea esterna verso la porta reale del servizio interno e ripeti il test sulla porta temporanea esterna.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Se il provider blocca una porta, devi usare una porta esterna diversa, chiedere lo sblocco al provider o usare una soluzione alternativa coerente con il servizio.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se la porta non sembra bloccata dal provider, passa al modem/router: il traffico arriva al dispositivo giusto?</p>
+</div>
 <h2>4. Il traffico arriva al modem/router giusto?</h2>
 <p>Se utilizzi due modem/router in cascata, si tratta di un caso particolare. In questo caso il traffico deve attraversare entrambi.</p>
 <pre><code>Internet -&gt; modem/router esterno -&gt; modem/router interno -&gt; dispositivo</code></pre>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Guarda la topologia della rete. Se il dispositivo è collegato al modem/router interno, non basta configurare il port forwarding solo lì.</p>
 <p>Devi controllare prima il modem/router esterno connesso a Internet e poi il modem/router più interno:</p>
@@ -128,12 +137,18 @@
 <li>sul modem/router interno, inoltra la porta verso l&#x27;IP LAN del dispositivo finale</li>
 </ul>
 <p>In alternativa, puoi mettere il router esterno in bridge o configurare una DMZ verso il router interno, se il tuo scenario lo consente.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Se il primo modem/router non inoltra verso il secondo, la connessione si ferma prima ancora di arrivare alla rete interna. Correggi il port forwarding sul modem/router esterno o semplifica la rete con bridge/DMZ.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se il traffico arriva al modem/router che gestisce il dispositivo finale, passa alla regola di port forwarding vera e propria.</p>
+</div>
 <h2>5. Il port forwarding inoltra verso l&#x27;IP interno corretto?</h2>
 <p>Una regola NAT sbagliata è una delle cause più comuni di porta chiusa.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Nella regola di port forwarding del modem/router controlla tutti i dati:</p>
 <ul>
@@ -151,21 +166,33 @@ Porta interna: 80
 Protocollo: TCP</code></pre>
 <p>Allora il test da Internet va fatto sulla porta <code>8080</code>, non sulla porta <code>80</code>.</p>
 <p>Nota importante: il protocollo UDP non può essere testato da remoto con questo tipo di verifica. Solo le porte TCP possono essere controllate dagli strumenti online.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Correggi porta esterna, porta interna, protocollo o IP di destinazione. Se stai testando TCP, assicurati che la regola non sia solo UDP.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se la regola è corretta, verifica che l&#x27;IP interno del dispositivo non sia cambiato.</p>
+</div>
 <h2>6. L&#x27;IP interno del dispositivo è stabile?</h2>
 <p>Il modem/router inoltra la porta verso un IP interno della rete locale. Se il dispositivo cambia IP, la regola continua a puntare al posto sbagliato.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Controlla l&#x27;IP attuale del dispositivo nel pannello del modem/router, nel sistema operativo o nell&#x27;interfaccia del NAS, server o apparato.</p>
 <p>Confrontalo con l&#x27;IP indicato nella regola di port forwarding.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Configura una prenotazione DHCP sul modem/router oppure imposta sul dispositivo un IP statico appartenente alla rete. Poi aggiorna la regola di port forwarding.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se l&#x27;IP interno è corretto e stabile, passa al controllo del dispositivo.</p>
+</div>
 <h2>7. Gateway e netmask del dispositivo sono corretti?</h2>
 <p>Se il dispositivo ha IP statico configurato a mano, gateway o netmask sbagliati possono permettere l&#x27;accesso solo dalla rete locale e impedire le risposte verso Internet.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Se la configurazione della rete del dispositivo è stata impostata a mano, controlla:</p>
 <ul>
@@ -175,41 +202,64 @@ Protocollo: TCP</code></pre>
 <li>DNS, se il servizio ne ha bisogno: l&#x27;IP del modem/router oppure resolver pubblici affidabili come 1.1.1.1, 9.9.9.9 o 8.8.8.8</li>
 </ul>
 <p>Il gateway, quindi, deve essere l&#x27;IP del modem/router della stessa rete del dispositivo. Per esempio, se il dispositivo è <code>192.168.1.50/24</code>, il gateway tipico è <code>192.168.1.1</code> e la netmask è <code>255.255.255.0</code>.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Correggi gateway e netmask. Se il gateway punta a un modem/router sbagliato, o la netmask mette il dispositivo in una rete diversa, le connessioni possono funzionare solo da locale ma non da remoto.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se gateway e netmask sono corretti, passa al firewall del dispositivo.</p>
+</div>
 <h2>8. Il firewall locale consente la connessione?</h2>
 <p>Il servizio può essere attivo ma bloccato dal firewall del sistema operativo o da un firewall applicativo.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Controlla firewall di Windows, <code>ufw</code>, <code>firewalld</code>, regole del NAS, pannelli cloud o security group. Su un server cloud, spesso devi aprire la porta sia nel sistema operativo sia nel pannello del provider.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Aggiungi una regola che consenta connessioni TCP in ingresso sulla porta corretta, limitando gli IP sorgente quando possibile. Evita di aprire servizi amministrativi a tutta Internet se non è necessario.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se il firewall consente la porta, controlla che il servizio sia davvero avviato e in ascolto.</p>
+</div>
 <h2>9. Il servizio è acceso e ascolta sulla porta corretta?</h2>
 <p>Il modem/router non può rendere aperta una porta se dall&#x27;altra parte non c&#x27;è un servizio attivo che ascolta.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Su Linux puoi usare:</p>
 <pre><code>ss -tlnp</code></pre>
 <p>oppure:</p>
 <pre><code>netstat -tlnp</code></pre>
 <p>Controlla anche container Docker, reverse proxy, pannelli NAS e configurazione del programma.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Avvia il servizio, correggi la porta configurata o sistema il mapping del container. Se la porta non compare tra quelle in ascolto, il problema non è ancora il test esterno.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se il servizio ascolta sulla porta giusta, resta l&#x27;ultimo controllo: su quale interfaccia sta ascoltando?</p>
+</div>
 <h2>10. Il servizio ascolta sull&#x27;interfaccia giusta?</h2>
 <p>Un servizio può essere attivo ma raggiungibile solo dallo stesso computer.</p>
+<div class="diagnostic-step diagnostic-step--check">
 <h3>Come controllare</h3>
 <p>Se vedi un ascolto su:</p>
 <pre><code>127.0.0.1:8080</code></pre>
 <p>il servizio risponde solo localmente. Per essere raggiungibile dalla rete deve ascoltare sull&#x27;IP LAN o su tutte le interfacce:</p>
 <pre><code>0.0.0.0:8080</code></pre>
+</div>
+<div class="diagnostic-step diagnostic-step--fail">
 <h3>Se fallisce</h3>
 <p>Modifica la configurazione del servizio, del web server, del database o del container affinché ascolti sull&#x27;interfaccia di rete corretta. Poi ripeti il test dalla rete locale e infine da Internet.</p>
+</div>
+<div class="diagnostic-step diagnostic-step--ok">
 <h3>Se è OK</h3>
 <p>Se anche questo punto è corretto ma la porta risulta ancora chiusa, ricontrolla i passaggi precedenti: spesso il problema è doppio NAT, CGNAT, porta esterna diversa da quella testata o firewall del provider/cloud.</p>
+</div>
 <h2>Domande frequenti</h2>
 <div class="faq-list">
     <details class="faq-item">
