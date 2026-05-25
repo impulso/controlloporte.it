@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Controllo porte aperte con ChatGPT o Claude | Controllo Porte</title>
+        <meta name="description" content="Esempi pratici per usare ControlloPorte.it con agenti AI come ChatGPT o Claude per il controllo porte aperte, port forwarding e raggiungibilità da Internet." />
+        <meta name="keywords" content="ChatGPT controllo porte, controllo porte aperte ChatGPT, Claude controllo porte, controllo porte aperte Claude, agenti AI port forwarding, controllare porta con AI" />
+        <link rel="canonical" href="https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:site_name" content="Controllo Porte" />
+        <meta property="og:title" content="Controllo porte aperte con ChatGPT o Claude" />
+        <meta property="og:description" content="Esempi pratici per usare ControlloPorte.it con agenti AI come ChatGPT o Claude per il controllo porte aperte e il port forwarding." />
+        <meta property="og:url" content="https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Controllo porte aperte con ChatGPT o Claude" />
+        <meta name="twitter:description" content="Esempi pratici per usare ControlloPorte.it con agenti AI come ChatGPT o Claude per il controllo porte aperte e il port forwarding." />
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": "https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/#article",
+        "headline": "Controllo porte aperte con ChatGPT o Claude",
+        "description": "Esempi pratici per usare ControlloPorte.it con agenti AI come ChatGPT o Claude per il controllo porte aperte, port forwarding e raggiungibilità da Internet.",
+        "inLanguage": "it-IT",
+        "mainEntityOfPage": "https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/",
+        "isPartOf": {
+                "@type": "WebApplication",
+                "@id": "https://controlloporte.it/#app",
+                "name": "Controllo Porte",
+                "url": "https://controlloporte.it/"
+        },
+        "publisher": {
+                "@type": "Organization",
+                "@id": "https://impulso.it/#organization",
+                "name": "Impulso.it",
+                "url": "https://impulso.it/"
+        },
+        "about": {
+                "@type": "WebApplication",
+                "@id": "https://controlloporte.it/#app",
+                "name": "Controllo Porte"
+        }
+}</script>
+        <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
+        <link href="/css/index.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="app-container article-container">
+            <header class="header">
+                <a href="/" class="logo"><span class="logo-text">Controllo Porte</span></a>
+                <nav class="nav"><a href="/" class="nav-link">Home</a><a href="/docs" class="nav-link">API</a></nav>
+            </header>
+            <main class="main article-main">
+                <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
+                <article class="article-content">
+                    <h1>Controllo porte aperte con ChatGPT o Claude</h1>
+<p>ControlloPorte.it può essere usato anche con agenti AI come ChatGPT, Claude o altri assistenti capaci di aprire link o fare richieste HTTP.</p>
+<p>In pratica puoi chiedere all&#x27;agente di usare ControlloPorte.it per fare un controllo porte aperte, verificare se una porta TCP è raggiungibile da Internet, interpretare il risultato e suggerire i controlli successivi.</p>
+<h2>Esempio rapido</h2>
+<p>Puoi scrivere all&#x27;agente:</p>
+<pre><code>Controlla se la mia porta 22 è aperta usando https://controlloporte.it</code></pre>
+<p>Se l&#x27;agente può aprire pagine web, può usare il link:</p>
+<pre><code>https://controlloporte.it/me/22</code></pre>
+<p>Il valore <code>me</code> indica l&#x27;IP pubblico del richiedente visto dal server. In questo modo il test controlla la porta <code>22</code> sul tuo IP pubblico.</p>
+<h2>Usare l&#x27;API con un agente AI</h2>
+<p>Se l&#x27;agente può fare richieste HTTP, il modo più preciso è usare l&#x27;API JSON:</p>
+<pre><code>https://controlloporte.it/api/check/me/22</code></pre>
+<p>Risposta di esempio:</p>
+<pre><code>{
+  &quot;error&quot;: false,
+  &quot;msg&quot;: null,
+  &quot;check&quot;: [
+    {
+      &quot;port&quot;: 22,
+      &quot;status&quot;: false,
+      &quot;latency_ms&quot;: null
+    }
+  ],
+  &quot;host&quot;: &quot;203.0.113.10&quot;
+}</code></pre>
+<p>In questo esempio la porta <code>22</code> risulta chiusa o non raggiungibile dall&#x27;esterno.</p>
+<h2>Prompt pronti da copiare</h2>
+<p>Per controllare SSH:</p>
+<pre><code>Usa https://controlloporte.it/api/check/me/22 e dimmi se la porta SSH del mio IP pubblico è aperta. Se è chiusa, spiegami quali controlli fare su modem/router, firewall, port forwarding e CGNAT.</code></pre>
+<p>Per controllare HTTPS:</p>
+<pre><code>Usa https://controlloporte.it/api/check/me/443 e dimmi se la porta 443 è raggiungibile da Internet. Interpreta anche il campo latency_ms.</code></pre>
+<p>Per controllare un dominio DNS dinamico:</p>
+<pre><code>Controlla se la porta 443 di esempio.ns0.it è aperta usando https://controlloporte.it/api/check/esempio.ns0.it/443. Se la porta è chiusa, aiutami a capire se il problema può essere DNS dinamico, port forwarding, firewall o CGNAT.</code></pre>
+<p>Per controllare più porte:</p>
+<pre><code>Fai una richiesta POST a https://controlloporte.it/api/query con JSON {&quot;host&quot;:&quot;me&quot;,&quot;ports&quot;:[22,80,443]} e riassumi quali porte sono aperte e quali sono chiuse.</code></pre>
+<h2>Cosa deve sapere l&#x27;agente</h2>
+<p>Un agente AI deve usare Controllo Porte solo per sistemi che possiedi o che sei autorizzato a verificare.</p>
+<p>Il servizio controlla porte TCP, non porte UDP. Se stai configurando una VPN, un gioco o un servizio che usa UDP, il risultato di un test TCP non conferma l&#x27;apertura della porta UDP.</p>
+<p>Il campo <code>latency_ms</code> indica la latenza di apertura della connessione TCP in millisecondi. Quando la porta è chiusa o non raggiungibile, il valore è <code>null</code>.</p>
+<h2>Perché usare Controllo Porte con un agente AI</h2>
+<p>Un agente può aiutarti a:</p>
+<ul>
+<li>leggere il risultato del test</li>
+<li>confrontare IP pubblico e hostname DNS dinamico</li>
+<li>capire se una porta è aperta o chiusa</li>
+<li>seguire una checklist di diagnosi</li>
+<li>distinguere problemi di modem/router, firewall, NAT, doppio NAT e CGNAT</li>
+</ul>
+<p>Se la porta risulta chiusa, puoi usare la guida: <a href="/perche-una-porta-risulta-chiusa/">Perché una porta risulta chiusa</a>.</p>
+<h2>File per agenti AI</h2>
+<p>ControlloPorte.it pubblica anche file pensati per agenti AI:</p>
+<ul>
+<li><a href="/llms.txt">llms.txt</a></li>
+<li><a href="/llms-full.txt">llms-full.txt</a></li>
+<li><a href="/.well-known/openapi.json">OpenAPI JSON</a></li>
+<li><a href="/docs">documentazione API</a></li>
+</ul>
+<p>Questi file aiutano gli assistenti a capire come usare il servizio e quali endpoint chiamare.</p>
+<h2>Controlla ora una porta TCP</h2>
+<p>Apri <a href="/">Controllo Porte</a>, inserisci IP o dominio, indica la porta e verifica se il servizio è raggiungibile da Internet.</p>
+                </article>
+            </main>
+<footer class="footer">
+                <div class="footer-content">
+                    <p class="copyright">
+                        © 2026 Controllo Porte ·
+                        <a href="/privacy-policy/">Privacy Policy</a> ·
+                        <a href="/llms.txt">AI</a>
+                    </p>
+                    <p class="footer-credit">
+                        Servizio offerto da
+                        <a class="external-link" href="https://impulso.it" target="_blank" rel="noopener noreferrer">
+                            Impulso.it
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7"></path>
+                                <path d="M8 7h9v9"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

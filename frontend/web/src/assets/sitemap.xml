@@ -31,6 +31,11 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://controlloporte.it/privacy-policy/</loc>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>

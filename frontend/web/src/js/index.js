@@ -31,6 +31,7 @@ const reservedPaths = new Set([
     "porte-tcp-comuni",
     "ip-pubblico-nat-cgnat",
     "perche-una-porta-risulta-chiusa",
+    "usare-controlloporte-con-chatgpt-claude",
 ]);
 
 // Reactive state
