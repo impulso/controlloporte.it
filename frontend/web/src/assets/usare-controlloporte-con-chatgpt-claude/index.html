@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Controllo porte aperte con ChatGPT o Claude | Controllo Porte</title>
         <meta name="description" content="Esempi pratici per usare ControlloPorte.it con agenti AI come ChatGPT o Claude per il controllo porte aperte, port forwarding e raggiungibilità da Internet." />
-        <meta name="keywords" content="ChatGPT controllo porte, controllo porte aperte ChatGPT, Claude controllo porte, controllo porte aperte Claude, agenti AI port forwarding, controllare porta con AI" />
         <link rel="canonical" href="https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/" />
         <meta name="robots" content="index,follow" />
         <meta property="og:type" content="article" />
@@ -42,6 +41,47 @@
                 "@id": "https://controlloporte.it/#app",
                 "name": "Controllo Porte"
         }
+}</script>
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "@id": "https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/#howto",
+        "name": "Come controllare una porta aperta con ChatGPT o Claude",
+        "description": "Procedura per chiedere a un agente AI come ChatGPT o Claude di usare ControlloPorte.it per verificare una porta TCP da Internet.",
+        "inLanguage": "it-IT",
+        "mainEntityOfPage": "https://controlloporte.it/usare-controlloporte-con-chatgpt-claude/",
+        "tool": [
+                {
+                        "@type": "HowToTool",
+                        "name": "ControlloPorte.it"
+                },
+                {
+                        "@type": "HowToTool",
+                        "name": "ChatGPT, Claude o un agente AI con accesso web o HTTP"
+                }
+        ],
+        "step": [
+                {
+                        "@type": "HowToStep",
+                        "name": "Chiedi all'agente di controllare la porta",
+                        "text": "Scrivi un prompt come: Controlla se la mia porta 22 è aperta usando https://controlloporte.it."
+                },
+                {
+                        "@type": "HowToStep",
+                        "name": "Usa il link diretto o l'API",
+                        "text": "Se l'agente può aprire pagine web usa https://controlloporte.it/me/22. Se può fare richieste HTTP usa https://controlloporte.it/api/check/me/22."
+                },
+                {
+                        "@type": "HowToStep",
+                        "name": "Interpreta il risultato",
+                        "text": "Leggi il campo status per capire se la porta è aperta. Il campo latency_ms indica la latenza TCP quando la porta è raggiungibile."
+                },
+                {
+                        "@type": "HowToStep",
+                        "name": "Segui la diagnosi se la porta è chiusa",
+                        "text": "Se la porta è chiusa, controlla port forwarding, modem/router, firewall, IP pubblico, NAT e CGNAT."
+                }
+        ]
 }</script>
         <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />

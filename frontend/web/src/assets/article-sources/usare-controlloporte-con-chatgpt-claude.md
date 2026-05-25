@@ -2,13 +2,6 @@
 title: "Controllo porte aperte con ChatGPT o Claude"
 description: "Esempi pratici per usare ControlloPorte.it con agenti AI come ChatGPT o Claude per il controllo porte aperte, port forwarding e raggiungibilità da Internet."
 slug: "/usare-controlloporte-con-chatgpt-claude"
-keywords:
-  - ChatGPT controllo porte
-  - controllo porte aperte ChatGPT
-  - Claude controllo porte
-  - controllo porte aperte Claude
-  - agenti AI port forwarding
-  - controllare porta con AI
 ---
 
 # Controllo porte aperte con ChatGPT o Claude
