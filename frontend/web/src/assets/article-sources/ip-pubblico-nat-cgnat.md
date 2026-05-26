@@ -1,5 +1,5 @@
 ---
-title: "IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile"
+title: "IP pubblico, NAT e CGNAT: differenze"
 description: "IP pubblico, NAT e CGNAT spiegati in modo semplice: perché una porta non è raggiungibile da Internet e quando il port forwarding non può funzionare."
 slug: "/ip-pubblico-nat-cgnat"
 keywords:
@@ -9,7 +9,7 @@ keywords:
   - servizio non raggiungibile da internet
 ---
 
-# IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile
+# IP pubblico, NAT e CGNAT: differenze
 
 Quando un servizio non è raggiungibile da Internet, spesso il problema non è il programma, né la porta, né il firewall.
 

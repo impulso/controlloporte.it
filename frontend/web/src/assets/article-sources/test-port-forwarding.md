@@ -185,7 +185,7 @@ Se l'IP WAN del router è in uno di questi intervalli, non è un IP pubblico dir
 
 In caso di CGNAT puoi chiedere al provider un IP pubblico, usare una VPN con port forwarding, oppure usare un tunnel verso un server esterno.
 
-Per approfondire il tema, leggi anche [IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile](/ip-pubblico-nat-cgnat/).
+Per approfondire il tema, leggi anche [IP pubblico, NAT e CGNAT: differenze](/ip-pubblico-nat-cgnat/).
 
 ## Testare dalla stessa rete può ingannare
 

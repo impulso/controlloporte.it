@@ -238,6 +238,8 @@ Se il test ha successo, significa che da Internet è possibile stabilire una con
 
 Se fallisce, il servizio può essere spento, filtrato da firewall, non inoltrato dal router o non raggiungibile per problemi di NAT.
 
+Prima di lasciare una porta pubblica, soprattutto per SSH, RDP o database, leggi anche la guida sulle [porte pericolose da aprire](/porte-pericolose-da-aprire/).
+
 Per una guida passo passo, leggi anche [come verificare se una porta è aperta](/come-verificare-se-una-porta-e-aperta/).
 
 ## FAQ

@@ -115,7 +115,7 @@ Per questo è importante fare il test da fuori dalla tua rete, usando un control
 Approfondimenti utili:
 
 - [Port forwarding: come capire se funziona](/test-port-forwarding/)
-- [IP pubblico, NAT e CGNAT: perché il servizio non è raggiungibile](/ip-pubblico-nat-cgnat/)
+- [IP pubblico, NAT e CGNAT: differenze](/ip-pubblico-nat-cgnat/)
 
 ## Prima di fare il test: cosa verificare
 

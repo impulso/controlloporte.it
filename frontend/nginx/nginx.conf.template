@@ -30,7 +30,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location ~ ^/(come-verificare-se-una-porta-e-aperta|test-port-forwarding|porte-tcp-comuni|ip-pubblico-nat-cgnat|perche-una-porta-risulta-chiusa|usare-controlloporte-con-chatgpt-claude)$ {
+    location ~ ^/(come-verificare-se-una-porta-e-aperta|test-port-forwarding|porte-tcp-comuni|porte-pericolose-da-aprire|ip-pubblico-nat-cgnat|perche-una-porta-risulta-chiusa|usare-controlloporte-con-chatgpt-claude)$ {
         return 301 https://$host$uri/;
     }
 

@@ -29,6 +29,7 @@ const reservedPaths = new Set([
     "come-verificare-se-una-porta-e-aperta",
     "test-port-forwarding",
     "porte-tcp-comuni",
+    "porte-pericolose-da-aprire",
     "ip-pubblico-nat-cgnat",
     "perche-una-porta-risulta-chiusa",
     "usare-controlloporte-con-chatgpt-claude",

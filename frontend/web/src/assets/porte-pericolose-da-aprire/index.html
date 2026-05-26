@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Porte pericolose da aprire: SSH, RDP e database | Controllo Porte</title>
+        <meta name="description" content="Quali porte TCP è rischioso aprire su Internet: SSH 22, RDP 3389, MySQL 3306, PostgreSQL 5432 e altri servizi. Rischi, alternative e controlli utili anche in ottica NIS2." />
+        <link rel="canonical" href="https://controlloporte.it/porte-pericolose-da-aprire/" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:site_name" content="Controllo Porte" />
+        <meta property="og:title" content="Porte pericolose da aprire: SSH, RDP e database" />
+        <meta property="og:description" content="Quali porte TCP è rischioso aprire su Internet: SSH 22, RDP 3389, MySQL 3306, PostgreSQL 5432 e altri servizi." />
+        <meta property="og:url" content="https://controlloporte.it/porte-pericolose-da-aprire/" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Porte pericolose da aprire: SSH, RDP e database" />
+        <meta name="twitter:description" content="Quali porte TCP è rischioso aprire su Internet: SSH 22, RDP 3389, MySQL 3306, PostgreSQL 5432 e altri servizi." />
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": "https://controlloporte.it/porte-pericolose-da-aprire/#article",
+        "headline": "Porte pericolose da aprire: SSH, RDP, database e servizi esposti",
+        "description": "Quali porte TCP è rischioso aprire su Internet: SSH 22, RDP 3389, MySQL 3306, PostgreSQL 5432 e altri servizi. Rischi, alternative e controlli utili anche in ottica NIS2.",
+        "inLanguage": "it-IT",
+        "mainEntityOfPage": "https://controlloporte.it/porte-pericolose-da-aprire/",
+        "isPartOf": {
+                "@type": "WebApplication",
+                "@id": "https://controlloporte.it/#app",
+                "name": "Controllo Porte",
+                "url": "https://controlloporte.it/"
+        },
+        "publisher": {
+                "@type": "Organization",
+                "@id": "https://impulso.it/#organization",
+                "name": "Impulso.it",
+                "url": "https://impulso.it/"
+        },
+        "about": {
+                "@type": "WebApplication",
+                "@id": "https://controlloporte.it/#app",
+                "name": "Controllo Porte"
+        }
+}</script>
+        <script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": "https://controlloporte.it/porte-pericolose-da-aprire/#faq",
+        "mainEntity": [
+                {
+                        "@type": "Question",
+                        "name": "Quali porte è meglio non aprire su Internet?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "In generale è meglio evitare di aprire direttamente porte amministrative e database, come 22, 3389, 3306, 5432, 1433, 6379, 9200, 5900, 21 e 23, salvo casi motivati e protetti."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "La porta 22 SSH è pericolosa?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "La porta 22 non è pericolosa di per sé, ma espone un accesso amministrativo. Se deve restare pubblica, usa chiavi SSH, blocca il login root, limita gli IP e tieni il sistema aggiornato."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "È sicuro aprire la porta 3389 RDP?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Esporre RDP direttamente su Internet è rischioso. È preferibile usare una VPN o un gateway RDP protetto, con autenticazione forte e regole firewall restrittive."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Posso aprire MySQL o PostgreSQL su Internet?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "È meglio evitarlo. Per MySQL, PostgreSQL e altri database usa VPN, tunnel SSH, reti private o allowlist di IP. Un database pubblico aumenta molto il rischio di compromissione dei dati."
+                        }
+                },
+                {
+                        "@type": "Question",
+                        "name": "Aprire una porta è un problema per NIS2?",
+                        "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Non sempre. Il punto è dimostrare che l'esposizione è necessaria, protetta, monitorata e coerente con la gestione del rischio. Un inventario delle porte aperte aiuta molto."
+                        }
+                }
+        ]
+}</script>
+        <link rel="icon" type="image/png" href="/controlloporte-logo.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/controlloporte-logo.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
+        <link href="/css/index.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="app-container article-container">
+            <header class="header">
+                <a href="/" class="logo"><span class="logo-text">Controllo Porte</span></a>
+                <nav class="nav"><a href="/" class="nav-link">Home</a><a href="/docs" class="nav-link">API</a></nav>
+            </header>
+            <main class="main article-main">
+                <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
+                <article class="article-content">
+                    <h1>Porte pericolose da aprire: SSH, RDP, database e servizi esposti</h1>
+<p>Aprire una porta sul modem/router o sul firewall significa rendere raggiungibile da Internet un servizio interno.</p>
+<p>Questo non è sempre sbagliato: un sito web, una VPN o un reverse proxy devono essere raggiungibili dall&#x27;esterno. Però ogni porta aperta aumenta la superficie di attacco e deve essere trattata come una scelta tecnica consapevole, non come un passaggio automatico della configurazione.</p>
+<p>Il rischio è particolarmente alto quando si espongono porte amministrative, accessi remoti o database, come <code>22</code>, <code>3389</code>, <code>3306</code>, <code>5432</code>, <code>6379</code>, <code>9200</code> e simili.</p>
+<p>Prima di aprire una porta, chiediti sempre: questo servizio deve davvero essere pubblico su Internet?</p>
+<h2>Checklist rapida prima di aprire una porta</h2>
+<ul>
+<li>Il servizio deve essere raggiungibile da chiunque su Internet?</li>
+<li>Esiste un&#x27;alternativa più sicura, come VPN, tunnel SSH o accesso remoto controllato?</li>
+<li>Il software esposto è aggiornato?</li>
+<li>L&#x27;accesso richiede autenticazione forte?</li>
+<li>Puoi limitare gli IP sorgente autorizzati?</li>
+<li>Hai log, monitoraggio e backup?</li>
+<li>Sai chi è responsabile della gestione di quel servizio?</li>
+<li>La porta aperta è coerente con le policy di sicurezza aziendali e con gli obblighi NIS2 applicabili?</li>
+</ul>
+<p>Se non sai rispondere a queste domande, è meglio fermarsi prima di creare la regola di port forwarding.</p>
+<h2>Perché una porta aperta è un rischio</h2>
+<p>Quando una porta è aperta, scanner automatici, bot e attaccanti possono rilevarla in pochi minuti.</p>
+<p>Da quel momento il servizio esposto può ricevere:</p>
+<ul>
+<li>tentativi di login automatici</li>
+<li>scansioni di vulnerabilità</li>
+<li>exploit contro software non aggiornato</li>
+<li>tentativi di enumerazione utenti</li>
+<li>attacchi brute force</li>
+<li>traffico indesiderato che genera log, carico e falsi allarmi</li>
+</ul>
+<p>Una porta aperta non significa automaticamente compromissione. Significa però che quel servizio è entrato nel perimetro esposto e deve essere gestito come tale.</p>
+<h2>Porte ad alto rischio da valutare con attenzione</h2>
+<p>Queste porte non sono &quot;vietate&quot; in assoluto, ma richiedono una motivazione forte e controlli adeguati prima di essere pubblicate su Internet.</p>
+<table>
+<thead>
+<tr>
+<th>Porta</th>
+<th>Servizio comune</th>
+<th>Rischio principale</th>
+<th>Alternativa consigliata</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><code>22</code></td><td>SSH</td><td>brute force, accesso amministrativo diretto</td><td>VPN, chiavi SSH, IP autorizzati</td></tr>
+<tr><td><code>3389</code></td><td>RDP</td><td>accesso desktop remoto esposto</td><td>VPN o gateway RDP protetto</td></tr>
+<tr><td><code>3306</code></td><td>MySQL/MariaDB</td><td>database esposto</td><td>VPN, tunnel SSH, IP allowlist</td></tr>
+<tr><td><code>5432</code></td><td>PostgreSQL</td><td>database esposto</td><td>VPN, tunnel SSH, IP allowlist</td></tr>
+<tr><td><code>1433</code></td><td>Microsoft SQL Server</td><td>database esposto</td><td>VPN, subnet privata</td></tr>
+<tr><td><code>6379</code></td><td>Redis</td><td>datastore spesso senza autenticazione forte</td><td>rete privata, VPN</td></tr>
+<tr><td><code>9200</code></td><td>Elasticsearch</td><td>dati e API amministrative esposte</td><td>rete privata, reverse proxy autenticato</td></tr>
+<tr><td><code>5900</code></td><td>VNC</td><td>desktop remoto debole o non cifrato</td><td>VPN, strumenti remoti sicuri</td></tr>
+<tr><td><code>21</code></td><td>FTP</td><td>credenziali e dati non cifrati</td><td>SFTP, FTPS, VPN</td></tr>
+<tr><td><code>23</code></td><td>Telnet</td><td>traffico non cifrato</td><td>SSH o VPN</td></tr>
+</tbody>
+</table>
+<h2>Porta 22 SSH</h2>
+<p>SSH è uno strumento potente per amministrare server, NAS, VPS e dispositivi Linux.</p>
+<p>Esporre la porta <code>22</code> su Internet è comune, ma richiede attenzione perché riceverà quasi certamente tentativi automatici di accesso.</p>
+<p>Misure minime:</p>
+<ul>
+<li>disabilitare il login <code>root</code></li>
+<li>usare chiavi SSH invece della sola password</li>
+<li>disabilitare password login quando possibile</li>
+<li>limitare gli IP autorizzati</li>
+<li>aggiornare il sistema</li>
+<li>usare strumenti di rate limiting o ban automatico</li>
+</ul>
+<p>Cambiare la porta SSH riduce il rumore dei bot più semplici, ma non sostituisce una configurazione sicura.</p>
+<h2>Porta 3389 RDP</h2>
+<p>La porta <code>3389</code> è usata da Remote Desktop Protocol.</p>
+<p>È una delle porte più delicate da esporre perché consente l&#x27;accesso grafico a un sistema Windows. Se il servizio è vulnerabile, mal configurato o protetto da password deboli, il rischio è molto alto.</p>
+<p>In generale è preferibile non pubblicare RDP direttamente su Internet. Meglio usare:</p>
+<ul>
+<li>VPN</li>
+<li>gateway RDP protetto</li>
+<li>accesso remoto con autenticazione forte</li>
+<li>regole firewall con IP sorgente limitati</li>
+</ul>
+<p>Se RDP deve essere esposto, va monitorato con attenzione e protetto con aggiornamenti, blocco account, autenticazione forte e log centralizzati.</p>
+<h2>Porte database: 3306, 5432, 1433</h2>
+<p>Le porte database non dovrebbero quasi mai essere aperte a tutto Internet.</p>
+<p>Esempi comuni:</p>
+<ul>
+<li><code>3306</code> per MySQL e MariaDB</li>
+<li><code>5432</code> per PostgreSQL</li>
+<li><code>1433</code> per Microsoft SQL Server</li>
+</ul>
+<p>Un database esposto può contenere dati personali, credenziali, configurazioni applicative, dati aziendali e informazioni operative.</p>
+<p>Se serve accesso remoto al database, valuta prima:</p>
+<ul>
+<li>VPN</li>
+<li>tunnel SSH</li>
+<li>rete privata tra server</li>
+<li>regole firewall con IP sorgente specifici</li>
+<li>replica o API applicativa invece dell&#x27;accesso diretto al database</li>
+</ul>
+<p>Aprire un database &quot;temporaneamente&quot; e poi dimenticarsene è uno degli errori più pericolosi.</p>
+<h2>Porte di pannelli web e dispositivi</h2>
+<p>Molti dispositivi espongono pannelli web su porte come <code>80</code>, <code>443</code>, <code>8080</code>, <code>8443</code>, <code>8000</code> o <code>9000</code>.</p>
+<p>Il problema non è solo la porta, ma il servizio dietro quella porta. Telecamere, DVR, centrali antifurto, NAS, inverter fotovoltaici e apparati industriali possono avere firmware vecchi, password deboli o interfacce non pensate per Internet pubblico.</p>
+<p>Prima di pubblicare un pannello web:</p>
+<ul>
+<li>aggiorna firmware e software</li>
+<li>cambia password predefinite</li>
+<li>usa HTTPS quando disponibile</li>
+<li>limita gli IP autorizzati</li>
+<li>valuta una VPN o un servizio di accesso remoto controllato</li>
+</ul>
+<p>Se il dispositivo è critico o non aggiornabile, è meglio non esporlo direttamente.</p>
+<h2>Porte aperte e NIS2</h2>
+<p>In ottica NIS2, la gestione delle porte aperte rientra nel tema più ampio della riduzione della superficie di attacco, del controllo degli accessi, della gestione delle vulnerabilità e della continuità operativa.</p>
+<p>La <a href="https://digital-strategy.ec.europa.eu/en/policies/nis2-directive">Direttiva NIS2</a> richiede misure di gestione del rischio cyber proporzionate per i soggetti interessati; l&#x27;inventario delle esposizioni verso Internet è un controllo tecnico utile dentro questo percorso.</p>
+<p>Per molte organizzazioni non basta che &quot;funzioni da remoto&quot;. Bisogna poter dimostrare che l&#x27;esposizione è necessaria, controllata e monitorata.</p>
+<p>Una buona pratica è mantenere un inventario delle porte esposte:</p>
+<ul>
+<li>host o dispositivo</li>
+<li>porta e protocollo</li>
+<li>servizio pubblicato</li>
+<li>motivo dell&#x27;esposizione</li>
+<li>responsabile tecnico</li>
+<li>data dell&#x27;ultima verifica</li>
+<li>misure di protezione applicate</li>
+</ul>
+<p>Questo articolo non sostituisce una consulenza di conformità, ma aiuta a impostare un controllo tecnico utile prima di aprire servizi verso Internet.</p>
+<h2>Alternative più sicure al port forwarding diretto</h2>
+<p>Quando possibile, evita di esporre direttamente servizi amministrativi o database.</p>
+<p>Alternative comuni:</p>
+<ul>
+<li>VPN con IP pubblico dedicato</li>
+<li>tunnel SSH</li>
+<li>reverse proxy con HTTPS e autenticazione</li>
+<li>firewall con allowlist di IP</li>
+<li>accesso remoto gestito</li>
+<li>servizio DNS dinamico abbinato a regole firewall precise</li>
+</ul>
+<p>Se sei dietro CGNAT o non hai IP pubblico, il port forwarding tradizionale potrebbe non funzionare. In quel caso può essere utile valutare una soluzione con IP pubblico dedicato via VPN, come <a href="https://ipstatico.pro/">IPStatico.pro</a>, oppure un accesso remoto semplificato come <a href="https://accessofacile.it/">AccessoFacile.it</a>.</p>
+<h2>Come verificare quali porte sono aperte</h2>
+<p>Dopo aver configurato modem/router o firewall, usa un test dall&#x27;esterno.</p>
+<p>Con <a href="/">Controllo Porte</a> puoi verificare se una porta TCP è raggiungibile da Internet su un IP, un dominio o un hostname DNS dinamico.</p>
+<p>Esempi:</p>
+<pre><code>porta 22 SSH
+porta 3389 RDP
+porta 3306 MySQL
+porta 5432 PostgreSQL
+porta 8080 pannello web</code></pre>
+<p>Se la porta risulta aperta, chiediti se è davvero necessario lasciarla pubblica. Se risulta chiusa ma dovrebbe essere aperta, segui la <a href="/perche-una-porta-risulta-chiusa/">checklist per capire perché una porta risulta chiusa</a>.</p>
+<h2>FAQ</h2>
+<div class="faq-list">
+    <details class="faq-item">
+        <summary>Quali porte è meglio non aprire su Internet?</summary>
+<p>In generale è meglio evitare di aprire direttamente porte amministrative e database, come <code>22</code>, <code>3389</code>, <code>3306</code>, <code>5432</code>, <code>1433</code>, <code>6379</code>, <code>9200</code>, <code>5900</code>, <code>21</code> e <code>23</code>, salvo casi motivati e protetti.</p>
+    </details>
+    <details class="faq-item">
+        <summary>La porta 22 SSH è pericolosa?</summary>
+<p>La porta <code>22</code> non è pericolosa di per sé, ma espone un accesso amministrativo. Se deve restare pubblica, usa chiavi SSH, blocca il login root, limita gli IP e tieni il sistema aggiornato.</p>
+    </details>
+    <details class="faq-item">
+        <summary>È sicuro aprire la porta 3389 RDP?</summary>
+<p>Esporre RDP direttamente su Internet è rischioso. È preferibile usare una VPN o un gateway RDP protetto, con autenticazione forte e regole firewall restrittive.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Posso aprire MySQL o PostgreSQL su Internet?</summary>
+<p>È meglio evitarlo. Per MySQL, PostgreSQL e altri database usa VPN, tunnel SSH, reti private o allowlist di IP. Un database pubblico aumenta molto il rischio di compromissione dei dati.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Aprire una porta è un problema per NIS2?</summary>
+<p>Non sempre. Il punto è dimostrare che l&#x27;esposizione è necessaria, protetta, monitorata e coerente con la gestione del rischio. Un inventario delle porte aperte aiuta molto.</p>
+    </details>
+</div>
+<h2>Controlla una porta prima di lasciarla aperta</h2>
+<p>Prima di pubblicare un servizio, verifica da Internet cosa risulta davvero raggiungibile.</p>
+<p>Usa il <a href="/">controllo porte aperte online</a> e poi confronta il risultato con la tua documentazione interna: ogni porta aperta deve avere un motivo, un responsabile e una protezione adeguata.</p>
+                </article>
+            </main>
+<footer class="footer">
+                <div class="footer-content">
+                    <p class="copyright">
+                        © 2026 Controllo Porte ·
+                        <a href="/privacy-policy/">Privacy Policy</a> ·
+                        <a href="/llms.txt">AI</a>
+                    </p>
+                    <p class="footer-credit">
+                        Servizio offerto da
+                        <a class="external-link" href="https://impulso.it" target="_blank" rel="noopener noreferrer">
+                            Impulso.it
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7"></path>
+                                <path d="M8 7h9v9"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>
