@@ -17,8 +17,6 @@ Verificare se una porta è aperta significa controllare se un servizio su un com
 
 In pratica, quando fai un controllo porte aperte stai chiedendo: "Da Internet riesco davvero a raggiungere questo servizio?".
 
-Vuoi fare subito il test? Usa il [controllo porte aperte online](/): inserisci IP o dominio, scegli la porta e verifica se è raggiungibile dall'esterno.
-
 ## Cos'è una porta di rete
 
 Un indirizzo IP identifica il dispositivo. La porta identifica il servizio in ascolto su quel dispositivo.
@@ -45,7 +43,7 @@ Una porta può risultare:
 - chiusa, quando il dispositivo risponde ma nessun servizio ascolta su quella porta
 - filtrata o non raggiungibile, quando firewall, NAT, router o provider bloccano la connessione
 
-## Verificare porta aperta: il test online
+## Come fare il test
 
 Il modo più semplice è usare uno strumento di test porta TCP online.
 
@@ -54,21 +52,15 @@ Ti servono due dati:
 1. l'indirizzo IP pubblico o il dominio da controllare
 2. il numero della porta da testare
 
-Esempio:
+Inserisci host e porta nel [controllo porte aperte online](/), poi avvia il test. Se preferisci non digitare l'IP, puoi usare i link diretti qui sotto: individuano automaticamente il tuo IP pubblico e aprono il test sulla porta indicata.
 
-```text
-Host: esempio.it
-Porta: 443
-```
+- [Verifica porta 22 (SSH)](/me/22)
+- [Verifica porta 80 (HTTP)](/me/80)
+- [Verifica porta 443 (HTTPS)](/me/443)
+- [Verifica porta 3389 (RDP)](/me/3389)
+- [Verifica porta 8080 (web alternativo)](/me/8080)
 
-Oppure:
-
-```text
-Host: 203.0.113.10
-Porta: 22
-```
-
-Il tester prova ad aprire una connessione TCP verso quell'host e quella porta. Se la connessione riesce, la porta è aperta dal punto di vista di Internet.
+Se la connessione riesce, la porta è aperta dal punto di vista di Internet.
 
 ## Come controllare una porta aperta da terminale
 
@@ -129,7 +121,7 @@ Prima di concludere che la porta non funziona, controlla questi punti:
 - stai testando l'IP pubblico giusto
 - il provider non blocca quella porta
 
-Se anche uno solo di questi elementi è sbagliato, il test porta TCP può fallire.
+Se anche uno solo di questi elementi manca, la porta risulterà chiusa anche se il servizio funziona in LAN.
 
 ## Esempio pratico: verificare la porta 80
 
@@ -154,7 +146,7 @@ Per renderlo raggiungibile da Internet devi:
 3. verificare che il server web sia attivo
 4. testare dall'esterno l'IP pubblico sulla porta `80`
 
-Solo se tutti questi passaggi sono corretti, la porta risulterà aperta.
+Solo se tutti questi passaggi sono corretti, la porta risulterà aperta. Puoi fare il test direttamente con [Verifica porta 80](/me/80).
 
 Puoi consultare anche la guida sulle [porte TCP comuni](/porte-tcp-comuni/) per capire quali porte sono usate più spesso dai servizi principali.
 
@@ -169,18 +161,6 @@ Un altro caso frequente è il firewall: il servizio è attivo, ma le connessioni
 Infine, se sei dietro CGNAT, il router potrebbe non avere un vero IP pubblico. In quel caso il port forwarding classico non basta.
 
 Per una diagnosi più completa, leggi anche: [Perché una porta risulta chiusa](/perche-una-porta-risulta-chiusa/).
-
-## Verificare porta aperta: metodo rapido
-
-Per fare una verifica sensata:
-
-1. identifica il servizio da testare
-2. controlla su quale porta ascolta
-3. verifica l'IP pubblico
-4. esegui il test porta TCP dall'esterno
-5. se la porta risulta chiusa, controlla firewall, router e NAT
-
-Questo approccio evita di andare a tentativi.
 
 ## FAQ
 

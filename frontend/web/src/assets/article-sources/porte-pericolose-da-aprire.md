@@ -176,17 +176,13 @@ Se sei dietro CGNAT o non hai IP pubblico, il port forwarding tradizionale potre
 
 Dopo aver configurato modem/router o firewall, usa un test dall'esterno.
 
-Con [Controllo Porte](/) puoi verificare se una porta TCP è raggiungibile da Internet su un IP, un dominio o un hostname DNS dinamico.
+Con [Controllo Porte](/) puoi verificare se una porta TCP è raggiungibile da Internet su un IP, un dominio o un hostname DNS dinamico. I link qui sotto usano il tuo IP pubblico automaticamente:
 
-Esempi:
-
-```text
-porta 22 SSH
-porta 3389 RDP
-porta 3306 MySQL
-porta 5432 PostgreSQL
-porta 8080 pannello web
-```
+- [Verifica porta 22 (SSH)](/me/22)
+- [Verifica porta 3389 (RDP)](/me/3389)
+- [Verifica porta 3306 (MySQL)](/me/3306)
+- [Verifica porta 5432 (PostgreSQL)](/me/5432)
+- [Verifica porta 8080 (pannello web)](/me/8080)
 
 Se la porta risulta aperta, chiediti se è davvero necessario lasciarla pubblica. Se risulta chiusa ma dovrebbe essere aperta, segui la [checklist per capire perché una porta risulta chiusa](/perche-una-porta-risulta-chiusa/).
 

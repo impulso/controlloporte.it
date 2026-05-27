@@ -17,8 +17,6 @@ Il port forwarding serve a rendere raggiungibile da Internet un servizio che si 
 
 Il problema è che spesso, dopo aver configurato tutto, la porta continua a risultare chiusa. Per capire se il port forwarding funziona davvero serve un test fatto nel modo giusto.
 
-Vuoi fare subito una verifica? Usa il [controllo porte aperte online](/) per testare IP, dominio e porta TCP dall'esterno.
-
 ## Cos'è il port forwarding
 
 Nella rete locale i dispositivi usano indirizzi privati, per esempio:
@@ -63,7 +61,14 @@ Il test va fatto sull'IP pubblico e sulla porta esterna:
 198.51.100.25:8080
 ```
 
-Se il servizio risponde, il port forwarding funziona.
+Se il servizio risponde, il port forwarding funziona. Puoi fare il test rapidamente con i link diretti:
+
+- [Verifica porta 80 (HTTP)](/me/80)
+- [Verifica porta 443 (HTTPS)](/me/443)
+- [Verifica porta 22 (SSH)](/me/22)
+- [Verifica porta 8080 (web alternativo)](/me/8080)
+
+I link usano automaticamente il tuo IP pubblico — niente da inserire.
 
 ## Il servizio interno deve essere acceso
 
@@ -206,7 +211,7 @@ Segui questa sequenza:
 5. controlla che l'IP WAN del router sia pubblico
 6. esegui il test dall'esterno sull'IP pubblico e sulla porta esterna
 
-Se arrivi al punto 6 con tutto corretto, la porta dovrebbe risultare aperta.
+Se arrivi al punto 6 con tutto corretto, la porta dovrebbe risultare aperta. Usa il [controllo porte aperte online](/) per eseguire il test dall'esterno.
 
 Se invece il test continua a fallire, può esserti utile la guida su [perché una porta risulta chiusa](/perche-una-porta-risulta-chiusa/).
 

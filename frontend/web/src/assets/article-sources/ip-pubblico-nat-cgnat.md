@@ -17,8 +17,6 @@ Il problema può essere più a monte: il tuo router potrebbe non avere un vero I
 
 Per capire perché una porta non è raggiungibile da Internet bisogna conoscere tre concetti: IP pubblico, NAT e CGNAT.
 
-Vuoi fare subito una verifica? Usa il [controllo porte aperte online](/) per testare IP, dominio e porta TCP dall'esterno.
-
 ## Cos'è un IP pubblico
 
 Un IP pubblico è un indirizzo raggiungibile da Internet.
@@ -191,12 +189,6 @@ Le opzioni principali sono:
 - usare soluzioni reverse tunnel
 
 La scelta dipende dal servizio che vuoi esporre e dal livello di affidabilità richiesto.
-
-Se il provider non offre un IP pubblico, o se vuoi evitare configurazioni complesse su VPS, una soluzione pratica è usare [ipstatico.pro](https://ipstatico.pro): permette di accedere da remoto a dispositivi e servizi anche quando la connessione è dietro CGNAT.
-
-È utile, per esempio, per raggiungere telecamere, NAS, sistemi domotici, server locali, apparati industriali o piccoli servizi self-hosted senza dover dipendere dal port forwarding tradizionale del router.
-
-Per un accesso occasionale può bastare un tunnel generico. Per un accesso stabile a dispositivi dietro CGNAT, invece, un servizio pensato per questo scenario evita molte complicazioni tecniche.
 
 ## IP pubblico statico o dinamico
 

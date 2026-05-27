@@ -240,13 +240,14 @@
 <p>Se sei dietro CGNAT o non hai IP pubblico, il port forwarding tradizionale potrebbe non funzionare. In quel caso può essere utile valutare una soluzione con IP pubblico dedicato via VPN, come <a href="https://ipstatico.pro/">IPStatico.pro</a>, oppure un accesso remoto semplificato come <a href="https://accessofacile.it/">AccessoFacile.it</a>.</p>
 <h2>Come verificare quali porte sono aperte</h2>
 <p>Dopo aver configurato modem/router o firewall, usa un test dall&#x27;esterno.</p>
-<p>Con <a href="/">Controllo Porte</a> puoi verificare se una porta TCP è raggiungibile da Internet su un IP, un dominio o un hostname DNS dinamico.</p>
-<p>Esempi:</p>
-<pre><code>porta 22 SSH
-porta 3389 RDP
-porta 3306 MySQL
-porta 5432 PostgreSQL
-porta 8080 pannello web</code></pre>
+<p>Con <a href="/">Controllo Porte</a> puoi verificare se una porta TCP è raggiungibile da Internet su un IP, un dominio o un hostname DNS dinamico. I link qui sotto usano il tuo IP pubblico automaticamente:</p>
+<ul>
+<li><a href="/me/22">Verifica porta 22 (SSH)</a></li>
+<li><a href="/me/3389">Verifica porta 3389 (RDP)</a></li>
+<li><a href="/me/3306">Verifica porta 3306 (MySQL)</a></li>
+<li><a href="/me/5432">Verifica porta 5432 (PostgreSQL)</a></li>
+<li><a href="/me/8080">Verifica porta 8080 (pannello web)</a></li>
+</ul>
 <p>Se la porta risulta aperta, chiediti se è davvero necessario lasciarla pubblica. Se risulta chiusa ma dovrebbe essere aperta, segui la <a href="/perche-una-porta-risulta-chiusa/">checklist per capire perché una porta risulta chiusa</a>.</p>
 <h2>FAQ</h2>
 <div class="faq-list">
