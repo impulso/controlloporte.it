@@ -3,26 +3,26 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Porte TCP comuni: 80, 443, 22, 25, 3306 | Controllo Porte</title>
-        <meta name="description" content="Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare." />
-        <meta name="keywords" content="porte TCP comuni, porta 443, porta 22 ssh, porta 80, porta 25 smtp, porta 3306 mysql" />
+        <title>Porte TCP comuni: web, self-hosting, telecamere e domotica | Controllo Porte</title>
+        <meta name="description" content="Guida alle porte TCP più usate: 80, 443, 22, 8080, 554 RTSP, 8123 Home Assistant, Plex, Jellyfin. Test diretto con un click sul tuo IP pubblico." />
+        <meta name="keywords" content="porte TCP comuni, porta 443, porta 22 ssh, porta 80, porta 8080, porta 554 rtsp, porta 8123 home assistant, porta 32400 plex, porte self-hosting, porte telecamere ip" />
         <link rel="canonical" href="https://controlloporte.it/porte-tcp-comuni/" />
         <meta name="robots" content="index,follow" />
         <meta property="og:type" content="article" />
         <meta property="og:locale" content="it_IT" />
         <meta property="og:site_name" content="Controllo Porte" />
-        <meta property="og:title" content="Porte TCP comuni: 80, 443, 22, 25, 3306" />
-        <meta property="og:description" content="Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare." />
+        <meta property="og:title" content="Porte TCP comuni: web, self-hosting, telecamere e domotica" />
+        <meta property="og:description" content="Guida alle porte TCP più usate: 80, 443, 22, 8080, 554 RTSP, 8123 Home Assistant, Plex, Jellyfin. Test diretto con un click sul tuo IP pubblico." />
         <meta property="og:url" content="https://controlloporte.it/porte-tcp-comuni/" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Porte TCP comuni: 80, 443, 22, 25, 3306" />
-        <meta name="twitter:description" content="Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare." />
+        <meta name="twitter:title" content="Porte TCP comuni: web, self-hosting, telecamere e domotica" />
+        <meta name="twitter:description" content="Guida alle porte TCP più usate: 80, 443, 22, 8080, 554 RTSP, 8123 Home Assistant, Plex, Jellyfin. Test diretto con un click sul tuo IP pubblico." />
         <script type="application/ld+json">{
         "@context": "https://schema.org",
         "@type": "Article",
         "@id": "https://controlloporte.it/porte-tcp-comuni/#article",
-        "headline": "Porte TCP comuni: 80, 443, 22, 25, 3306",
-        "description": "Guida alle porte TCP comuni: 80 HTTP, 443 HTTPS, 22 SSH, 25 SMTP e 3306 MySQL. A cosa servono, quando aprirle e quali rischi valutare.",
+        "headline": "Porte TCP comuni: web, self-hosting, telecamere e domotica",
+        "description": "Guida alle porte TCP più usate: 80, 443, 22, 8080, 554 RTSP, 8123 Home Assistant, Plex, Jellyfin. Test diretto con un click sul tuo IP pubblico.",
         "inLanguage": "it-IT",
         "mainEntityOfPage": "https://controlloporte.it/porte-tcp-comuni/",
         "isPartOf": {
@@ -58,207 +58,142 @@
             <main class="main article-main">
                 <nav class="breadcrumb" aria-label="Percorso"><a href="/">Home</a><span>/</span><span>Guide</span></nav>
                 <article class="article-content">
-                    <h1>Porte TCP comuni: 80, 443, 22, 25, 3306</h1>
-<p>Le porte TCP comuni sono numeri standard usati da servizi molto diffusi: siti web, accessi SSH, posta elettronica, database e applicazioni server.</p>
-<p>Conoscerle aiuta a capire cosa stai esponendo su Internet, quale porta testare e quali rischi valutare prima di aprire una regola sul router o sul firewall.</p>
-<p>In questa guida vediamo le porte TCP più cercate: <code>80</code>, <code>443</code>, <code>22</code>, <code>25</code> e <code>3306</code>.</p>
-<p>Vuoi fare subito una verifica? Usa il <a href="/">controllo porte aperte online</a> per testare IP, dominio e porta TCP dall&#x27;esterno.</p>
-<h2>Cosa sono le porte TCP</h2>
-<p>TCP è un protocollo di trasporto usato per stabilire connessioni affidabili tra due dispositivi.</p>
-<p>Una porta TCP identifica il servizio da raggiungere su un host.</p>
-<p>Esempio:</p>
-<pre><code>esempio.it:443</code></pre>
-<p>In questo caso:</p>
-<ul>
-<li><code>esempio.it</code> è l&#x27;host</li>
-<li><code>443</code> è la porta</li>
-<li>il servizio atteso è HTTPS</li>
-</ul>
-<p>Senza la porta, il sistema non saprebbe a quale applicazione consegnare la connessione.</p>
-<h2>Porta 80: HTTP</h2>
-<p>La porta <code>80</code> è la porta standard di HTTP.</p>
-<p>Viene usata per siti web non cifrati o per reindirizzare automaticamente gli utenti verso HTTPS.</p>
-<p>Esempio:</p>
-<pre><code>http://esempio.it</code></pre>
-<p>Quando apri un sito con <code>http://</code>, il browser usa normalmente la porta <code>80</code>.</p>
-<h3>Quando aprire la porta 80</h3>
-<p>Ha senso aprirla se:</p>
-<ul>
-<li>ospiti un sito web</li>
-<li>devi gestire il rinnovo di certificati con challenge HTTP</li>
-<li>vuoi reindirizzare HTTP verso HTTPS</li>
-<li>stai pubblicando un servizio web interno</li>
-</ul>
-<h3>Attenzione alla sicurezza</h3>
-<p>HTTP non cifra il traffico. Per login, pannelli di controllo, API e dati personali è meglio usare HTTPS sulla porta <code>443</code>.</p>
-<h2>Porta 443: HTTPS</h2>
-<p>La porta <code>443</code> è la porta standard di HTTPS.</p>
-<p>È usata dai siti web cifrati tramite TLS, cioè la maggior parte del web moderno.</p>
-<p>Esempio:</p>
-<pre><code>https://esempio.it</code></pre>
-<p>Se un sito è raggiungibile sulla porta <code>443</code>, il browser può stabilire una connessione sicura e verificare il certificato.</p>
-<h3>Quando aprire la porta 443</h3>
-<p>È la porta giusta per:</p>
-<ul>
-<li>siti web pubblici</li>
-<li>pannelli amministrativi protetti</li>
-<li>reverse proxy</li>
-<li>API HTTPS</li>
-<li>applicazioni self-hosted</li>
-</ul>
-<h3>Porta 443 e reverse proxy</h3>
-<p>Molti servizi domestici o aziendali vengono pubblicati dietro un reverse proxy come Nginx, Caddy, Traefik o Apache.</p>
-<p>In quel caso dall&#x27;esterno si apre solo la porta <code>443</code>, mentre il reverse proxy smista le richieste verso servizi interni diversi.</p>
-<h2>Porta 22 SSH</h2>
-<p>La porta <code>22</code> è la porta standard di SSH.</p>
-<p>SSH serve ad accedere da remoto a server Linux, dispositivi di rete, VPS, NAS e sistemi embedded.</p>
-<p>Esempio:</p>
-<pre><code>ssh utente@esempio.it</code></pre>
-<p>Se non specifichi una porta diversa, SSH prova normalmente la porta <code>22</code>.</p>
-<h3>Quando aprire la porta 22</h3>
-<p>Aprila solo se hai davvero bisogno di amministrare un sistema da remoto.</p>
-<p>Buone pratiche:</p>
-<ul>
-<li>disabilitare il login root</li>
-<li>usare chiavi SSH invece della sola password</li>
-<li>limitare gli IP autorizzati quando possibile</li>
-<li>tenere il sistema aggiornato</li>
-<li>valutare una VPN per l&#x27;accesso amministrativo</li>
-</ul>
-<h3>Cambiare porta SSH serve?</h3>
-<p>Spostare SSH da <code>22</code> a un&#x27;altra porta riduce il rumore dei tentativi automatici, ma non sostituisce una configurazione sicura.</p>
-<p>La sicurezza vera arriva da autenticazione forte, aggiornamenti e regole firewall sensate.</p>
-<h2>Porta 25 SMTP</h2>
-<p>La porta <code>25</code> è storicamente usata da SMTP, il protocollo per l&#x27;invio di email tra server.</p>
-<p>È una porta particolare perché molti provider la bloccano o la limitano sulle connessioni residenziali, per ridurre spam e abusi.</p>
-<h3>Quando serve la porta 25</h3>
-<p>Serve soprattutto ai mail server che devono consegnare email ad altri server.</p>
-<p>Non è di solito la porta usata da un normale client email per inviare posta autenticata.</p>
-<p>Per i client si usano spesso:</p>
-<pre><code>587 submission
-465 SMTPS</code></pre>
-<h3>Perché la porta 25 risulta chiusa</h3>
-<p>Può risultare chiusa perché:</p>
-<ul>
-<li>il servizio SMTP non è attivo</li>
-<li>il firewall la blocca</li>
-<li>il provider la filtra</li>
-<li>il server non accetta connessioni pubbliche</li>
-<li>il cloud provider richiede una richiesta di sblocco</li>
-</ul>
-<p>Se devi gestire posta in uscita, verifica sempre le policy del provider.</p>
-<h2>Porta 3306 MySQL</h2>
-<p>La porta <code>3306</code> è la porta predefinita di MySQL e MariaDB.</p>
-<p>È usata dai client per collegarsi al database.</p>
-<p>Esempio:</p>
-<pre><code>mysql.example.it:3306</code></pre>
-<h3>È una buona idea aprire MySQL su Internet?</h3>
-<p>In generale no, salvo casi ben controllati.</p>
-<p>Un database esposto pubblicamente aumenta molto la superficie di attacco. Se devi accedere a MySQL da remoto, valuta soluzioni più sicure:</p>
-<ul>
-<li>VPN</li>
-<li>tunnel SSH</li>
-<li>firewall con IP sorgente limitati</li>
-<li>rete privata del provider cloud</li>
-<li>autenticazione forte e TLS</li>
-</ul>
-<h3>Porta 3306 aperta: cosa controllare</h3>
-<p>Se devi esporla, controlla almeno:</p>
-<ul>
-<li>utenti con password robuste</li>
-<li>privilegi minimi</li>
-<li>accesso limitato per IP</li>
-<li>aggiornamenti del database</li>
-<li>log di accesso</li>
-<li>backup funzionanti</li>
-</ul>
-<h2>Tabella riepilogativa</h2>
+                    <h1>Porte TCP comuni: guida pratica</h1>
+<p>Ogni servizio che esponi su Internet usa una porta TCP. Conoscere le porte più comuni aiuta a capire cosa stai aprendo, perché un test fallisce e quali rischi valutare.</p>
+<p>Questa guida copre le porte più cercate: web, accesso remoto, email, database, streaming, telecamere IP e self-hosting.</p>
+<h2>Riferimento rapido</h2>
+<p>Clicca il link nella colonna <strong>Test</strong> per controllare subito quella porta sul tuo IP pubblico.</p>
 <table>
 <thead>
 <tr>
 <th>Porta</th>
-<th>Servizio comune</th>
-<th>Uso tipico</th>
-<th>Da esporre su Internet?</th>
+<th>Servizio</th>
+<th>Test rapido</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>80</td>
-<td>HTTP</td>
-<td>Siti web non cifrati o redirect</td>
-<td>Sì, se serve</td>
-</tr>
-<tr>
-<td>443</td>
-<td>HTTPS</td>
-<td>Siti web e API cifrate</td>
-<td>Sì, spesso</td>
-</tr>
-<tr>
-<td>22</td>
-<td>SSH</td>
-<td>Amministrazione remota</td>
-<td>Solo con protezioni</td>
-</tr>
-<tr>
-<td>25</td>
-<td>SMTP</td>
-<td>Invio email tra server</td>
-<td>Solo per mail server</td>
-</tr>
-<tr>
-<td>3306</td>
-<td>MySQL/MariaDB</td>
-<td>Database</td>
-<td>Meglio evitare, salvo restrizioni</td>
-</tr>
+<tr><td>80</td><td>HTTP</td><td><a href="/me/80">Testa porta 80</a></td></tr>
+<tr><td>443</td><td>HTTPS</td><td><a href="/me/443">Testa porta 443</a></td></tr>
+<tr><td>22</td><td>SSH</td><td><a href="/me/22">Testa porta 22</a></td></tr>
+<tr><td>3389</td><td>RDP</td><td><a href="/me/3389">Testa porta 3389</a></td></tr>
+<tr><td>25</td><td>SMTP</td><td><a href="/me/25">Testa porta 25</a></td></tr>
+<tr><td>587</td><td>SMTP submission</td><td><a href="/me/587">Testa porta 587</a></td></tr>
+<tr><td>3306</td><td>MySQL / MariaDB</td><td><a href="/me/3306">Testa porta 3306</a></td></tr>
+<tr><td>5432</td><td>PostgreSQL</td><td><a href="/me/5432">Testa porta 5432</a></td></tr>
+<tr><td>8080</td><td>HTTP alternativo</td><td><a href="/me/8080">Testa porta 8080</a></td></tr>
+<tr><td>8443</td><td>HTTPS alternativo</td><td><a href="/me/8443">Testa porta 8443</a></td></tr>
+<tr><td>554</td><td>RTSP (telecamere)</td><td><a href="/me/554">Testa porta 554</a></td></tr>
+<tr><td>8123</td><td>Home Assistant</td><td><a href="/me/8123">Testa porta 8123</a></td></tr>
+<tr><td>32400</td><td>Plex</td><td><a href="/me/32400">Testa porta 32400</a></td></tr>
+<tr><td>8096</td><td>Jellyfin</td><td><a href="/me/8096">Testa porta 8096</a></td></tr>
+<tr><td>9443</td><td>Portainer</td><td><a href="/me/9443">Testa porta 9443</a></td></tr>
 </tbody>
 </table>
+<p>I link usano <code>me</code> come host: il test controlla automaticamente la porta sul tuo IP pubblico, senza doverlo copiare.</p>
+<hr>
+<h2>Porte web: 80, 443, 8080, 8443</h2>
+<h3>Porta 80 — HTTP</h3>
+<p>La porta <code>80</code> è la porta standard di HTTP. Viene usata dai siti web non cifrati e dai redirect automatici verso HTTPS.</p>
+<p>Quando aprirla: se ospiti un sito web, gestisci il rinnovo di certificati con challenge HTTP, o vuoi reindirizzare il traffico verso HTTPS.</p>
+<p>Non usarla per pannelli di controllo, login o API: HTTP non cifra il traffico.</p>
+<p><a href="/me/80">Controlla se la porta 80 è aperta sul tuo IP</a></p>
+<h3>Porta 443 — HTTPS</h3>
+<p>La porta <code>443</code> è la porta standard di HTTPS, usata dalla maggior parte dei siti web moderni e delle API cifrate tramite TLS.</p>
+<p>È la porta giusta per siti web pubblici, reverse proxy (Nginx, Caddy, Traefik), applicazioni self-hosted con certificato, e pannelli amministrativi protetti.</p>
+<p>Con un reverse proxy sulla porta <code>443</code> puoi esporre più servizi interni su un solo IP, distinguendoli per dominio o sottodominio.</p>
+<p><a href="/me/443">Controlla se la porta 443 è aperta sul tuo IP</a></p>
+<h3>Porta 8080 — HTTP alternativo</h3>
+<p>La porta <code>8080</code> è usata da molti servizi web come alternativa alla <code>80</code>, spesso quando l'applicazione gira senza privilegi di root o quando la porta 80 è già occupata.</p>
+<p>La usano frequentemente: Proxmox, alcuni NAS, applicazioni Java, container Docker esposti senza reverse proxy, e servizi self-hosted in fase di test.</p>
+<p><a href="/me/8080">Controlla se la porta 8080 è aperta sul tuo IP</a></p>
+<h3>Porta 8443 — HTTPS alternativo</h3>
+<p>Equivalente cifrata della porta <code>8080</code>. Usata da servizi che gestiscono il proprio TLS senza passare per un reverse proxy, o come porta alternativa quando la <code>443</code> è già occupata.</p>
+<p><a href="/me/8443">Controlla se la porta 8443 è aperta sul tuo IP</a></p>
+<hr>
+<h2>Accesso remoto: SSH e RDP</h2>
+<h3>Porta 22 — SSH</h3>
+<p>La porta <code>22</code> è la porta standard di SSH, usata per l'accesso remoto a server Linux, VPS, NAS e dispositivi di rete.</p>
+<p>Se la esponi su Internet, riceverà tentativi automatici di accesso continui. Le contromisure minime sono: autenticazione con chiave SSH, accesso root disabilitato, firewall con IP limitati se possibile.</p>
+<p>Spostare SSH su un'altra porta riduce il rumore dei tentativi automatici, ma non è una misura di sicurezza in sé.</p>
+<p><a href="/me/22">Controlla se la porta 22 è aperta sul tuo IP</a></p>
+<h3>Porta 3389 — RDP (Desktop remoto Windows)</h3>
+<p>La porta <code>3389</code> è usata da RDP, il protocollo di desktop remoto di Windows.</p>
+<p>Se esposta su Internet senza protezioni è uno dei bersagli più frequenti degli attacchi automatizzati. Prima di aprirla valuta VPN, tunnel SSH o servizi di accesso remoto dedicati.</p>
+<p><a href="/me/3389">Controlla se la porta 3389 è aperta sul tuo IP</a></p>
+<hr>
+<h2>Email: 25, 587</h2>
+<h3>Porta 25 — SMTP</h3>
+<p>La porta <code>25</code> è usata per il trasferimento di email tra server. La maggior parte dei provider italiani la blocca sulle connessioni residenziali per ridurre spam e abusi.</p>
+<p>Se gestisci un mail server e la porta <code>25</code> risulta chiusa, il problema è quasi sempre il provider, non la tua configurazione.</p>
+<p><a href="/me/25">Controlla se la porta 25 è aperta sul tuo IP</a></p>
+<h3>Porta 587 — SMTP submission</h3>
+<p>È la porta corretta per i client email che inviano posta autenticata. Se configuri un server di posta per uso personale o aziendale, questa è la porta da aprire per l'invio, non la <code>25</code>.</p>
+<p><a href="/me/587">Controlla se la porta 587 è aperta sul tuo IP</a></p>
+<hr>
+<h2>Database: 3306, 5432</h2>
+<h3>Porta 3306 — MySQL e MariaDB</h3>
+<p>La porta <code>3306</code> è la porta predefinita di MySQL e MariaDB.</p>
+<p>Esporla direttamente su Internet è quasi sempre una cattiva idea. Se hai bisogno di accesso remoto al database, usa un tunnel SSH oppure una VPN. Se sei su un cloud provider, usa la rete privata interna.</p>
+<p><a href="/me/3306">Controlla se la porta 3306 è aperta sul tuo IP</a></p>
+<h3>Porta 5432 — PostgreSQL</h3>
+<p>Stessa situazione di MySQL: la porta <code>5432</code> va tenuta dietro firewall o VPN. Esporla su Internet aumenta molto la superficie di attacco senza un beneficio reale.</p>
+<p><a href="/me/5432">Controlla se la porta 5432 è aperta sul tuo IP</a></p>
+<hr>
+<h2>Streaming e telecamere: RTSP, Plex, Jellyfin</h2>
+<h3>Porta 554 — RTSP (telecamere IP e NVR)</h3>
+<p>La porta <code>554</code> è usata da RTSP (Real Time Streaming Protocol), il protocollo standard per lo streaming video delle telecamere IP, dei sistemi NVR e DVR.</p>
+<p>Il test TCP sulla porta <code>554</code> verifica se il canale di segnalazione RTSP è raggiungibile dall'esterno. Il flusso video vero e proprio usa in genere UDP su porte separate, che questo tipo di test non verifica.</p>
+<p>Se hai telecamere IP e vuoi accedere al feed video da Internet, la porta <code>554</code> deve essere aperta e inoltrata dal router verso il NVR o la telecamera. Se sei dietro CGNAT, il port forwarding non basterà: leggi la guida su <a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT</a>.</p>
+<p><a href="/me/554">Controlla se la porta 554 è aperta sul tuo IP</a></p>
+<h3>Porta 32400 — Plex Media Server</h3>
+<p>La porta <code>32400</code> è la porta principale di Plex per l'accesso remoto diretto. Se Plex non riesce a usare il relay cloud e la porta non è aperta, la riproduzione da fuori casa avviene via relay con qualità e latenza peggiori.</p>
+<p><a href="/me/32400">Controlla se la porta 32400 è aperta sul tuo IP</a></p>
+<h3>Porta 8096 — Jellyfin</h3>
+<p>La porta <code>8096</code> è la porta HTTP predefinita di Jellyfin. Per accesso cifrato dall'esterno è consigliabile usare un reverse proxy su <code>443</code> con certificato TLS invece di esporre direttamente la <code>8096</code>.</p>
+<p><a href="/me/8096">Controlla se la porta 8096 è aperta sul tuo IP</a></p>
+<hr>
+<h2>Self-hosting e domotica: Home Assistant, Portainer</h2>
+<h3>Porta 8123 — Home Assistant</h3>
+<p>La porta <code>8123</code> è la porta predefinita di Home Assistant. Se vuoi accedere alla domotica da fuori casa, questa è la porta da aprire o da esporre tramite reverse proxy su <code>443</code>.</p>
+<p>Home Assistant Cloud (Nabu Casa) offre accesso remoto senza dover aprire porte. Se invece gestisci tu il port forwarding, verifica che la porta sia raggiungibile dall'esterno con il test qui sotto.</p>
+<p><a href="/me/8123">Controlla se la porta 8123 è aperta sul tuo IP</a></p>
+<h3>Porta 9443 — Portainer</h3>
+<p>La porta <code>9443</code> è l'interfaccia HTTPS di Portainer per la gestione dei container Docker. Non va mai esposta direttamente su Internet: Portainer dà accesso completo all'infrastruttura Docker. Usala solo in LAN o tramite VPN.</p>
+<p><a href="/me/9443">Controlla se la porta 9443 è aperta sul tuo IP</a></p>
+<hr>
+<h2>Una nota su UDP</h2>
+<p>Questo strumento testa solo connessioni TCP. Alcuni servizi usano UDP per il traffico principale: WireGuard (porta 51820), OpenVPN (porta 1194 UDP), i flussi RTP delle telecamere, alcuni giochi online. Per questi servizi il test TCP non dà un risultato utile — una porta UDP può essere aperta anche se il test TCP dice "chiusa".</p>
+<hr>
 <h2>Porte aperte e sicurezza</h2>
-<p>Ogni porta aperta espone un servizio.</p>
-<p>Questo non significa che ogni porta aperta sia pericolosa, ma significa che quel servizio deve essere:</p>
-<ul>
-<li>necessario</li>
-<li>aggiornato</li>
-<li>configurato correttamente</li>
-<li>monitorato</li>
-<li>protetto da autenticazione adeguata</li>
-</ul>
-<p>La regola pratica è semplice: apri solo ciò che serve davvero.</p>
-<h2>Come testare una porta TCP comune</h2>
-<p>Per verificare se una porta è aperta, usa l&#x27;host e il numero di porta.</p>
-<p>Esempi:</p>
-<pre><code>esempio.it:80
-esempio.it:443
-esempio.it:22
-esempio.it:25
-esempio.it:3306</code></pre>
-<p>Se il test ha successo, significa che da Internet è possibile stabilire una connessione TCP verso quella porta.</p>
-<p>Se fallisce, il servizio può essere spento, filtrato da firewall, non inoltrato dal router o non raggiungibile per problemi di NAT.</p>
-<p>Prima di lasciare una porta pubblica, soprattutto per SSH, RDP o database, leggi anche la guida sulle <a href="/porte-pericolose-da-aprire/">porte pericolose da aprire</a>.</p>
-<p>Per una guida passo passo, leggi anche <a href="/come-verificare-se-una-porta-e-aperta/">come verificare se una porta è aperta</a>.</p>
+<p>Ogni porta aperta espone un servizio. La regola pratica è semplice: apri solo ciò che serve davvero, tienilo aggiornato, proteggilo con autenticazione adeguata.</p>
+<p>I database e i pannelli di controllo non vanno mai esposti direttamente su Internet. Per l'accesso remoto, una VPN o un tunnel SSH è quasi sempre più sicuro del port forwarding diretto.</p>
+<p>Prima di lasciare una porta pubblica, leggi anche la guida sulle <a href="/porte-pericolose-da-aprire/">porte pericolose da aprire</a>.</p>
+<p>Se una porta risulta chiusa quando dovrebbe essere aperta, la guida su <a href="/perche-una-porta-risulta-chiusa/">perché una porta risulta chiusa</a> copre le cause più comuni: firewall, port forwarding errato, IP interno cambiato e CGNAT.</p>
 <h2>FAQ</h2>
 <div class="faq-list">
     <details class="faq-item">
-        <summary>Quali sono le porte TCP più comuni?</summary>
-<p>Tra le più comuni ci sono <code>80</code> per HTTP, <code>443</code> per HTTPS, <code>22</code> per SSH, <code>25</code> per SMTP e <code>3306</code> per MySQL.</p>
+        <summary>Quali sono le porte TCP più usate nel self-hosting?</summary>
+<p>Le più comuni sono <code>80</code> e <code>443</code> per i servizi web, <code>22</code> per SSH, <code>8123</code> per Home Assistant, <code>554</code> per le telecamere IP con RTSP, <code>32400</code> per Plex e <code>8096</code> per Jellyfin.</p>
+    </details>
+    <details class="faq-item">
+        <summary>La porta 8123 di Home Assistant deve essere aperta?</summary>
+<p>Solo se vuoi accedere a Home Assistant da Internet senza usare Home Assistant Cloud. In alternativa puoi usare un reverse proxy su <code>443</code> o un tunnel VPN, che evitano di esporre direttamente la <code>8123</code>.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Posso testare la porta RTSP delle mie telecamere?</summary>
+<p>Sì, il test TCP sulla porta <code>554</code> verifica se il canale di segnalazione è raggiungibile. Il flusso video usa UDP e non è testabile con questo strumento. Se la porta <code>554</code> risulta chiusa, controlla port forwarding, firewall e se sei dietro CGNAT.</p>
     </details>
     <details class="faq-item">
         <summary>La porta 443 deve essere aperta?</summary>
 <p>Deve essere aperta se vuoi rendere raggiungibile un sito o servizio HTTPS da Internet. Se non pubblichi servizi web, non è necessario aprirla.</p>
     </details>
     <details class="faq-item">
-        <summary>La porta 22 SSH è pericolosa?</summary>
-<p>Non è pericolosa di per sé, ma se esposta a Internet riceverà tentativi automatici di accesso. Va protetta con chiavi SSH, firewall e configurazione corretta.</p>
-    </details>
-    <details class="faq-item">
         <summary>È sicuro aprire la porta 3306 MySQL?</summary>
 <p>Di solito è meglio evitare. Per accedere a un database da remoto sono preferibili VPN, tunnel SSH o regole firewall che limitano gli IP autorizzati.</p>
     </details>
 </div>
-<h2>Controlla ora una porta TCP</h2>
-<p>Inserisci IP o dominio, indica la porta da verificare e controlla se il servizio è raggiungibile da Internet con il <a href="/">test online di Controllo Porte</a>.</p>
+<h2>Verifica ora una porta TCP</h2>
+<p>Usa il <a href="/">controllo porte aperte online</a> oppure clicca direttamente uno dei link nella tabella in cima a questa pagina per testare la porta sul tuo IP pubblico.</p>
                 </article>
             </main>
 <footer class="footer">
