@@ -38,11 +38,7 @@ Il primo errore è testare l'indirizzo sbagliato. Da Internet devi controllare l
 
 ### Come controllare
 
-Apri il tool di Controllo Porte e usa il tuo IP pubblico rilevato automaticamente, oppure usa l'indirizzo:
-
-```text
-https://controlloporte.it/api/me
-```
+Apri il [tool di Controllo Porte](/) e usa il tuo IP pubblico rilevato automaticamente, oppure [verifica qui quale IP pubblico stai usando](/api/me).
 
 Se usi un dominio o un DNS dinamico, effettua PRIMA la verifica sull'IP e poi ripeti i test sul nome host.
 
