@@ -3,29 +3,29 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Controllo Porte Aperte Online | Test TCP Gratuito</title>
+        <title><%= htmlWebpackPlugin.options.PAGE_TITLE %></title>
         <meta
             name="description"
-            content="Controlla se una porta TCP è aperta o chiusa su IP o dominio. Test gratuito per port forwarding, modem/router, firewall, server, VPS e DNS dinamico."
+            content="<%= htmlWebpackPlugin.options.PAGE_DESCRIPTION %>"
         />
-        <link rel="canonical" href="https://controlloporte.it/" />
+        <link rel="canonical" href="<%= htmlWebpackPlugin.options.PAGE_CANONICAL %>" />
         <meta name="robots" content="index,follow" />
 
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="it_IT" />
         <meta property="og:site_name" content="Controllo Porte" />
-        <meta property="og:title" content="Controllo Porte Aperte Online" />
+        <meta property="og:title" content="<%= htmlWebpackPlugin.options.OG_TITLE %>" />
         <meta
             property="og:description"
-            content="Verifica se una porta TCP è raggiungibile dall'esterno su IP o dominio."
+            content="<%= htmlWebpackPlugin.options.PAGE_DESCRIPTION %>"
         />
-        <meta property="og:url" content="https://controlloporte.it/" />
+        <meta property="og:url" content="<%= htmlWebpackPlugin.options.PAGE_CANONICAL %>" />
 
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Controllo Porte Aperte Online" />
+        <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.OG_TITLE %>" />
         <meta
             name="twitter:description"
-            content="Test online gratuito per verificare porte TCP aperte o chiuse."
+            content="<%= htmlWebpackPlugin.options.PAGE_DESCRIPTION %>"
         />
         <script type="application/ld+json">
         {
@@ -82,22 +82,23 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/controlloporte-logo.png" />
     </head>
 
-    <body>
+    <body class="<%= htmlWebpackPlugin.options.PAGE_MODE === 'ddns' ? 'ddns-route' : '' %>">
         <div class="app-container">
             <header class="header">
                 <a href="/" class="logo">
                     <span class="logo-text">Controllo Porte</span>
                 </a>
                 <nav class="nav">
+                    <a href="/controlloDDNS" class="nav-link">Controllo DDNS</a>
                     <a href="/docs" class="nav-link">API</a>
                 </nav>
             </header>
 
             <main class="main">
                 <section class="hero">
-                    <h1 class="hero-title">Controllo Porte Aperte Online</h1>
+                    <h1 class="hero-title"><%= htmlWebpackPlugin.options.HERO_TITLE %></h1>
                     <p class="hero-subtitle">
-                        Verifica se una porta TCP è aperta o chiusa su un indirizzo IP o dominio.
+                        <%= htmlWebpackPlugin.options.HERO_SUBTITLE %>
                     </p>
                     <p class="public-ip">
                         Il tuo IP pubblico attuale è:
@@ -107,14 +108,14 @@
 
                 <section class="checker-card">
                     <form id="form" class="checker-form" novalidate>
-                        <div class="form-group">
-                            <label for="host" class="form-label">Host o indirizzo IP</label>
+                        <div class="form-group host-form-group">
+                            <label for="host" class="form-label"><%= htmlWebpackPlugin.options.HOST_LABEL %></label>
                             <div class="host-input-wrapper">
                                 <input
                                     type="text"
                                     class="form-input"
                                     id="host"
-                                    placeholder="Inserisci un dominio o indirizzo IPv4"
+                                    placeholder="<%= htmlWebpackPlugin.options.HOST_PLACEHOLDER %>"
                                     value="<%= htmlWebpackPlugin.options.DEFAULT_HOST %>"
                                     autocomplete="off"
                                     required
@@ -123,11 +124,11 @@
                                     Usa il mio IP pubblico
                                 </button>
                             </div>
-                            <span class="form-hint">Inserisci un dominio o indirizzo IPv4</span>
-                            <span class="form-error">Inserisci un dominio o indirizzo IP valido</span>
+                            <span class="form-hint"><%= htmlWebpackPlugin.options.HOST_HINT %></span>
+                            <span class="form-error"><%= htmlWebpackPlugin.options.HOST_ERROR %></span>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group ports-form-group">
                             <label for="ports" class="form-label">Porte</label>
                             <div class="ports-input-wrapper">
                                 <input
@@ -187,6 +188,24 @@
                                 Controllo...
                             </span>
                         </button>
+                        <button id="ddns-submit" type="button" class="secondary-submit-btn">
+                            <span class="ddns-submit-text">Controlla DDNS</span>
+                            <span class="ddns-submit-loading">
+                                <svg class="spinner" viewBox="0 0 24 24">
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                        fill="none"
+                                        stroke-dasharray="31.4 31.4"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                                Controllo...
+                            </span>
+                        </button>
                     </form>
 
                     <div id="results" class="results hidden">
@@ -204,6 +223,21 @@
                         </div>
                     </div>
 
+                    <div id="ddns-results" class="results hidden">
+                        <div class="results-header">
+                            <h3 class="results-title">Risultato DDNS</h3>
+                            <span id="ddns-results-host" class="results-host"></span>
+                        </div>
+                        <div id="ddns-result-card" class="ddns-result-card"></div>
+                        <div class="share-result">
+                            <label for="ddns-share-url" class="share-label">Link condivisibile</label>
+                            <div class="share-control">
+                                <input id="ddns-share-url" class="share-input" type="text" readonly />
+                                <button id="copy-ddns-share-link" class="share-copy-btn" type="button">Copia link</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="error" class="error-message hidden">
                         <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -215,61 +249,121 @@
                 </section>
 
                 <section class="desc-content">
-                    <div id="intro-content" class="intro-content">
-                        <h2>Verifica porte TCP aperte o chiuse</h2>
+                    <% if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
+                        <div id="intro-content" class="intro-content">
+                            <h2>Verifica se il DNS dinamico è aggiornato</h2>
+                            <p>
+                                Il controllo DDNS confronta l'IP pubblico del visitatore con l'indirizzo IPv4 a cui
+                                risolve il nome host inserito. Se i due indirizzi coincidono, il nome host DNS dinamico
+                                sta puntando alla connessione da cui stai navigando.
+                            </p>
+                            <p>
+                                È utile quando un accesso remoto, una telecamera, un NAS o un servizio domestico non
+                                risponde e vuoi capire se il problema nasce dal DNS dinamico non aggiornato oppure da
+                                port forwarding, firewall, NAT o CGNAT.
+                            </p>
+                        </div>
+
+                        <h2>Come leggere il risultato</h2>
                         <p>
-                            Controllo Porte ti permette di verificare se una porta TCP è raggiungibile dall'esterno.
-                            È utile per testare port forwarding, configurazioni firewall, modem/router, VPS, server domestici,
-                            NAS, servizi web, SSH, database e applicazioni self-hosted.
+                            Se il controllo indica DDNS corretto, il nome host risolve allo stesso IP pubblico rilevato
+                            dal sito. Se indica DDNS non allineato, il nome host punta a un IP diverso: il client DDNS
+                            potrebbe non avere aggiornato il record, oppure stai navigando da una rete diversa.
+                        </p>
+
+                        <h2>Controlli successivi</h2>
+                        <p>
+                            Dopo aver verificato il DNS dinamico, puoi controllare se il servizio è raggiungibile
+                            dall'esterno usando il test porte.
+                        </p>
+                        <ul>
+                            <li><a href="/">Controllo porte aperte online</a></li>
+                            <li><a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a></li>
+                            <li><a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT: differenze</a></li>
+                            <li><a href="/perche-una-porta-risulta-chiusa/">Checklist per capire perché una porta risulta chiusa</a></li>
+                        </ul>
+                    <% } else { %>
+                        <div id="intro-content" class="intro-content">
+                            <h2>Verifica porte TCP aperte o chiuse</h2>
+                            <p>
+                                Controllo Porte ti permette di verificare se una porta TCP è raggiungibile dall'esterno.
+                                È utile per testare port forwarding, configurazioni firewall, modem/router, VPS, server domestici,
+                                NAS, servizi web, SSH, database e applicazioni self-hosted.
+                            </p>
+                            <p>
+                                Il sito nasce come supporto pratico per gli utenti di servizi di DNS dinamico e accesso remoto,
+                                dall'esperienza quasi trentennale nella configurazione di migliaia di modem e modem/router per
+                                telecamere, impianti fotovoltaici, centrali antifurto, NAS, server locali e dispositivi raggiungibili
+                                da Internet.
+                            </p>
+                        </div>
+
+                        <h2>Vuoi capire perché la porta del modem/router è chiusa?</h2>
+                        <p>
+                            <a href="/perche-una-porta-risulta-chiusa/">Checklist per capire perché una porta risulta chiusa da Internet</a>
+                        </p>
+                        <p>Esegui i controlli indicati nella guida per capire la causa della porta chiusa del modem.</p>
+
+                        <h2>Usa Controllo Porte con ChatGPT o Claude</h2>
+                        <p>
+                            Puoi chiedere a un agente AI di verificare una porta TCP usando ControlloPorte.it, per esempio
+                            la porta 22 sul tuo IP pubblico o la porta 443 di un hostname DNS dinamico.
                         </p>
                         <p>
-                            Il sito nasce come supporto pratico per gli utenti di servizi di DNS dinamico e accesso remoto,
-                            dall'esperienza quasi trentennale nella configurazione di migliaia di modem e modem/router per
-                            telecamere, impianti fotovoltaici, centrali antifurto, NAS, server locali e dispositivi raggiungibili
-                            da Internet.
+                            <a href="/usare-controlloporte-con-chatgpt-claude/">Controllo porte aperte con ChatGPT o Claude</a>
                         </p>
-                    </div>
 
-                    <h2>Vuoi capire perché la porta del modem/router è chiusa?</h2>
-                    <p>
-                        <a href="/perche-una-porta-risulta-chiusa/">Checklist per capire perché una porta risulta chiusa da Internet</a>
-                    </p>
-                    <p>Esegui i controlli indicati nella guida per capire la causa della porta chiusa del modem.</p>
-
-                    <h2>Usa Controllo Porte con ChatGPT o Claude</h2>
-                    <p>
-                        Puoi chiedere a un agente AI di verificare una porta TCP usando ControlloPorte.it, per esempio
-                        la porta 22 sul tuo IP pubblico o la porta 443 di un hostname DNS dinamico.
-                    </p>
-                    <p>
-                        <a href="/usare-controlloporte-con-chatgpt-claude/">Controllo porte aperte con ChatGPT o Claude</a>
-                    </p>
-
-                    <h2>Risolvi problemi di porte chiuse, port forwarding e CGNAT</h2>
-                    <p>
-                        Se la porta è chiusa, queste guide ti aiutano a capire se il problema è nel servizio,
-                        nel firewall, nel modem/router, nel NAT o nel provider.
-                    </p>
-                    <ul>
-                        <li>
-                            <a href="/come-verificare-se-una-porta-e-aperta/">Come verificare se una porta è aperta</a>
-                        </li>
-                        <li>
-                            <a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a>
-                        </li>
-                        <li>
-                            <a href="/porte-tcp-comuni/">Porte TCP comuni: 80, 443, 22, 25, 3306</a>
-                        </li>
-                        <li>
-                            <a href="/porte-pericolose-da-aprire/">Porte pericolose da aprire: SSH, RDP, database e NIS2</a>
-                        </li>
-                        <li>
-                            <a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT: differenze</a>
-                        </li>
-                    </ul>
+                        <h2>Risolvi problemi di porte chiuse, port forwarding e CGNAT</h2>
+                        <p>
+                            Se la porta è chiusa, queste guide ti aiutano a capire se il problema è nel servizio,
+                            nel firewall, nel modem/router, nel NAT o nel provider.
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="/come-verificare-se-una-porta-e-aperta/">Come verificare se una porta è aperta</a>
+                            </li>
+                            <li>
+                                <a href="/test-port-forwarding/">Port forwarding: come capire se funziona</a>
+                            </li>
+                            <li>
+                                <a href="/porte-tcp-comuni/">Porte TCP comuni: 80, 443, 22, 25, 3306</a>
+                            </li>
+                            <li>
+                                <a href="/porte-pericolose-da-aprire/">Porte pericolose da aprire: SSH, RDP, database e NIS2</a>
+                            </li>
+                            <li>
+                                <a href="/ip-pubblico-nat-cgnat/">IP pubblico, NAT e CGNAT: differenze</a>
+                            </li>
+                        </ul>
+                    <% } %>
 
                     <h2>Domande frequenti</h2>
                     <div class="faq-list">
+                        <% if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
+                        <details class="faq-item">
+                            <summary>Cosa controlla il test DDNS?</summary>
+                    <p>
+                        Risolve il nome host inserito e confronta l'indirizzo ottenuto con l'IP pubblico rilevato per
+                        la visita corrente. Serve a capire se il record DNS dinamico punta alla connessione giusta.
+                    </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Perché il DDNS risulta non allineato?</summary>
+                    <p>
+                        Il client DDNS potrebbe non aver aggiornato il record, il router potrebbe usare un IP diverso,
+                        oppure la connessione potrebbe essere dietro NAT o CGNAT. In alcuni casi stai semplicemente
+                        facendo il test da una rete diversa da quella associata al nome host.
+                    </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Se il DDNS è corretto la porta deve risultare aperta?</summary>
+                    <p>
+                        No. Il DDNS corretto conferma solo che il nome host punta all'IP pubblico rilevato. Per la
+                        raggiungibilità del servizio devi controllare anche porta, firewall, port forwarding e servizio
+                        in ascolto.
+                    </p>
+                        </details>
+                        <% } else { %>
                         <details class="faq-item">
                             <summary>Perché una porta risulta chiusa?</summary>
                     <p>
@@ -310,8 +404,10 @@
                         delle porte testate. Usiamo i dati inseriti solo per eseguire il controllo richiesto.
                     </p>
                         </details>
+                        <% } %>
                     </div>
 
+                    <% if (htmlWebpackPlugin.options.PAGE_MODE !== 'ddns') { %>
                     <h2>Porte comuni da controllare</h2>
                     <div class="faq-list">
                         <details class="faq-item common-ports">
@@ -328,6 +424,7 @@
                             </ul>
                         </details>
                     </div>
+                    <% } %>
                 </section>
             </main>
 <footer class="footer">

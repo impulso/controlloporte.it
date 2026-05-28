@@ -81,6 +81,15 @@ class APISchema(BaseModel):
     )
 
 
+class DDNSCheckSchema(BaseModel):
+    """Schema for the `controllo_ddns_post` endpoint"""
+
+    host: HostAnnotation = Field(
+        description="Resolvable hostname to compare with the requester public IP.",
+        examples=["casa.example.com"],
+    )
+
+
 class APICheckSchema(BaseModel):
     """Schema for the individual results of a check"""
 
@@ -113,6 +122,30 @@ class APIResponseSchema(BaseModel):
             "resolved requester public IP address."
         ),
         examples=["example.com", "1.1.1.1"],
+    )
+
+
+class DDNSResponseSchema(BaseModel):
+    """The schema used for the DDNS check response"""
+
+    error: bool = Field(
+        description="Whether an error occurred during the check", examples=[False]
+    )
+    msg: str | None
+    host: str = Field(
+        description="Hostname that was resolved", examples=["casa.example.com"]
+    )
+    requester_ip: str = Field(
+        description="Public IP address detected for the requester",
+        examples=["1.2.3.4"],
+    )
+    resolved_ip: str = Field(
+        description="IPv4 address resolved from the hostname",
+        examples=["1.2.3.4"],
+    )
+    match: bool = Field(
+        description="Whether the requester public IP matches the hostname resolution",
+        examples=[True],
     )
 
 

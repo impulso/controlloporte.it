@@ -8,10 +8,13 @@ from litestar import MediaType, Request, get, post
 from litestar.params import Body
 from litestar.status_codes import HTTP_200_OK
 
-from app.helpers.query import get_requester, query_address
+from app.helpers.exceptions import JsonAPIException
+from app.helpers.query import check_ddns, get_requester, query_address
 from app.schemas.api import (
     APIResponseSchema,
     APISchema,
+    DDNSCheckSchema,
+    DDNSResponseSchema,
     HostAnnotation,
     PortAnnotation,
     PortCheckStrAnnotation,
@@ -107,6 +110,42 @@ def query_post(
     """
     host = get_requester(request) if data.host == "me" else data.host
     return post_helper(host, data.ports)
+
+
+@post(
+    "/api/controlloDDNS",
+    media_type=MediaType.JSON,
+    status_code=HTTP_200_OK,
+    sync_to_thread=False,
+)
+def controllo_ddns_post(
+    request: Request,
+    data: Annotated[
+        DDNSCheckSchema,
+        Body(
+            title="Check a dynamic DNS hostname against the requester IP",
+            description=(
+                "Resolve a hostname and compare it with the public IP address "
+                "detected for the incoming request."
+            ),
+        ),
+    ],
+) -> DDNSResponseSchema:
+    """
+    Compare a DNS hostname with the requester public IP address.
+
+    The endpoint resolves the supplied hostname to an IPv4 address and compares it
+    with the public IP detected from the request headers. It is useful to verify
+    whether a dynamic DNS hostname currently points to the same public IP used by
+    the visitor.
+    """
+    try:
+        requester_ip = get_requester(request)
+    except ValueError as ex:
+        raise JsonAPIException(key="requester_ip", message=str(ex)) from ex
+
+    ddns_check = check_ddns(data.host, requester_ip)
+    return DDNSResponseSchema(error=False, msg=None, **ddns_check)
 
 
 def post_helper(host: str, ports: list[int]) -> APIResponseSchema:

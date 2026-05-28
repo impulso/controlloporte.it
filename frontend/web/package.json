@@ -17,7 +17,7 @@
         "url": "https://github.com/impulso/controlloporte.it/issues"
     },
     "scripts": {
-        "dev": "API_URL=${API_URL:-http://api:8000} DEFAULT_HOST=${DEFAULT_HOST} DEFAULT_PORT=${DEFAULT_PORT} NODE_ENV=development webpack serve --history-api-fallback",
+        "dev": "API_URL=${API_URL:-http://api:8000} DEFAULT_HOST=${DEFAULT_HOST} DEFAULT_PORT=${DEFAULT_PORT} NODE_ENV=development webpack serve",
         "build": "DEFAULT_HOST=${DEFAULT_HOST} DEFAULT_PORT=${DEFAULT_PORT} NODE_ENV=production webpack build",
         "lint": "eslint src",
         "lint:fix": "npm run lint -- --fix",

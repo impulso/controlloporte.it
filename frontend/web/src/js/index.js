@@ -5,14 +5,23 @@
 let detectedPublicIp = "";
 
 window.onload = () => {
+    if (window.location.pathname === "/controlloDDNS") {
+        window.location.replace("/controlloDDNS/");
+        return;
+    }
+
     initializeState();
     setupEventListeners();
-    const shouldSubmit = applyCheckRoute();
+    const routeAction = applyCheckRoute();
 
     loadPublicIp();
 
-    if (shouldSubmit) {
+    if (routeAction === "ports") {
         handleSubmit(new Event("submit"));
+    }
+
+    if (routeAction === "ddns") {
+        handleDdnsSubmit(new Event("submit"));
     }
 };
 
@@ -41,7 +50,9 @@ const state = new Proxy(
         host: "",
         ports: [],
         results: null,
+        ddnsResults: null,
         loading: false,
+        ddnsLoading: false,
         error: null,
     },
     {
@@ -57,7 +68,9 @@ function initializeState() {
     state.host = "";
     state.ports = [];
     state.results = null;
+    state.ddnsResults = null;
     state.loading = false;
+    state.ddnsLoading = false;
     state.error = null;
 }
 
@@ -82,6 +95,8 @@ function setupEventListeners() {
     });
 
     document.getElementById("copy-share-link")?.addEventListener("click", copyShareLink);
+    document.getElementById("copy-ddns-share-link")?.addEventListener("click", copyDdnsShareLink);
+    document.getElementById("ddns-submit")?.addEventListener("click", handleDdnsSubmit);
     document.getElementById("use-public-ip")?.addEventListener("click", usePublicIp);
 
     // Validate ports on input
@@ -108,7 +123,22 @@ function handleSubmit(event) {
 
     hideError();
     hideResults();
+    hideDdnsResults();
     queryHost();
+}
+
+function handleDdnsSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!validateDdnsHostInput()) {
+        return;
+    }
+
+    hideError();
+    hideResults();
+    hideDdnsResults();
+    queryDdns();
 }
 
 function validateHostInput() {
@@ -178,6 +208,10 @@ function applyCheckRoute() {
         .filter(Boolean)
         .map((segment) => decodeURIComponent(segment));
 
+    if (isDdnsRoute(segments)) {
+        return applyDdnsRoute(segments);
+    }
+
     if (![1, 2].includes(segments.length) || reservedPaths.has(segments[0])) {
         return false;
     }
@@ -192,7 +226,30 @@ function applyCheckRoute() {
 
     document.getElementById("ports").value = ports.replaceAll(";", ", ");
 
-    return validateHostInput() && validatePortsInput();
+    return validateHostInput() && validatePortsInput() ? "ports" : false;
+}
+
+function isDdnsRoute(segments) {
+    return segments[0] === "controlloDDNS";
+}
+
+function applyDdnsRoute(segments) {
+    if (segments.length > 2) {
+        return false;
+    }
+
+    const host = segments[1] || "";
+    if (host) {
+        document.getElementById("host").value = host;
+    }
+
+    document.body.classList.add("ddns-route");
+
+    if (!host) {
+        return false;
+    }
+
+    return validateDdnsHostInput() ? "ddns" : false;
 }
 
 function loadPublicIp() {
@@ -278,8 +335,59 @@ function queryHost() {
         });
 }
 
+function queryDdns() {
+    const form = document.getElementById("form");
+    const host = form.querySelector("#host").value.trim();
+
+    state.host = host;
+    state.ddnsLoading = true;
+    state.error = null;
+
+    fetch("/api/controlloDDNS", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ host: host }),
+    })
+        .then((response) =>
+            response.json().then((data) => {
+                if (!response.ok) {
+                    const error = new Error(data?.message || "Request failed");
+                    error.data = data;
+                    throw error;
+                }
+
+                return data;
+            })
+        )
+        .then((response) => {
+            state.ddnsResults = response;
+            state.ddnsLoading = false;
+        })
+        .catch((error) => {
+            state.error =
+                error.data?.extra?.map((item) => item.message).join(", ") ||
+                error.data?.message ||
+                "Si è verificato un errore. Riprova tra poco.";
+            state.ddnsLoading = false;
+        });
+}
+
+function validateDdnsHostInput() {
+    const hostInput = document.getElementById("host");
+    const hostGroup = hostInput.closest(".form-group");
+    const value = hostInput.value.trim();
+    const hostnamePattern = /^[\w-]+(\.[\w-]+)+$/;
+    const isValid = value && hostnamePattern.test(value);
+
+    hostGroup.classList.toggle("has-error", !isValid);
+    return isValid;
+}
+
 function updateView(prop, value) {
     const submitBtn = document.getElementById("submit");
+    const ddnsSubmitBtn = document.getElementById("ddns-submit");
 
     switch (prop) {
         case "loading":
@@ -287,9 +395,20 @@ function updateView(prop, value) {
             submitBtn.disabled = value;
             break;
 
+        case "ddnsLoading":
+            ddnsSubmitBtn.classList.toggle("loading", value);
+            ddnsSubmitBtn.disabled = value;
+            break;
+
         case "results":
             if (value && !state.error) {
                 showResults(value);
+            }
+            break;
+
+        case "ddnsResults":
+            if (value && !state.error) {
+                showDdnsResults(value);
             }
             break;
 
@@ -345,8 +464,48 @@ function showResults(data) {
     scrollToFeedback(resultsDiv);
 }
 
+function showDdnsResults(data) {
+    const resultsDiv = document.getElementById("ddns-results");
+    const resultsHost = document.getElementById("ddns-results-host");
+    const resultCard = document.getElementById("ddns-result-card");
+    const shareUrlInput = document.getElementById("ddns-share-url");
+    const introContent = document.getElementById("intro-content");
+    const statusClass = data.match ? "open" : "closed";
+    const statusText = data.match ? "DDNS corretto" : "DDNS non allineato";
+
+    resultsHost.textContent = data.host;
+    resultCard.innerHTML = `
+        <div class="ddns-status ${statusClass}">
+            <span class="status-dot"></span>
+            ${statusText}
+        </div>
+        <dl class="ddns-details">
+            <div>
+                <dt>IP del visitatore</dt>
+                <dd>${data.requester_ip}</dd>
+            </div>
+            <div>
+                <dt>IP risolto dal nome host</dt>
+                <dd>${data.resolved_ip}</dd>
+            </div>
+        </dl>
+    `;
+
+    resultsDiv.classList.remove("hidden");
+    if (shareUrlInput) {
+        shareUrlInput.value = buildDdnsShareUrl(data);
+    }
+    introContent?.classList.add("hidden");
+    scrollToFeedback(resultsDiv);
+}
+
 function hideResults() {
     document.getElementById("results").classList.add("hidden");
+    document.getElementById("intro-content")?.classList.remove("hidden");
+}
+
+function hideDdnsResults() {
+    document.getElementById("ddns-results").classList.add("hidden");
     document.getElementById("intro-content")?.classList.remove("hidden");
 }
 
@@ -377,10 +536,27 @@ function buildShareUrl(data) {
     return `${window.location.origin}/${host}/${ports}`;
 }
 
+function buildDdnsShareUrl(data) {
+    const host = encodeURIComponent(data.host);
+
+    return `${window.location.origin}/controlloDDNS/${host}`;
+}
+
 function copyShareLink() {
     const shareUrlInput = document.getElementById("share-url");
     const copyButton = document.getElementById("copy-share-link");
 
+    copyToClipboard(shareUrlInput, copyButton);
+}
+
+function copyDdnsShareLink() {
+    const shareUrlInput = document.getElementById("ddns-share-url");
+    const copyButton = document.getElementById("copy-ddns-share-link");
+
+    copyToClipboard(shareUrlInput, copyButton);
+}
+
+function copyToClipboard(shareUrlInput, copyButton) {
     if (!shareUrlInput || !copyButton) {
         return;
     }

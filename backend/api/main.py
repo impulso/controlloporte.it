@@ -20,7 +20,13 @@ from app.helpers.handlers import (
 )
 from app.routes.admin import health
 from app.routes.v1 import v1_query_post
-from app.routes.v2 import get_port_check, get_port_check_json, my_ip, query_post
+from app.routes.v2 import (
+    controllo_ddns_post,
+    get_port_check,
+    get_port_check_json,
+    my_ip,
+    query_post,
+)
 
 
 def _get_project_meta():
@@ -54,6 +60,7 @@ app = Litestar(
     route_handlers=[
         InternalPrometheusController,
         my_ip,
+        controllo_ddns_post,
         query_post,
         get_port_check,
         get_port_check_json,

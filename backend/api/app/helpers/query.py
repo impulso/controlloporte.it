@@ -193,6 +193,37 @@ def query_address(address: str, ports: list[int]) -> list[dict]:
     return check_ports(check_address, ports)
 
 
+def check_ddns(hostname: str, requester_ip: str) -> dict[str, str | bool]:
+    """
+    Compare the requester's IP address with the IPv4 address resolved by a hostname.
+
+    Args:
+        hostname (str): The DNS hostname to resolve.
+        requester_ip (str): The public IP address detected from the incoming request.
+
+    Returns:
+        dict[str, str | bool]: The hostname, requester IP, resolved IP and match status.
+
+    Raises:
+        JsonAPIException: If the hostname cannot be resolved or the requester IP is missing.
+    """
+    try:
+        if is_ip_address(hostname) or hostname == "me":
+            raise ValueError("Inserisci un nome host DNS dinamico")
+        if not requester_ip:
+            raise ValueError("Impossibile rilevare l'indirizzo IP del richiedente")
+        resolved_address = resolve_hostname(hostname)
+    except Exception as ex:
+        raise JsonAPIException(key="host", message=str(ex)) from ex
+
+    return {
+        "host": hostname,
+        "requester_ip": requester_ip,
+        "resolved_ip": resolved_address,
+        "match": requester_ip == resolved_address,
+    }
+
+
 def get_requester(request: Request) -> str:
     """
     Extracts the requester's IP address from known headers.

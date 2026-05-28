@@ -209,6 +209,58 @@ def test_query_post_endpoint_v2_with_me(client, mocker):
     mock_query_address.assert_called_once_with(HEADER_REAL_IP, [443])
 
 
+def test_controllo_ddns_endpoint_matching_ip(client, mocker):
+    """Test DDNS endpoint compares the requester IP with hostname resolution."""
+    mock_get_requester = mocker.patch(
+        "app.routes.v2.get_requester", return_value=HEADER_REAL_IP
+    )
+    mock_check_ddns = mocker.patch(
+        "app.routes.v2.check_ddns",
+        return_value={
+            "host": "home.example.com",
+            "requester_ip": HEADER_REAL_IP,
+            "resolved_ip": HEADER_REAL_IP,
+            "match": True,
+        },
+    )
+
+    response = client.post("/api/controlloDDNS", json={"host": "home.example.com"})
+
+    assert response.status_code == HTTP_200_OK
+    assert response.json() == {
+        "error": False,
+        "msg": None,
+        "host": "home.example.com",
+        "requester_ip": HEADER_REAL_IP,
+        "resolved_ip": HEADER_REAL_IP,
+        "match": True,
+    }
+    mock_get_requester.assert_called_once()
+    mock_check_ddns.assert_called_once_with("home.example.com", HEADER_REAL_IP)
+
+
+def test_controllo_ddns_endpoint_missing_requester_ip(client, mocker):
+    """Test DDNS endpoint returns JSON validation error when requester IP is missing."""
+    mocker.patch(
+        "app.routes.v2.get_requester",
+        side_effect=ValueError("Impossibile rilevare l'indirizzo IP del richiedente"),
+    )
+
+    response = client.post("/api/controlloDDNS", json={"host": "home.example.com"})
+
+    assert response.status_code == HTTP_400_BAD_REQUEST
+    ret = response.json()
+    assert ret["detail"] == (
+        "errore di validazione: richiesta non valida per POST /api/controlloDDNS"
+    )
+    assert ret["error"] is True
+    assert ret["extra"][0]["key"] == "requester_ip"
+    assert (
+        ret["extra"][0]["message"]
+        == "Impossibile rilevare l'indirizzo IP del richiedente"
+    )
+
+
 def test_query_post_endpoint_invalid_port_v2(client):
     """Test v2 query endpoint raises error with invalid port number."""
     request_data = {"host": VALID_DOMAIN, "ports": [80, 70000]}  # Invalid port range

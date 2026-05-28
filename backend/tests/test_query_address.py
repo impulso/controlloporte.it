@@ -5,6 +5,7 @@ import pytest
 from api.app.helpers.query import (
     JsonAPIException,
     _check_port_status,
+    check_ddns,
     check_ports,
     query_address,
     resolve_hostname,
@@ -92,6 +93,40 @@ def test_query_address_resolves_hostname_before_port_checks(mocker):
         {"port": port, "status": True, "latency_ms": result[index]["latency_ms"]}
         for index, port in enumerate(OPEN_PORTS)
     ]
+
+
+def test_check_ddns_matching_requester_ip(mocker):
+    """Test DDNS check returns a match when hostname resolves to requester IP."""
+    mocker.patch("socket.gethostbyname", return_value=VALID_PUBLIC_IPV4)
+
+    result = check_ddns("home.example.com", VALID_PUBLIC_IPV4)
+
+    assert result == {
+        "host": "home.example.com",
+        "requester_ip": VALID_PUBLIC_IPV4,
+        "resolved_ip": VALID_PUBLIC_IPV4,
+        "match": True,
+    }
+
+
+def test_check_ddns_different_requester_ip(mocker):
+    """Test DDNS check returns no match when hostname resolves elsewhere."""
+    mocker.patch("socket.gethostbyname", return_value=VALID_PUBLIC_IPV4)
+
+    result = check_ddns("home.example.com", "1.2.3.4")
+
+    assert result == {
+        "host": "home.example.com",
+        "requester_ip": "1.2.3.4",
+        "resolved_ip": VALID_PUBLIC_IPV4,
+        "match": False,
+    }
+
+
+def test_check_ddns_rejects_plain_ip_hostname():
+    """Test DDNS check requires a hostname instead of a direct IP address."""
+    with pytest.raises(JsonAPIException, match="Inserisci un nome host DNS dinamico"):
+        check_ddns(VALID_PUBLIC_IPV4, VALID_PUBLIC_IPV4)
 
 
 def test_resolve_hostname_rejects_private_resolved_ip(mocker):
