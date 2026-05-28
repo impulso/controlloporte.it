@@ -7,6 +7,8 @@ server {
     set_real_ip_from 172.16.0.0/12;
     real_ip_header X-Forwarded-For;
     real_ip_recursive on;
+    resolver 127.0.0.11 ipv6=off valid=30s;
+    set $api_url $API_URL;
 
     location ~* ^/(?:\.env(?:[._-][^/]*)?|env|(?:config|app|src|backend|api)/\.env|\.docker\.env)$ {
         access_log /var/log/nginx/security-scan.log combined;
@@ -34,7 +36,7 @@ server {
     }
 
     location = /.well-known/openapi.json {
-        proxy_pass $API_URL/docs/openapi.json;
+        proxy_pass $api_url/docs/openapi.json;
         proxy_hide_header Content-Type;
         add_header Content-Type "application/json; charset=utf-8" always;
         proxy_set_header Host $host;
@@ -48,7 +50,7 @@ server {
     }
 
     location ~ ^/(api|docs|metrics) {
-        proxy_pass $API_URL;
+        proxy_pass $api_url;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
