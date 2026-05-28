@@ -396,8 +396,10 @@ function updateView(prop, value) {
             break;
 
         case "ddnsLoading":
-            ddnsSubmitBtn.classList.toggle("loading", value);
-            ddnsSubmitBtn.disabled = value;
+            if (ddnsSubmitBtn) {
+                ddnsSubmitBtn.classList.toggle("loading", value);
+                ddnsSubmitBtn.disabled = value;
+            }
             break;
 
         case "results":
