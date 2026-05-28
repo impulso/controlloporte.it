@@ -31,13 +31,13 @@
         {
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            "@id": "https://controlloporte.it/#app",
-            "name": "Controllo Porte",
-            "alternateName": "ControlloPorte.it",
-            "url": "https://controlloporte.it/",
+            "@id": "<%= htmlWebpackPlugin.options.SCHEMA_ID %>",
+            "name": "<%= htmlWebpackPlugin.options.SCHEMA_NAME %>",
+            "alternateName": "<%= htmlWebpackPlugin.options.SCHEMA_ALTERNATE_NAME %>",
+            "url": "<%= htmlWebpackPlugin.options.PAGE_CANONICAL %>",
             "applicationCategory": "NetworkingApplication",
             "operatingSystem": "Any",
-            "description": "Strumento italiano gratuito per controllare se una porta TCP è aperta o chiusa su un indirizzo IP o dominio, utile per port forwarding, modem/router, DNS dinamico, NAT e CGNAT.",
+            "description": "<%= htmlWebpackPlugin.options.PAGE_DESCRIPTION %>",
             "inLanguage": "it-IT",
             "provider": {
                 "@type": "Organization",
@@ -89,7 +89,7 @@
                     <span class="logo-text">Controllo Porte</span>
                 </a>
                 <nav class="nav">
-                    <a href="/controlloDDNS" class="nav-link">Controllo DDNS</a>
+                    <a href="/controlloDDNS/" class="nav-link">Controllo DDNS</a>
                     <a href="/docs" class="nav-link">API</a>
                 </nav>
             </header>
@@ -120,74 +120,78 @@
                                     autocomplete="off"
                                     required
                                 />
-                                <button id="use-public-ip" class="secondary-form-btn" type="button" disabled>
-                                    Usa il mio IP pubblico
-                                </button>
+                                <% if (htmlWebpackPlugin.options.PAGE_MODE !== 'ddns') { %>
+                                    <button id="use-public-ip" class="secondary-form-btn" type="button" disabled>
+                                        Usa il mio IP pubblico
+                                    </button>
+                                <% } %>
                             </div>
                             <span class="form-hint"><%= htmlWebpackPlugin.options.HOST_HINT %></span>
                             <span class="form-error"><%= htmlWebpackPlugin.options.HOST_ERROR %></span>
                         </div>
 
-                        <div class="form-group ports-form-group">
-                            <label for="ports" class="form-label">Porte</label>
-                            <div class="ports-input-wrapper">
-                                <input
-                                    type="text"
-                                    class="form-input"
-                                    id="ports"
-                                    placeholder="80, 443, 22"
-                                    value="<%= htmlWebpackPlugin.options.DEFAULT_PORT %>"
-                                    autocomplete="off"
-                                    required
-                                />
-                                <span class="form-error">Inserisci porte valide</span>
-                                <div class="port-presets">
-                                    <div class="port-preset-group">
-                                        <span class="port-preset-label">Gruppi</span>
-                                        <div class="quick-ports">
-                                            <button type="button" class="quick-port-btn" data-ports="80,443">Web</button>
-                                            <button type="button" class="quick-port-btn" data-ports="25,465,587,993,995">Email</button>
-                                            <button type="button" class="quick-port-btn" data-ports="22,3389,5900">Accesso remoto</button>
-                                            <button type="button" class="quick-port-btn" data-ports="3306,5432,6379,27017">Database</button>
-                                            <button type="button" class="quick-port-btn" data-ports="8123,32400,5000,8096">Casa/NAS</button>
+                        <% if (htmlWebpackPlugin.options.PAGE_MODE !== 'ddns') { %>
+                            <div class="form-group ports-form-group">
+                                <label for="ports" class="form-label">Porte</label>
+                                <div class="ports-input-wrapper">
+                                    <input
+                                        type="text"
+                                        class="form-input"
+                                        id="ports"
+                                        placeholder="80, 443, 22"
+                                        value="<%= htmlWebpackPlugin.options.DEFAULT_PORT %>"
+                                        autocomplete="off"
+                                        required
+                                    />
+                                    <span class="form-error">Inserisci porte valide</span>
+                                    <div class="port-presets">
+                                        <div class="port-preset-group">
+                                            <span class="port-preset-label">Gruppi</span>
+                                            <div class="quick-ports">
+                                                <button type="button" class="quick-port-btn" data-ports="80,443">Web</button>
+                                                <button type="button" class="quick-port-btn" data-ports="25,465,587,993,995">Email</button>
+                                                <button type="button" class="quick-port-btn" data-ports="22,3389,5900">Accesso remoto</button>
+                                                <button type="button" class="quick-port-btn" data-ports="3306,5432,6379,27017">Database</button>
+                                                <button type="button" class="quick-port-btn" data-ports="8123,32400,5000,8096">Casa/NAS</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="port-preset-group">
-                                        <span class="port-preset-label">Porte rapide</span>
-                                        <div class="quick-ports">
-                                            <button type="button" class="quick-port-btn" data-port="80">HTTP</button>
-                                            <button type="button" class="quick-port-btn" data-port="443">HTTPS</button>
-                                            <button type="button" class="quick-port-btn" data-port="22">SSH</button>
-                                            <button type="button" class="quick-port-btn" data-port="21">FTP</button>
-                                            <button type="button" class="quick-port-btn" data-port="3306">MySQL</button>
-                                            <button type="button" class="quick-port-btn" data-port="5432">PostgreSQL</button>
-                                            <button type="button" class="quick-port-btn" data-port="3389">Remote Desktop</button>
-                                            <button type="button" class="quick-port-btn" data-port="8123">Home Assistant</button>
+                                        <div class="port-preset-group">
+                                            <span class="port-preset-label">Porte rapide</span>
+                                            <div class="quick-ports">
+                                                <button type="button" class="quick-port-btn" data-port="80">HTTP</button>
+                                                <button type="button" class="quick-port-btn" data-port="443">HTTPS</button>
+                                                <button type="button" class="quick-port-btn" data-port="22">SSH</button>
+                                                <button type="button" class="quick-port-btn" data-port="21">FTP</button>
+                                                <button type="button" class="quick-port-btn" data-port="3306">MySQL</button>
+                                                <button type="button" class="quick-port-btn" data-port="5432">PostgreSQL</button>
+                                                <button type="button" class="quick-port-btn" data-port="3389">Remote Desktop</button>
+                                                <button type="button" class="quick-port-btn" data-port="8123">Home Assistant</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <span class="form-hint">Separa più porte con una virgola, da 1 a 65535</span>
                             </div>
-                            <span class="form-hint">Separa più porte con una virgola, da 1 a 65535</span>
-                        </div>
 
-                        <button id="submit" type="submit" class="submit-btn">
-                            <span class="submit-text">Controlla porte</span>
-                            <span class="submit-loading">
-                                <svg class="spinner" viewBox="0 0 24 24">
-                                    <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="10"
-                                        stroke="currentColor"
-                                        stroke-width="3"
-                                        fill="none"
-                                        stroke-dasharray="31.4 31.4"
-                                        stroke-linecap="round"
-                                    />
-                                </svg>
-                                Controllo...
-                            </span>
-                        </button>
+                            <button id="submit" type="submit" class="submit-btn">
+                                <span class="submit-text">Controlla porte</span>
+                                <span class="submit-loading">
+                                    <svg class="spinner" viewBox="0 0 24 24">
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            stroke-width="3"
+                                            fill="none"
+                                            stroke-dasharray="31.4 31.4"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                    Controllo...
+                                </span>
+                            </button>
+                        <% } %>
                         <% if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
                             <button id="ddns-submit" type="button" class="secondary-submit-btn">
                                 <span class="ddns-submit-text">Controlla DDNS</span>

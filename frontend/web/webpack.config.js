@@ -44,6 +44,9 @@ module.exports = {
                 "Controlla se una porta TCP è aperta o chiusa su IP o dominio. Test gratuito per port forwarding, modem/router, firewall, server, VPS e DNS dinamico.",
             PAGE_CANONICAL: "https://controlloporte.it/",
             OG_TITLE: "Controllo Porte Aperte Online",
+            SCHEMA_ID: "https://controlloporte.it/#app",
+            SCHEMA_NAME: "Controllo Porte",
+            SCHEMA_ALTERNATE_NAME: "ControlloPorte.it",
             HERO_TITLE: "Controllo Porte Aperte Online",
             HERO_SUBTITLE:
                 "Verifica se una porta TCP è aperta o chiusa su un indirizzo IP o dominio.",
@@ -66,6 +69,9 @@ module.exports = {
                 "Controlla se un nome host DDNS risolve allo stesso IP pubblico del visitatore. Verifica rapida per DNS dinamico, modem/router e accesso remoto.",
             PAGE_CANONICAL: "https://controlloporte.it/controlloDDNS/",
             OG_TITLE: "Controllo DDNS Online",
+            SCHEMA_ID: "https://controlloporte.it/controlloDDNS/#app",
+            SCHEMA_NAME: "Controllo DDNS",
+            SCHEMA_ALTERNATE_NAME: "Controllo DDNS ControlloPorte.it",
             HERO_TITLE: "Controllo DDNS Online",
             HERO_SUBTITLE:
                 "Verifica se il nome host DNS dinamico punta al tuo IP pubblico attuale.",

@@ -100,9 +100,11 @@ function setupEventListeners() {
     document.getElementById("use-public-ip")?.addEventListener("click", usePublicIp);
 
     // Validate ports on input
-    portsInput.addEventListener("input", () => {
-        validatePortsInput();
-    });
+    if (portsInput) {
+        portsInput.addEventListener("input", () => {
+            validatePortsInput();
+        });
+    }
 
     // Validate host on input
     document.getElementById("host").addEventListener("input", () => {
@@ -391,8 +393,10 @@ function updateView(prop, value) {
 
     switch (prop) {
         case "loading":
-            submitBtn.classList.toggle("loading", value);
-            submitBtn.disabled = value;
+            if (submitBtn) {
+                submitBtn.classList.toggle("loading", value);
+                submitBtn.disabled = value;
+            }
             break;
 
         case "ddnsLoading":
