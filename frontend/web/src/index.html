@@ -188,24 +188,26 @@
                                 Controllo...
                             </span>
                         </button>
-                        <button id="ddns-submit" type="button" class="secondary-submit-btn">
-                            <span class="ddns-submit-text">Controlla DDNS</span>
-                            <span class="ddns-submit-loading">
-                                <svg class="spinner" viewBox="0 0 24 24">
-                                    <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="10"
-                                        stroke="currentColor"
-                                        stroke-width="3"
-                                        fill="none"
-                                        stroke-dasharray="31.4 31.4"
-                                        stroke-linecap="round"
-                                    />
-                                </svg>
-                                Controllo...
-                            </span>
-                        </button>
+                        <% if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
+                            <button id="ddns-submit" type="button" class="secondary-submit-btn">
+                                <span class="ddns-submit-text">Controlla DDNS</span>
+                                <span class="ddns-submit-loading">
+                                    <svg class="spinner" viewBox="0 0 24 24">
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            stroke-width="3"
+                                            fill="none"
+                                            stroke-dasharray="31.4 31.4"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                    Controllo...
+                                </span>
+                            </button>
+                        <% } %>
                     </form>
 
                     <div id="results" class="results hidden">
