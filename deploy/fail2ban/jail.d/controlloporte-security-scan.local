@@ -1,0 +1,9 @@
+[controlloporte-security-scan]
+enabled = true
+filter = controlloporte-security-scan
+logpath = /var/log/controlloporte/nginx/security-scan.log
+maxretry = 1
+findtime = 86400
+bantime = -1
+backend = auto
+action = firewallcmd-allports[name=controlloporte-security-scan]

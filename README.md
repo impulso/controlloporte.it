@@ -101,6 +101,28 @@ The production configuration exposes:
 - API on `127.0.0.1:8000`;
 - public reverse proxy through Caddy/Nginx.
 
+### Permanent scanner bans
+
+Nginx rejects common secret/config probes such as `/.env`, `/.git/config`, `wp-config.php`
+backups, exposed logs, SQL dumps and CI files with status `444`, and writes them to:
+
+```text
+/var/log/controlloporte/nginx/security-scan.log
+```
+
+Install the included fail2ban jail on the host to ban the caller at firewall level on the
+first matching request:
+
+```bash
+sudo cp deploy/fail2ban/filter.d/controlloporte-security-scan.conf /etc/fail2ban/filter.d/
+sudo cp deploy/fail2ban/jail.d/controlloporte-security-scan.local /etc/fail2ban/jail.d/
+sudo systemctl reload fail2ban
+```
+
+The jail uses `bantime = -1`, so bans are permanent until manually removed.
+On the production AlmaLinux host it uses `firewallcmd-allports`, matching the active
+firewalld firewall.
+
 ## Environment Variables
 
 ### Frontend

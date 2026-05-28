@@ -8,6 +8,31 @@ server {
     real_ip_header X-Forwarded-For;
     real_ip_recursive on;
 
+    location ~* ^/(?:\.env(?:[._-][^/]*)?|env|(?:config|app|src|backend|api)/\.env|\.docker\.env)$ {
+        access_log /var/log/nginx/security-scan.log combined;
+        return 444;
+    }
+
+    location ~* ^/(?:\.git(?:/config|-credentials)?|\.npmrc|\.pypirc|\.yarnrc(?:\.yml)?|\.github/workflows/[^/]+\.ya?ml|Jenkinsfile|\.gitlab-ci\.yml)$ {
+        access_log /var/log/nginx/security-scan.log combined;
+        return 444;
+    }
+
+    location ~* ^/(?:wp-json/gravitysmtp(?:/.*)?|(?:wp-)?config\.php(?:[._-](?:bak|backup|old|save|swp|txt))?|settings\.php|(?:config|application|docker-compose|amplify)\.ya?ml|application(?:-production)?\.properties|Dockerfile|web\.config|(?:local_)?settings\.py|settings/production\.py|config/(?:database|secrets|application)\.ya?ml|(?:appsettings(?:\.(?:Development|Production))?|local\.settings|config|config/(?:production|development))\.json|(?:next|nuxt|vite)\.config\.js|firebase\.json|\.firebase/hosting\.json|composer\.json)$ {
+        access_log /var/log/nginx/security-scan.log combined;
+        return 444;
+    }
+
+    location ~* ^/(?:logs|storage/logs|var/log)/(?:error|application|laravel|app)\.log$ {
+        access_log /var/log/nginx/security-scan.log combined;
+        return 444;
+    }
+
+    location ~* ^/(?:database|dump|backup|db)\.sql$ {
+        access_log /var/log/nginx/security-scan.log combined;
+        return 444;
+    }
+
     location = /.well-known/openapi.json {
         proxy_pass $API_URL/docs/openapi.json;
         proxy_hide_header Content-Type;

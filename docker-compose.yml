@@ -17,6 +17,8 @@ services:
       - API_URL=http://api:8000  # Public API URL for browser clients
     ports:
       - 127.0.0.1:8080:80
+    volumes:
+      - /var/log/controlloporte/nginx:/var/log/nginx
     healthcheck:
       test: ["CMD", "wget", "--spider", "-S", "http://127.0.0.1"]
       interval: 30s
