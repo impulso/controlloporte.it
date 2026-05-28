@@ -38,8 +38,6 @@ services:
     container_name: api
     environment:
       - ALLOW_PRIVATE=false  # Prevent usage of private IP addresses
-    ports:
-      - 127.0.0.1:8000:8000
     healthcheck:
       test: ["CMD", "wget", "--spider", "-S", "http://127.0.0.1:8000/healthz"]
       interval: 30s

@@ -98,7 +98,7 @@ docker compose up -d --build
 The production configuration exposes:
 
 - frontend on `127.0.0.1:8080`;
-- API on `127.0.0.1:8000`;
+- API on the internal Docker network only;
 - public reverse proxy through Caddy/Nginx.
 
 ### Permanent scanner bans
