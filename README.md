@@ -104,7 +104,7 @@ The production configuration exposes:
 ### Permanent scanner bans
 
 Nginx rejects common secret/config probes such as `/.env`, `/.git/config`, `wp-config.php`
-backups, exposed logs, SQL dumps and CI files with status `444`, and writes them to:
+backups, exposed logs, SQL dumps and CI files with status `403`, and writes them to:
 
 ```text
 /var/log/controlloporte/nginx/security-scan.log
@@ -119,7 +119,7 @@ sudo cp deploy/fail2ban/jail.d/controlloporte-security-scan.local /etc/fail2ban/
 sudo systemctl reload fail2ban
 ```
 
-The jail uses `bantime = -1`, so bans are permanent until manually removed.
+The jail is named `cp-scan` and uses `bantime = -1`, so bans are permanent until manually removed.
 On the production AlmaLinux host it uses `firewallcmd-allports`, matching the active
 firewalld firewall.
 
