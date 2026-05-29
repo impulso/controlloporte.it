@@ -20,8 +20,8 @@ Il servizio è pensato per diagnosi di rete autorizzate, verifica del port forwa
 Controllo Porte offre tre strumenti distinti:
 
 - **Controllo porta singola** — verifica se una o più porte TCP specifiche sono raggiungibili su un IP o dominio: https://controlloporte.it/
-- **Scansione NAT veloce** — scansiona le 50 porte TCP più comuni sull'IP pubblico del richiedente: https://controlloporte.it/controlloMODEM/
-- **Controllo DDNS** — verifica se un nome host DNS dinamico risolve all'IP pubblico del visitatore: https://controlloporte.it/controlloDDNS/
+- **Scansione NAT veloce** — scansiona le 50 porte TCP più comuni sull'IP pubblico del richiedente: https://controlloporte.it/controllo-modem/
+- **Controllo DDNS** — verifica se un nome host DNS dinamico risolve all'IP pubblico del visitatore: https://controlloporte.it/controllo-ddns/
 
 ## Tool principale
 
@@ -163,13 +163,13 @@ Nota: la struttura esatta delle risposte può evolvere. Per integrazioni automat
 
 ## Scansione NAT veloce
 
-URL: https://controlloporte.it/controlloMODEM/
+URL: https://controlloporte.it/controllo-modem/
 
 Esegue una scansione rapida delle 50 porte TCP più comuni sull'IP pubblico del richiedente. Il bersaglio è sempre e solo l'IP pubblico rilevato automaticamente dalla visita — non è possibile inserire IP di terzi. Richiede consenso esplicito prima dell'avvio. Utile per scoprire quali porte risultano aperte dall'esterno senza dover testare porta per porta. Produce un link condivisibile con i risultati.
 
 ## Controllo DDNS
 
-URL: https://controlloporte.it/controlloDDNS/
+URL: https://controlloporte.it/controllo-ddns/
 
 Verifica se un nome host DNS dinamico risolve all'IP pubblico del visitatore. L'utente inserisce un hostname DDNS (es. `casa.example.com`) e il servizio confronta l'IP a cui risolve con l'IP pubblico rilevato dalla visita corrente. Se coincidono, il record DDNS è allineato. Se differiscono, il client DDNS potrebbe non aver aggiornato il record, oppure si sta navigando da una rete diversa. Produce un link condivisibile con il risultato.
 
@@ -332,7 +332,7 @@ Controllo Porte is a free Italian online tool to check whether a TCP port is ope
 - Supported protocol: TCP only. UDP ports are not supported.
 - Access: free, no registration required
 - Use cases: port forwarding checks, firewall diagnosis, router configuration, public IP checks, NAT and CGNAT troubleshooting, remote access diagnostics, DDNS verification
-- Tools: single port check (main), NAT quick scan (https://controlloporte.it/controlloMODEM/), DDNS check (https://controlloporte.it/controlloDDNS/)
+- Tools: single port check (main), NAT quick scan (https://controlloporte.it/controllo-modem/), DDNS check (https://controlloporte.it/controllo-ddns/)
 - API documentation: https://controlloporte.it/docs
 - OpenAPI spec: https://controlloporte.it/.well-known/openapi.json
 - Main endpoint (POST): `POST https://controlloporte.it/api/query`

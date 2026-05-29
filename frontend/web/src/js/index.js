@@ -5,13 +5,13 @@
 let detectedPublicIp = "";
 
 function initializeApp() {
-    if (window.location.pathname === "/controlloDDNS") {
-        window.location.replace("/controlloDDNS/");
+    if (window.location.pathname === "/controllo-ddns") {
+        window.location.replace("/controllo-ddns/");
         return;
     }
 
-    if (window.location.pathname === "/controlloMODEM") {
-        window.location.replace("/controlloMODEM/");
+    if (window.location.pathname === "/controllo-modem") {
+        window.location.replace("/controllo-modem/");
         return;
     }
 
@@ -266,11 +266,11 @@ function applyCheckRoute() {
 }
 
 function isDdnsRoute(segments) {
-    return segments[0] === "controlloDDNS";
+    return segments[0] === "controllo-ddns";
 }
 
 function isNatRoute(segments) {
-    return segments[0] === "controlloMODEM";
+    return segments[0] === "controllo-modem";
 }
 
 function applyNatRoute(segments) {
@@ -696,7 +696,7 @@ function buildShareUrl(data) {
 function buildDdnsShareUrl(data) {
     const host = encodeURIComponent(data.host);
 
-    return `${window.location.origin}/controlloDDNS/${host}`;
+    return `${window.location.origin}/controllo-ddns/${host}`;
 }
 
 function copyShareLink() {

@@ -57,7 +57,7 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            filename: "controlloDDNS/index.html",
+            filename: "controllo-ddns/index.html",
             template: "src/index.html",
             minify: {
                 collapseWhitespace: true,
@@ -67,9 +67,9 @@ module.exports = {
             PAGE_TITLE: "Controllo DDNS Online | Verifica DNS Dinamico",
             PAGE_DESCRIPTION:
                 "Verifica se il tuo nome host DDNS punta all'IP pubblico corretto. Utile quando un accesso remoto, una telecamera o un NAS non risponde e vuoi escludere il DNS dinamico come causa.",
-            PAGE_CANONICAL: "https://controlloporte.it/controlloDDNS/",
+            PAGE_CANONICAL: "https://controlloporte.it/controllo-ddns/",
             OG_TITLE: "Controllo DDNS Online",
-            SCHEMA_ID: "https://controlloporte.it/controlloDDNS/#app",
+            SCHEMA_ID: "https://controlloporte.it/controllo-ddns/#app",
             SCHEMA_NAME: "Controllo DDNS",
             SCHEMA_ALTERNATE_NAME: "Controllo DDNS ControlloPorte.it",
             HERO_TITLE: "Controllo DDNS Online",
@@ -82,7 +82,7 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            filename: "controlloMODEM/index.html",
+            filename: "controllo-modem/index.html",
             template: "src/index.html",
             minify: {
                 collapseWhitespace: true,
@@ -92,9 +92,9 @@ module.exports = {
             PAGE_TITLE: "Porte Aperte sul Modem | Scanner 50 Porte TCP Comuni",
             PAGE_DESCRIPTION:
                 "Scopri quali porte TCP sono esposte su Internet dal tuo IP pubblico. Scansione rapida delle 50 porte più comuni: SSH, RDP, HTTP, database e pannelli web.",
-            PAGE_CANONICAL: "https://controlloporte.it/controlloMODEM/",
+            PAGE_CANONICAL: "https://controlloporte.it/controllo-modem/",
             OG_TITLE: "Porte Aperte sul Modem",
-            SCHEMA_ID: "https://controlloporte.it/controlloMODEM/#app",
+            SCHEMA_ID: "https://controlloporte.it/controllo-modem/#app",
             SCHEMA_NAME: "Porte Aperte sul Modem",
             SCHEMA_ALTERNATE_NAME: "Scanner Porte Aperte ControlloPorte.it",
             HERO_TITLE: "Porte Aperte sul Modem",
@@ -120,12 +120,12 @@ module.exports = {
             disableDotRule: true,
             rewrites: [
                 {
-                    from: /^\/controlloDDNS\/.*$/,
-                    to: "/controlloDDNS/index.html",
+                    from: /^\/controllo-ddns\/.*$/,
+                    to: "/controllo-ddns/index.html",
                 },
                 {
-                    from: /^\/controlloMODEM\/.*$/,
-                    to: "/controlloMODEM/index.html",
+                    from: /^\/controllo-modem\/.*$/,
+                    to: "/controllo-modem/index.html",
                 },
             ],
         },
@@ -149,5 +149,6 @@ module.exports = {
         path: resolve(__dirname, "dist"),
         filename: "js/[name].min.js",
         publicPath: "/",
+        clean: true,
     },
 };

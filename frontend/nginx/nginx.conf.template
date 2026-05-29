@@ -60,23 +60,39 @@ server {
     }
 
     location = /controlloDDNS {
-        return 301 https://$host/controlloDDNS/;
-    }
-
-    location = /controlloMODEM {
-        return 301 https://$host/controlloMODEM/;
+        return 301 https://$host/controllo-ddns/;
     }
 
     location ^~ /controlloDDNS/ {
-        root /usr/share/nginx/html;
-        index index.html;
-        try_files $uri $uri/ /controlloDDNS/index.html =404;
+        return 301 https://$host/controllo-ddns/;
+    }
+
+    location = /controlloMODEM {
+        return 301 https://$host/controllo-modem/;
     }
 
     location ^~ /controlloMODEM/ {
+        return 301 https://$host/controllo-modem/;
+    }
+
+    location = /controllo-ddns {
+        return 301 https://$host/controllo-ddns/;
+    }
+
+    location = /controllo-modem {
+        return 301 https://$host/controllo-modem/;
+    }
+
+    location ^~ /controllo-ddns/ {
         root /usr/share/nginx/html;
         index index.html;
-        try_files $uri $uri/ /controlloMODEM/index.html =404;
+        try_files $uri $uri/ /controllo-ddns/index.html =404;
+    }
+
+    location ^~ /controllo-modem/ {
+        root /usr/share/nginx/html;
+        index index.html;
+        try_files $uri $uri/ /controllo-modem/index.html =404;
     }
 
     location ~ ^/(come-verificare-se-una-porta-e-aperta|test-port-forwarding|porte-tcp-comuni|porte-pericolose-da-aprire|ip-pubblico-nat-cgnat|perche-una-porta-risulta-chiusa|usare-controlloporte-con-chatgpt-claude)$ {
