@@ -6,6 +6,7 @@ The project includes:
 
 - a static frontend served by Nginx;
 - a Python API backend built with Litestar;
+- an internal nmap worker for the controlled quick NAT scan;
 - JSON endpoints for checking one or more TCP ports;
 - support for checking the visitor's public IP address through the `me` alias;
 - Italian SEO content and informational pages;
@@ -138,6 +139,36 @@ firewalld firewall.
 | Name | Required | Default | Description |
 | --- | --- | --- | --- |
 | `ALLOW_PRIVATE` | No | `False` | Allows checks against private/special IPv4 ranges. |
+| `NMAP_WORKER_URL` | No | `http://nmap-worker:8080/scan` | Internal URL for the nmap worker used by the quick NAT scan. |
+| `NAT_SCAN_RATE_LIMIT_SECONDS` | No | `300` | Minimum interval between quick NAT scans from the same requester IP. |
+
+### Quick NAT scan
+
+The `/controlloNAT/` page runs a controlled scan against the visitor's detected public
+IPv4 address. Clients cannot submit arbitrary targets. The public API endpoint is:
+
+```text
+POST /api/nat/quick-scan
+```
+
+Request body:
+
+```json
+{"consent": true}
+```
+
+The API calls the internal `nmap-worker` container with a fixed profile:
+
+```json
+{
+  "ip": "requester_public_ip",
+  "scan_type": "top_ports",
+  "num_ports": 50
+}
+```
+
+The worker executes a TCP connect scan with `--top-ports 50`, timeout and retry limits,
+then returns structured JSON that the API formats into an Italian nmap-like report.
 
 ## License
 

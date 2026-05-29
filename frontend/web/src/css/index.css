@@ -416,7 +416,11 @@ a {
 
 body.ddns-route .ports-form-group,
 body.ddns-route #submit,
-body.ddns-route #use-public-ip {
+body.ddns-route #use-public-ip,
+body.nat-route .host-form-group,
+body.nat-route .ports-form-group,
+body.nat-route #submit,
+body.nat-route #use-public-ip {
     display: none;
 }
 
@@ -454,6 +458,52 @@ body.ddns-route .secondary-submit-btn {
 
 .submit-btn.loading .submit-loading {
     display: flex;
+}
+
+.nat-submit-loading {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.submit-btn.loading .nat-submit-text {
+    display: none;
+}
+
+.submit-btn.loading .nat-submit-loading {
+    display: flex;
+}
+
+.nat-scan-panel {
+    display: grid;
+    gap: 1rem;
+}
+
+.nat-scan-copy {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.consent-control {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: start;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 1rem;
+}
+
+.consent-control input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.15rem;
+    accent-color: var(--accent);
 }
 
 .spinner {
@@ -558,6 +608,19 @@ body.ddns-route .secondary-submit-btn {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
+    padding: 1rem;
+}
+
+.nat-report {
+    overflow-x: auto;
+    white-space: pre;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 0.875rem;
+    line-height: 1.65;
     padding: 1rem;
 }
 

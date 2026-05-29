@@ -89,6 +89,7 @@
                     <span class="logo-text">Controllo Porte</span>
                 </a>
                 <nav class="nav">
+                    <a href="/controlloNAT/" class="nav-link">Scansione NAT</a>
                     <a href="/controlloDDNS/" class="nav-link">Controllo DDNS</a>
                     <a href="/docs" class="nav-link">API</a>
                 </nav>
@@ -108,6 +109,35 @@
 
                 <section class="checker-card">
                     <form id="form" class="checker-form" novalidate>
+                        <% if (htmlWebpackPlugin.options.PAGE_MODE === 'nat') { %>
+                            <div class="nat-scan-panel">
+                                <p class="nat-scan-copy">
+                                    La scansione controlla le 50 porte TCP più comuni esclusivamente sul tuo IP pubblico rilevato da questa visita.
+                                </p>
+                                <label class="consent-control" for="nat-consent">
+                                    <input id="nat-consent" type="checkbox" />
+                                    <span>Confermo di voler eseguire una scansione rapida del mio IP pubblico e di essere autorizzato a farlo.</span>
+                                </label>
+                            </div>
+                            <button id="nat-submit" type="button" class="submit-btn" disabled>
+                                <span class="nat-submit-text">Avvia scansione NAT veloce</span>
+                                <span class="nat-submit-loading">
+                                    <svg class="spinner" viewBox="0 0 24 24">
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            stroke-width="3"
+                                            fill="none"
+                                            stroke-dasharray="31.4 31.4"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                    Scansione...
+                                </span>
+                            </button>
+                        <% } else { %>
                         <div class="form-group host-form-group">
                             <label for="host" class="form-label"><%= htmlWebpackPlugin.options.HOST_LABEL %></label>
                             <div class="host-input-wrapper">
@@ -212,6 +242,7 @@
                                 </span>
                             </button>
                         <% } %>
+                        <% } %>
                     </form>
 
                     <div id="results" class="results hidden">
@@ -244,6 +275,14 @@
                         </div>
                     </div>
 
+                    <div id="nat-results" class="results hidden">
+                        <div class="results-header">
+                            <h3 class="results-title">Risultato scansione NAT</h3>
+                            <span id="nat-results-host" class="results-host"></span>
+                        </div>
+                        <pre id="nat-report" class="nat-report"></pre>
+                    </div>
+
                     <div id="error" class="error-message hidden">
                         <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -255,7 +294,25 @@
                 </section>
 
                 <section class="desc-content">
-                    <% if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
+                    <% if (htmlWebpackPlugin.options.PAGE_MODE === 'nat') { %>
+                        <div id="intro-content" class="intro-content">
+                            <h2>Scansione rapida delle porte più comuni</h2>
+                            <p>
+                                La scansione NAT veloce usa un profilo controllato basato sulle 50 porte TCP più comuni.
+                                Il bersaglio è sempre il tuo IP pubblico rilevato dal sito: non è possibile inserire IP di terzi.
+                            </p>
+                            <p>
+                                Il risultato indica solo quali porte risultano raggiungibili dall'esterno in questo momento.
+                                Per verificare una porta specifica puoi usare il test porta dedicato.
+                            </p>
+                        </div>
+
+                        <h2>Sicurezza del test</h2>
+                        <p>
+                            La scansione usa un profilo rapido e limitato. Non esegue rilevamento del sistema operativo,
+                            script NSE, scansioni UDP o scansioni complete di tutte le porte.
+                        </p>
+                    <% } else if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
                         <div id="intro-content" class="intro-content">
                             <h2>Verifica se il DNS dinamico è aggiornato</h2>
                             <p>
@@ -345,7 +402,26 @@
 
                     <h2>Domande frequenti</h2>
                     <div class="faq-list">
-                        <% if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
+                        <% if (htmlWebpackPlugin.options.PAGE_MODE === 'nat') { %>
+                        <details class="faq-item">
+                            <summary>Posso scegliere un IP da scansionare?</summary>
+                    <p>
+                        No. La scansione riguarda solo l'IP pubblico rilevato dalla visita corrente.
+                    </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Il test controlla tutte le porte?</summary>
+                    <p>
+                        No. Il profilo rapido controlla le 50 porte TCP più comuni.
+                    </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Se non trova porte aperte cosa significa?</summary>
+                    <p>
+                        Significa solo che nessuna delle 50 porte TCP più comuni risulta aperta dall'esterno in questo momento.
+                    </p>
+                        </details>
+                        <% } else if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
                         <details class="faq-item">
                             <summary>Cosa controlla il test DDNS?</summary>
                     <p>

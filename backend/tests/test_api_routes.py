@@ -1,6 +1,8 @@
 """Tests for API routes"""
 from litestar.status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
+from app.schemas.api import NATScanNotShownSchema, NATScanWorkerResponseSchema
+
 from .conftest import HEADER_REAL_IP, INVALID_HOST, VALID_DOMAIN
 
 
@@ -258,6 +260,56 @@ def test_controllo_ddns_endpoint_missing_requester_ip(client, mocker):
     assert (
         ret["extra"][0]["message"]
         == "Impossibile rilevare l'indirizzo IP del richiedente"
+    )
+
+
+def test_quick_nat_scan_endpoint_success(client, mocker):
+    """Test quick NAT scan uses requester IP and returns the formatted report."""
+    mock_get_requester = mocker.patch(
+        "app.routes.v2.get_requester", return_value=HEADER_REAL_IP
+    )
+    mock_run_scan = mocker.patch(
+        "app.routes.v2.run_quick_nat_scan",
+        return_value=NATScanWorkerResponseSchema(
+            ip=HEADER_REAL_IP,
+            scan_type="top_ports",
+            num_ports=50,
+            scanned_ports=50,
+            open_ports=[],
+            not_shown=NATScanNotShownSchema(
+                count=50,
+                state="filtered",
+                reason="no-response",
+            ),
+            duration_ms=1234,
+        ),
+    )
+
+    response = client.post("/api/nat/quick-scan", json={"consent": True})
+
+    assert response.status_code == HTTP_200_OK
+    ret = response.json()
+    assert ret["error"] is False
+    assert ret["ip"] == HEADER_REAL_IP
+    assert ret["scan_type"] == "top_ports"
+    assert ret["num_ports"] == 50
+    assert ret["summary"] == "Nessuna porta aperta è stata trovata tra le 50 più comuni."
+    assert "Report scansione NAT veloce" in ret["report"]
+    mock_get_requester.assert_called_once()
+    mock_run_scan.assert_called_once_with(HEADER_REAL_IP)
+
+
+def test_quick_nat_scan_endpoint_requires_consent(client):
+    """Test quick NAT scan requires explicit user consent."""
+    response = client.post("/api/nat/quick-scan", json={"consent": False})
+
+    assert response.status_code == HTTP_400_BAD_REQUEST
+    ret = response.json()
+    assert ret["error"] is True
+    assert ret["extra"][0]["key"] == "consent"
+    assert (
+        ret["extra"][0]["message"]
+        == "Devi autorizzare la scansione rapida del tuo IP pubblico."
     )
 
 

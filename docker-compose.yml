@@ -38,8 +38,31 @@ services:
     container_name: api
     environment:
       - ALLOW_PRIVATE=false  # Prevent usage of private IP addresses
+      - NMAP_WORKER_URL=http://nmap-worker:8080/scan
     healthcheck:
       test: ["CMD", "wget", "--spider", "-S", "http://127.0.0.1:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    depends_on:
+      - nmap-worker
+    networks:
+      - portchecker
+  nmap-worker:
+    restart: unless-stopped
+    build:
+      context: nmap-worker
+      dockerfile: Dockerfile
+    image: local/portcheckerio-nmap-worker:latest
+    container_name: nmap-worker
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-S", "http://127.0.0.1:8080/healthz"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -25,6 +25,7 @@ from app.routes.v2 import (
     get_port_check,
     get_port_check_json,
     my_ip,
+    quick_nat_scan_post,
     query_post,
 )
 
@@ -64,6 +65,7 @@ app = Litestar(
         query_post,
         get_port_check,
         get_port_check_json,
+        quick_nat_scan_post,
         v1_query_post,
         health,
     ],

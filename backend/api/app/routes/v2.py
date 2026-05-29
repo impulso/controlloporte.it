@@ -9,6 +9,7 @@ from litestar.params import Body
 from litestar.status_codes import HTTP_200_OK
 
 from app.helpers.exceptions import JsonAPIException
+from app.helpers.nat_scan import format_quick_nat_scan_report, run_quick_nat_scan
 from app.helpers.query import check_ddns, get_requester, query_address
 from app.schemas.api import (
     APIResponseSchema,
@@ -16,6 +17,8 @@ from app.schemas.api import (
     DDNSCheckSchema,
     DDNSResponseSchema,
     HostAnnotation,
+    NATScanRequestSchema,
+    NATScanResponseSchema,
     PortAnnotation,
     PortCheckStrAnnotation,
     RequesterAnnotation,
@@ -146,6 +149,56 @@ def controllo_ddns_post(
 
     ddns_check = check_ddns(data.host, requester_ip)
     return DDNSResponseSchema(error=False, msg=None, **ddns_check)
+
+
+@post(
+    "/api/nat/quick-scan",
+    media_type=MediaType.JSON,
+    status_code=HTTP_200_OK,
+    sync_to_thread=True,
+)
+def quick_nat_scan_post(
+    request: Request,
+    data: Annotated[
+        NATScanRequestSchema,
+        Body(
+            title="Run a quick NAT scan against the requester public IP",
+            description=(
+                "Runs a controlled nmap top-ports scan against the requester "
+                "public IPv4 address. The target IP is always detected from "
+                "the request and cannot be supplied by the client."
+            ),
+        ),
+    ],
+) -> NATScanResponseSchema:
+    """
+    Run a quick NAT scan against the requester public IPv4 address.
+
+    The client must provide explicit consent. The endpoint never accepts a target IP
+    from the request body; it scans only the public IP detected from proxy headers.
+    """
+    if data.consent is not True:
+        raise JsonAPIException(
+            key="consent",
+            message="Devi autorizzare la scansione rapida del tuo IP pubblico.",
+        )
+
+    try:
+        requester_ip = get_requester(request)
+    except ValueError as ex:
+        raise JsonAPIException(key="requester_ip", message=str(ex)) from ex
+
+    scan = run_quick_nat_scan(requester_ip)
+    report = format_quick_nat_scan_report(scan)
+    summary = report.split("\n\n", maxsplit=3)[3].split("\n", maxsplit=1)[0]
+
+    return NATScanResponseSchema(
+        error=False,
+        msg=None,
+        summary=summary,
+        report=report,
+        **scan.model_dump(),
+    )
 
 
 def post_helper(host: str, ports: list[int]) -> APIResponseSchema:

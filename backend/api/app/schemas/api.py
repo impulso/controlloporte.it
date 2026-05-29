@@ -90,6 +90,18 @@ class DDNSCheckSchema(BaseModel):
     )
 
 
+class NATScanRequestSchema(BaseModel):
+    """Schema for requesting a quick NAT scan."""
+
+    consent: bool = Field(
+        description=(
+            "Explicit user confirmation that they want to scan their detected "
+            "public IP address and are authorized to do so."
+        ),
+        examples=[True],
+    )
+
+
 class APICheckSchema(BaseModel):
     """Schema for the individual results of a check"""
 
@@ -106,6 +118,48 @@ class APICheckSchema(BaseModel):
         ),
         examples=[23],
     )
+
+
+class NATScanOpenPortSchema(BaseModel):
+    """One open TCP port found by the quick NAT scan."""
+
+    port: int = Field(description="TCP port number", examples=[443])
+    protocol: str = Field(description="Protocol scanned", examples=["tcp"])
+    state: str = Field(description="Nmap state", examples=["open"])
+    service: str = Field(description="Detected or known service name", examples=["https"])
+    reason: str | None = Field(default=None, description="Nmap reason", examples=["syn-ack"])
+
+
+class NATScanNotShownSchema(BaseModel):
+    """Nmap-style summary of ports not shown in the report."""
+
+    count: int = Field(description="Number of non-open ports not shown", examples=[48])
+    state: str = Field(description="Dominant state for non-open ports", examples=["filtered"])
+    reason: str = Field(description="Dominant reason for non-open ports", examples=["no-response"])
+
+
+class NATScanWorkerResponseSchema(BaseModel):
+    """Structured response returned by the internal nmap worker."""
+
+    ip: str = Field(description="Requester public IPv4 address", examples=["91.99.156.172"])
+    scan_type: str = Field(description="Scan profile", examples=["top_ports"])
+    num_ports: int = Field(description="Number of top ports scanned", examples=[50])
+    scanned_ports: int = Field(description="Number of TCP ports scanned", examples=[50])
+    open_ports: list[NATScanOpenPortSchema]
+    not_shown: NATScanNotShownSchema
+    duration_ms: int = Field(description="Scan duration in milliseconds", examples=[12340])
+
+
+class NATScanResponseSchema(NATScanWorkerResponseSchema):
+    """Public quick NAT scan response."""
+
+    error: bool = Field(description="Whether an error occurred", examples=[False])
+    msg: str | None
+    summary: str = Field(
+        description="Short human-readable interpretation of the result",
+        examples=["Sono state trovate 2 porte raggiungibili dall'esterno."],
+    )
+    report: str = Field(description="Italian nmap-like report text")
 
 
 class APIResponseSchema(BaseModel):

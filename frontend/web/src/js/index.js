@@ -10,6 +10,11 @@ window.onload = () => {
         return;
     }
 
+    if (window.location.pathname === "/controlloNAT") {
+        window.location.replace("/controlloNAT/");
+        return;
+    }
+
     initializeState();
     setupEventListeners();
     const routeAction = applyCheckRoute();
@@ -51,8 +56,10 @@ const state = new Proxy(
         ports: [],
         results: null,
         ddnsResults: null,
+        natResults: null,
         loading: false,
         ddnsLoading: false,
+        natLoading: false,
         error: null,
     },
     {
@@ -69,8 +76,10 @@ function initializeState() {
     state.ports = [];
     state.results = null;
     state.ddnsResults = null;
+    state.natResults = null;
     state.loading = false;
     state.ddnsLoading = false;
+    state.natLoading = false;
     state.error = null;
 }
 
@@ -97,6 +106,8 @@ function setupEventListeners() {
     document.getElementById("copy-share-link")?.addEventListener("click", copyShareLink);
     document.getElementById("copy-ddns-share-link")?.addEventListener("click", copyDdnsShareLink);
     document.getElementById("ddns-submit")?.addEventListener("click", handleDdnsSubmit);
+    document.getElementById("nat-submit")?.addEventListener("click", handleNatSubmit);
+    document.getElementById("nat-consent")?.addEventListener("change", updateNatConsent);
     document.getElementById("use-public-ip")?.addEventListener("click", usePublicIp);
 
     // Validate ports on input
@@ -107,7 +118,7 @@ function setupEventListeners() {
     }
 
     // Validate host on input
-    document.getElementById("host").addEventListener("input", () => {
+    document.getElementById("host")?.addEventListener("input", () => {
         validateHostInput();
     });
 }
@@ -126,6 +137,7 @@ function handleSubmit(event) {
     hideError();
     hideResults();
     hideDdnsResults();
+    hideNatResults();
     queryHost();
 }
 
@@ -140,7 +152,25 @@ function handleDdnsSubmit(event) {
     hideError();
     hideResults();
     hideDdnsResults();
+    hideNatResults();
     queryDdns();
+}
+
+function handleNatSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const consent = document.getElementById("nat-consent")?.checked === true;
+    if (!consent) {
+        showError("Devi autorizzare la scansione rapida del tuo IP pubblico.");
+        return;
+    }
+
+    hideError();
+    hideResults();
+    hideDdnsResults();
+    hideNatResults();
+    queryNatScan();
 }
 
 function validateHostInput() {
@@ -214,6 +244,10 @@ function applyCheckRoute() {
         return applyDdnsRoute(segments);
     }
 
+    if (isNatRoute(segments)) {
+        return applyNatRoute(segments);
+    }
+
     if (![1, 2].includes(segments.length) || reservedPaths.has(segments[0])) {
         return false;
     }
@@ -233,6 +267,19 @@ function applyCheckRoute() {
 
 function isDdnsRoute(segments) {
     return segments[0] === "controlloDDNS";
+}
+
+function isNatRoute(segments) {
+    return segments[0] === "controlloNAT";
+}
+
+function applyNatRoute(segments) {
+    if (segments.length > 1) {
+        return false;
+    }
+
+    document.body.classList.add("nat-route");
+    return false;
 }
 
 function applyDdnsRoute(segments) {
@@ -376,6 +423,41 @@ function queryDdns() {
         });
 }
 
+function queryNatScan() {
+    state.natLoading = true;
+    state.error = null;
+
+    fetch("/api/nat/quick-scan", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ consent: true }),
+    })
+        .then((response) =>
+            response.json().then((data) => {
+                if (!response.ok) {
+                    const error = new Error(data?.message || "Request failed");
+                    error.data = data;
+                    throw error;
+                }
+
+                return data;
+            })
+        )
+        .then((response) => {
+            state.natResults = response;
+            state.natLoading = false;
+        })
+        .catch((error) => {
+            state.error =
+                error.data?.extra?.map((item) => item.message).join(", ") ||
+                error.data?.message ||
+                "Si è verificato un errore. Riprova tra poco.";
+            state.natLoading = false;
+        });
+}
+
 function validateDdnsHostInput() {
     const hostInput = document.getElementById("host");
     const hostGroup = hostInput.closest(".form-group");
@@ -390,6 +472,7 @@ function validateDdnsHostInput() {
 function updateView(prop, value) {
     const submitBtn = document.getElementById("submit");
     const ddnsSubmitBtn = document.getElementById("ddns-submit");
+    const natSubmitBtn = document.getElementById("nat-submit");
 
     switch (prop) {
         case "loading":
@@ -406,6 +489,14 @@ function updateView(prop, value) {
             }
             break;
 
+        case "natLoading":
+            if (natSubmitBtn) {
+                natSubmitBtn.classList.toggle("loading", value);
+                natSubmitBtn.disabled =
+                    value || document.getElementById("nat-consent")?.checked !== true;
+            }
+            break;
+
         case "results":
             if (value && !state.error) {
                 showResults(value);
@@ -415,6 +506,12 @@ function updateView(prop, value) {
         case "ddnsResults":
             if (value && !state.error) {
                 showDdnsResults(value);
+            }
+            break;
+
+        case "natResults":
+            if (value && !state.error) {
+                showNatResults(value);
             }
             break;
 
@@ -505,6 +602,19 @@ function showDdnsResults(data) {
     scrollToFeedback(resultsDiv);
 }
 
+function showNatResults(data) {
+    const resultsDiv = document.getElementById("nat-results");
+    const resultsHost = document.getElementById("nat-results-host");
+    const natReport = document.getElementById("nat-report");
+    const introContent = document.getElementById("intro-content");
+
+    resultsHost.textContent = data.ip;
+    natReport.textContent = data.report;
+    resultsDiv.classList.remove("hidden");
+    introContent?.classList.add("hidden");
+    scrollToFeedback(resultsDiv);
+}
+
 function hideResults() {
     document.getElementById("results").classList.add("hidden");
     document.getElementById("intro-content")?.classList.remove("hidden");
@@ -513,6 +623,19 @@ function hideResults() {
 function hideDdnsResults() {
     document.getElementById("ddns-results").classList.add("hidden");
     document.getElementById("intro-content")?.classList.remove("hidden");
+}
+
+function hideNatResults() {
+    document.getElementById("nat-results")?.classList.add("hidden");
+    document.getElementById("intro-content")?.classList.remove("hidden");
+}
+
+function updateNatConsent() {
+    const natSubmitBtn = document.getElementById("nat-submit");
+    if (natSubmitBtn) {
+        natSubmitBtn.disabled =
+            document.getElementById("nat-consent")?.checked !== true || state.natLoading;
+    }
 }
 
 function showError(message) {

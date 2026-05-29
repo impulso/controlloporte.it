@@ -81,6 +81,31 @@ module.exports = {
             HOST_ERROR: "Inserisci un nome host DDNS valido",
         }),
 
+        new HtmlWebpackPlugin({
+            filename: "controlloNAT/index.html",
+            template: "src/index.html",
+            minify: {
+                collapseWhitespace: true,
+            },
+            ...pageDefaults,
+            PAGE_MODE: "nat",
+            PAGE_TITLE: "Scansione NAT Veloce | Test Porte Comuni",
+            PAGE_DESCRIPTION:
+                "Esegui una scansione NAT veloce sul tuo IP pubblico e verifica se alcune porte TCP comuni risultano raggiungibili da Internet.",
+            PAGE_CANONICAL: "https://controlloporte.it/controlloNAT/",
+            OG_TITLE: "Scansione NAT Veloce",
+            SCHEMA_ID: "https://controlloporte.it/controlloNAT/#app",
+            SCHEMA_NAME: "Scansione NAT Veloce",
+            SCHEMA_ALTERNATE_NAME: "Scansione NAT ControlloPorte.it",
+            HERO_TITLE: "Scansione NAT Veloce",
+            HERO_SUBTITLE:
+                "Controlla rapidamente le 50 porte TCP più comuni sul tuo IP pubblico.",
+            HOST_LABEL: "",
+            HOST_PLACEHOLDER: "",
+            HOST_HINT: "",
+            HOST_ERROR: "",
+        }),
+
         new MiniCssExtractPlugin({
             filename: "css/[name].min.css",
         }),
@@ -97,6 +122,10 @@ module.exports = {
                 {
                     from: /^\/controlloDDNS\/.*$/,
                     to: "/controlloDDNS/index.html",
+                },
+                {
+                    from: /^\/controlloNAT\/.*$/,
+                    to: "/controlloNAT/index.html",
                 },
             ],
         },

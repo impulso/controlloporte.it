@@ -61,10 +61,20 @@ server {
         return 301 https://$host/controlloDDNS/;
     }
 
+    location = /controlloNAT {
+        return 301 https://$host/controlloNAT/;
+    }
+
     location ^~ /controlloDDNS/ {
         root /usr/share/nginx/html;
         index index.html;
         try_files $uri $uri/ /controlloDDNS/index.html =404;
+    }
+
+    location ^~ /controlloNAT/ {
+        root /usr/share/nginx/html;
+        index index.html;
+        try_files $uri $uri/ /controlloNAT/index.html =404;
     }
 
     location ~ ^/(come-verificare-se-una-porta-e-aperta|test-port-forwarding|porte-tcp-comuni|porte-pericolose-da-aprire|ip-pubblico-nat-cgnat|perche-una-porta-risulta-chiusa|usare-controlloporte-con-chatgpt-claude)$ {
