@@ -30,12 +30,6 @@ function initializeApp() {
     }
 }
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initializeApp);
-} else {
-    initializeApp();
-}
-
 const reservedPaths = new Set([
     "api",
     "css",
@@ -715,4 +709,10 @@ function copyToClipboard(shareUrlInput, copyButton) {
     shareUrlInput.select();
     document.execCommand("copy");
     setCopied();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeApp);
+} else {
+    initializeApp();
 }
