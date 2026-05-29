@@ -430,6 +430,14 @@ body.ddns-route .host-input-wrapper {
 
 body.ddns-route .secondary-submit-btn {
     margin-top: 0;
+    background: var(--accent);
+    color: #000;
+    border: none;
+}
+
+body.ddns-route .secondary-submit-btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+    border: none;
 }
 
 .submit-btn:hover:not(:disabled) {
