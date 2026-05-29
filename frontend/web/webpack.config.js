@@ -82,7 +82,7 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            filename: "controlloNAT/index.html",
+            filename: "controlloMODEM/index.html",
             template: "src/index.html",
             minify: {
                 collapseWhitespace: true,
@@ -92,9 +92,9 @@ module.exports = {
             PAGE_TITLE: "Porte Aperte sul Modem | Scanner 50 Porte TCP Comuni",
             PAGE_DESCRIPTION:
                 "Scopri quali porte TCP sono esposte su Internet dal tuo IP pubblico. Scansione rapida delle 50 porte più comuni: SSH, RDP, HTTP, database e pannelli web.",
-            PAGE_CANONICAL: "https://controlloporte.it/controlloNAT/",
+            PAGE_CANONICAL: "https://controlloporte.it/controlloMODEM/",
             OG_TITLE: "Porte Aperte sul Modem",
-            SCHEMA_ID: "https://controlloporte.it/controlloNAT/#app",
+            SCHEMA_ID: "https://controlloporte.it/controlloMODEM/#app",
             SCHEMA_NAME: "Porte Aperte sul Modem",
             SCHEMA_ALTERNATE_NAME: "Scanner Porte Aperte ControlloPorte.it",
             HERO_TITLE: "Porte Aperte sul Modem",
@@ -124,8 +124,8 @@ module.exports = {
                     to: "/controlloDDNS/index.html",
                 },
                 {
-                    from: /^\/controlloNAT\/.*$/,
-                    to: "/controlloNAT/index.html",
+                    from: /^\/controlloMODEM\/.*$/,
+                    to: "/controlloMODEM/index.html",
                 },
             ],
         },
