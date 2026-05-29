@@ -10,6 +10,8 @@ server {
     resolver 127.0.0.11 ipv6=off valid=30s;
     set $api_url $API_URL;
 
+    access_log /dev/stdout combined;
+
     location ~* ^/(?:\.env(?:[._-][^/]*)?|env|(?:config|app|src|backend|api)/\.env|\.docker\.env)$ {
         access_log /var/log/nginx/security-scan.log combined;
         return 403;
