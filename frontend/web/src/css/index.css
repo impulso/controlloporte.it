@@ -602,25 +602,44 @@ body.ddns-route .secondary-submit-btn {
     white-space: nowrap;
 }
 
+.nat-result-item {
+    grid-template-columns: minmax(7rem, 1fr) minmax(6rem, 0.75fr) minmax(7rem, 1fr);
+}
+
+.nat-result-heading {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+.nat-result-item .result-status {
+    justify-content: flex-start;
+}
+
+.result-service {
+    color: var(--text-secondary);
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
+}
+
+.nat-summary {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}
+
 .ddns-result-card {
     display: grid;
     gap: 1rem;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    padding: 1rem;
-}
-
-.nat-report {
-    overflow-x: auto;
-    white-space: pre;
-    background: var(--bg-input);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text-primary);
-    font-family: "SF Mono", "Fira Code", monospace;
-    font-size: 0.875rem;
-    line-height: 1.65;
     padding: 1rem;
 }
 

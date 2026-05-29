@@ -1,7 +1,11 @@
 """Tests for API routes"""
 from litestar.status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
-from app.schemas.api import NATScanNotShownSchema, NATScanWorkerResponseSchema
+from app.schemas.api import (
+    NATScanNotShownSchema,
+    NATScanOpenPortSchema,
+    NATScanWorkerResponseSchema,
+)
 
 from .conftest import HEADER_REAL_IP, INVALID_HOST, VALID_DOMAIN
 
@@ -275,9 +279,31 @@ def test_quick_nat_scan_endpoint_success(client, mocker):
             scan_type="top_ports",
             num_ports=50,
             scanned_ports=50,
-            open_ports=[],
+            open_ports=[
+                NATScanOpenPortSchema(
+                    port=22,
+                    protocol="tcp",
+                    state="open",
+                    service="ssh",
+                    reason="syn-ack",
+                ),
+                NATScanOpenPortSchema(
+                    port=80,
+                    protocol="tcp",
+                    state="open",
+                    service="http",
+                    reason="syn-ack",
+                ),
+                NATScanOpenPortSchema(
+                    port=443,
+                    protocol="tcp",
+                    state="open",
+                    service="https",
+                    reason="syn-ack",
+                ),
+            ],
             not_shown=NATScanNotShownSchema(
-                count=50,
+                count=47,
                 state="filtered",
                 reason="no-response",
             ),
@@ -293,8 +319,13 @@ def test_quick_nat_scan_endpoint_success(client, mocker):
     assert ret["ip"] == HEADER_REAL_IP
     assert ret["scan_type"] == "top_ports"
     assert ret["num_ports"] == 50
-    assert ret["summary"] == "Nessuna porta aperta è stata trovata tra le 50 più comuni."
-    assert "Report scansione NAT veloce" in ret["report"]
+    assert (
+        ret["summary"]
+        == "Sono state trovate 3 porte raggiungibili dall'esterno e non mostrate 47 porte TCP senza risposta."
+    )
+    assert ret["report"].startswith("PORTA    STATO   SERVIZIO")
+    assert "22/tcp" in ret["report"]
+    assert "Report scansione NAT veloce" not in ret["report"]
     mock_get_requester.assert_called_once()
     mock_run_scan.assert_called_once_with(HEADER_REAL_IP)
 

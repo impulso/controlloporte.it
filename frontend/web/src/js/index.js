@@ -605,11 +605,39 @@ function showDdnsResults(data) {
 function showNatResults(data) {
     const resultsDiv = document.getElementById("nat-results");
     const resultsHost = document.getElementById("nat-results-host");
-    const natReport = document.getElementById("nat-report");
+    const resultsList = document.getElementById("nat-results-list");
+    const summary = document.getElementById("nat-summary");
     const introContent = document.getElementById("intro-content");
 
     resultsHost.textContent = data.ip;
-    natReport.textContent = data.report;
+    resultsList.innerHTML = "";
+
+    if (data.open_ports.length > 0) {
+        const heading = document.createElement("div");
+        heading.className = "result-item nat-result-item nat-result-heading";
+        heading.innerHTML = `
+            <span>PORTA</span>
+            <span>STATO</span>
+            <span>SERVIZIO</span>
+        `;
+        resultsList.appendChild(heading);
+    }
+
+    data.open_ports.forEach((port) => {
+        const item = document.createElement("div");
+        item.className = "result-item nat-result-item";
+        item.innerHTML = `
+            <span class="result-port">${port.port}/${port.protocol}</span>
+            <span class="result-status open">
+                <span class="status-dot"></span>
+                Aperta
+            </span>
+            <span class="result-service">${port.service}</span>
+        `;
+        resultsList.appendChild(item);
+    });
+
+    summary.textContent = data.summary;
     resultsDiv.classList.remove("hidden");
     introContent?.classList.add("hidden");
     scrollToFeedback(resultsDiv);

@@ -280,7 +280,8 @@
                             <h3 class="results-title">Risultato scansione NAT</h3>
                             <span id="nat-results-host" class="results-host"></span>
                         </div>
-                        <pre id="nat-report" class="nat-report"></pre>
+                        <div id="nat-results-list" class="results-list"></div>
+                        <p id="nat-summary" class="nat-summary"></p>
                     </div>
 
                     <div id="error" class="error-message hidden">
@@ -311,6 +312,18 @@
                         <p>
                             La scansione usa un profilo rapido e limitato. Non esegue rilevamento del sistema operativo,
                             script NSE, scansioni UDP o scansioni complete di tutte le porte.
+                        </p>
+
+                        <h2>Controlli successivi</h2>
+                        <p>
+                            Vuoi verificare una porta specifica?
+                            Usa il test porta dedicato:
+                            <a href="/me/">https://controlloporte.it/me/</a>
+                        </p>
+                        <p>
+                            Una porta che ti aspetti aperta risulta chiusa?
+                            Consulta la checklist:
+                            <a href="/perche-una-porta-risulta-chiusa/">https://controlloporte.it/perche-una-porta-risulta-chiusa/</a>
                         </p>
                     <% } else if (htmlWebpackPlugin.options.PAGE_MODE === 'ddns') { %>
                         <div id="intro-content" class="intro-content">

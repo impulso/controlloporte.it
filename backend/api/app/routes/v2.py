@@ -190,7 +190,7 @@ def quick_nat_scan_post(
 
     scan = run_quick_nat_scan(requester_ip)
     report = format_quick_nat_scan_report(scan)
-    summary = report.split("\n\n", maxsplit=3)[3].split("\n", maxsplit=1)[0]
+    summary = report.rsplit("\n\n", maxsplit=1)[-1]
 
     return NATScanResponseSchema(
         error=False,

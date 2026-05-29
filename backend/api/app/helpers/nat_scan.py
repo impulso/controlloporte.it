@@ -64,14 +64,6 @@ def run_quick_nat_scan(requester_ip: str) -> NATScanWorkerResponseSchema:
 def format_quick_nat_scan_report(scan: NATScanWorkerResponseSchema) -> str:
     """Format the scan result as an Italian nmap-like report."""
     lines = [
-        f"Report scansione NAT veloce per il tuo IP pubblico ({scan.ip})",
-        "",
-        (
-            f"Non mostrate: {scan.not_shown.count} porte TCP "
-            f"{_translate_state(scan.not_shown.state)} "
-            f"({_translate_reason(scan.not_shown.reason)})"
-        ),
-        "",
         "PORTA    STATO   SERVIZIO",
     ]
 
@@ -84,16 +76,7 @@ def format_quick_nat_scan_report(scan: NATScanWorkerResponseSchema) -> str:
     lines.extend(
         [
             "",
-            _summary_for_open_ports(len(scan.open_ports), scan.num_ports),
-            "",
-            "Vuoi verificare una porta specifica?",
-            "Usa il test porta dedicato: https://controlloporte.it/me/",
-            "",
-            "Una porta che ti aspetti aperta risulta chiusa?",
-            (
-                "Consulta la checklist: "
-                "https://controlloporte.it/perche-una-porta-risulta-chiusa/"
-            ),
+            _summary_for_scan(scan),
         ]
     )
 
@@ -137,23 +120,16 @@ def _translate_state(state: str) -> str:
     }.get(state, state)
 
 
-def _translate_reason(reason: str) -> str:
-    return {
-        "no-response": "nessuna risposta",
-        "conn-refused": "connessione rifiutata",
-        "syn-ack": "risposta TCP",
-    }.get(reason, reason)
-
-
-def _summary_for_open_ports(open_count: int, scanned_ports: int) -> str:
+def _summary_for_scan(scan: NATScanWorkerResponseSchema) -> str:
+    open_count = len(scan.open_ports)
     if open_count == 0:
-        return f"Nessuna porta aperta è stata trovata tra le {scanned_ports} più comuni."
-    if open_count == 1:
-        return (
-            "È stata trovata 1 porta raggiungibile dall'esterno. "
-            "Questo indica che almeno un servizio risulta visibile da Internet."
-        )
+        prefix = f"Nessuna porta aperta è stata trovata tra le {scan.num_ports} più comuni"
+    elif open_count == 1:
+        prefix = "È stata trovata 1 porta raggiungibile dall'esterno"
+    else:
+        prefix = f"Sono state trovate {open_count} porte raggiungibili dall'esterno"
+
     return (
-        f"Sono state trovate {open_count} porte raggiungibili dall'esterno. "
-        "Questo indica che almeno alcuni servizi risultano visibili da Internet."
+        f"{prefix} e non mostrate {scan.not_shown.count} porte TCP "
+        f"senza risposta."
     )
