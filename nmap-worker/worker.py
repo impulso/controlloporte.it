@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -12,7 +13,7 @@ from xml.etree import ElementTree
 ALLOWED_SCAN_TYPE = "top_ports"
 ALLOWED_NUM_PORTS = 50
 HOST = "0.0.0.0"
-PORT = 8080
+PORT = int(os.environ.get("PORT", "8080"))
 
 
 class ScanHandler(BaseHTTPRequestHandler):

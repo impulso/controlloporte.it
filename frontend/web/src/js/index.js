@@ -4,7 +4,7 @@
 
 let detectedPublicIp = "";
 
-window.onload = () => {
+function initializeApp() {
     if (window.location.pathname === "/controlloDDNS") {
         window.location.replace("/controlloDDNS/");
         return;
@@ -28,7 +28,13 @@ window.onload = () => {
     if (routeAction === "ddns") {
         handleDdnsSubmit(new Event("submit"));
     }
-};
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeApp);
+} else {
+    initializeApp();
+}
 
 const reservedPaths = new Set([
     "api",
