@@ -10,8 +10,8 @@ function initializeApp() {
         return;
     }
 
-    if (window.location.pathname === "/controlloNAT") {
-        window.location.replace("/controlloNAT/");
+    if (window.location.pathname === "/controlloMODEM") {
+        window.location.replace("/controlloMODEM/");
         return;
     }
 
@@ -270,7 +270,7 @@ function isDdnsRoute(segments) {
 }
 
 function isNatRoute(segments) {
-    return segments[0] === "controlloNAT";
+    return segments[0] === "controlloMODEM";
 }
 
 function applyNatRoute(segments) {
