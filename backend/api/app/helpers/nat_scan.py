@@ -77,7 +77,7 @@ def format_quick_nat_scan_report(scan: NATScanWorkerResponseSchema) -> str:
 
     for port in scan.open_ports:
         lines.append(
-            f"{port.port}/{port.protocol:<3}  {_translate_state(port.state):<6} "
+            f"{port.port}/{port.protocol:<3}   {_translate_state(port.state):<6}  "
             f"{port.service}"
         )
 
